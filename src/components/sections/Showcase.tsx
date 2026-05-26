@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight, Code2, GraduationCap, Network } from 'lucide-react';
 import ShowcaseCases from './ShowcaseCases';
+import AiDemo from './AiDemo';
 import { prefersReducedMotion } from '../../lib/animations';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -96,6 +97,7 @@ export default function Showcase() {
       </div>
 
       <ShowcaseCases />
+      <AiDemo />
     </section>
   );
 }

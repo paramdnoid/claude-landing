@@ -6,8 +6,9 @@ type Node = { id: string; label: string };
 const NODES: Node[] = [
   { id: 'hero', label: '01' },
   { id: 'about', label: '02' },
-  { id: 'showcase', label: '03' },
-  { id: 'contact', label: '04' },
+  { id: 'process', label: '03' },
+  { id: 'showcase', label: '04' },
+  { id: 'contact', label: '05' },
 ];
 
 export default function TimelineRail() {

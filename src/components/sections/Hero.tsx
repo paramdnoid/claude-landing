@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { lazy, Suspense, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { prefersReducedMotion, revealChars, splitText } from '../../lib/animations';
+
+const HeroParticles = lazy(() => import('../HeroParticles'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -83,12 +85,23 @@ export default function Hero() {
       <div
         ref={bgRef}
         aria-hidden="true"
-        className="bg-grid absolute inset-0 -z-10"
+        className="bg-grid absolute inset-0 -z-20"
         style={{
           maskImage:
             'radial-gradient(ellipse at 50% 40%, black 30%, transparent 75%)',
           WebkitMaskImage:
             'radial-gradient(ellipse at 50% 40%, black 30%, transparent 75%)',
+        }}
+      />
+      <Suspense fallback={null}>
+        <HeroParticles />
+      </Suspense>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-[5]"
+        style={{
+          background:
+            'radial-gradient(ellipse 55% 50% at 30% 55%, rgba(10,10,15,0.95) 0%, rgba(10,10,15,0.7) 35%, transparent 70%)',
         }}
       />
       <div

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Mail, Send } from 'lucide-react';
-import { prefersReducedMotion, revealChars, splitText } from '../../lib/animations';
+import { prefersReducedMotion, splitText } from '../../lib/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 

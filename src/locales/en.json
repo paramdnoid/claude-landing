@@ -1,0 +1,137 @@
+{
+  "nav": {
+    "about": "About",
+    "process": "Process",
+    "showcase": "Services",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "hero": {
+    "eyebrow": "01 · Studio",
+    "title": "ZIAN AI CONCEPTS",
+    "tagline": "AI-driven Engineering. Courses. Integration.",
+    "lede": "I build modern web and app products with AI at their core, run hands-on courses, and integrate generative AI into companies.",
+    "scrollHint": "Scroll to explore"
+  },
+  "clients": {
+    "label": "Trusted by studios, startups & SMBs"
+  },
+  "about": {
+    "eyebrow": "02 · About",
+    "title": "One person. One clear promise.",
+    "lede": "ZIAN AI CONCEPTS is André Zimmermann — engineer, trainer, AI practitioner. No agency machinery, just a direct partner focused on measurable outcomes.",
+    "milestones": [
+      { "label": "Engineer", "title": "Web & App Engineering", "body": "Deep experience in modern frontend (React, TypeScript) and backend integration. Clean code, fast builds, long-lived architecture." },
+      { "label": "AI Practitioner", "title": "AI in production", "body": "From RAG to agents to bespoke workflows — I build AI that actually solves problems." },
+      { "label": "Trainer", "title": "Courses that stick", "body": "Workshops and courses for teams that want to master AI, not hype it. From prompt engineering to coding with agents." },
+      { "label": "Solo Studio", "title": "Direct line", "body": "You talk to the person who also builds. Short paths, clear ownership, honest advice." }
+    ]
+  },
+  "process": {
+    "eyebrow": "03 · Process",
+    "title": "How I work.",
+    "lede": "Clear steps, no magic. Switch the lens depending on your project.",
+    "variantLabel": "Process variant",
+    "standard": {
+      "label": "Build",
+      "steps": [
+        { "label": "Discovery", "title": "Understand, don't assume", "body": "We align on goal, users, risks and success metric before a single line of code." },
+        { "label": "Architecture", "title": "Solid structure", "body": "Lean tech choices, clear modules, sane dependencies — every choice justified, nothing trendy." },
+        { "label": "Build", "title": "Visible fast, built right", "body": "Iterative, short cycles with working builds — feedback over waterfall." },
+        { "label": "Train", "title": "Hand over knowledge", "body": "Documentation, walk-throughs and optional mini-workshops for your team." },
+        { "label": "Handover", "title": "Clean handover", "body": "Repo, deploy, runbook and an optional maintenance retainer if you want it." }
+      ]
+    },
+    "ai": {
+      "label": "AI Integration",
+      "steps": [
+        { "label": "Listen", "title": "Listen before shipping", "body": "Interviews with the people who'll actually use the AI — not just leadership." },
+        { "label": "Use-Case", "title": "Realistic use cases", "body": "We prioritize by impact × feasibility, not by buzz." },
+        { "label": "Prototype", "title": "Fast proof", "body": "A working prototype on your real data within 2-4 weeks." },
+        { "label": "Integrate", "title": "Into existing tools", "body": "We integrate AI into your workflows — not another tool island." },
+        { "label": "Train", "title": "Enable the team", "body": "Workshops + guardrails so your team can evolve the tooling on their own." }
+      ]
+    }
+  },
+  "showcase": {
+    "eyebrow": "04 · Services",
+    "title": "What I build for you.",
+    "lede": "Three core offerings. One consistent quality promise.",
+    "services": [
+      { "tag": "Service 01", "title": "AI Web & App Development", "body": "Idea to product: landing pages, SaaS, mobile apps — all with AI features where it makes sense.", "features": ["React · Next · Vite", "RAG · Agents · LLM APIs", "Design + engineering from one source"] },
+      { "tag": "Service 02", "title": "AI Courses & Training", "body": "Hands-on workshops for developers, teams or leadership — from prompting to productive AI workflows.", "features": ["Custom curriculum", "Live or remote", "Materials included"] },
+      { "tag": "Service 03", "title": "Enterprise AI Integration", "body": "I guide the adoption of AI into existing tools, processes and teams — strategically and technically.", "features": ["Use-case discovery", "Tool-stack setup", "Change support"] }
+    ],
+    "casesTitle": "Selected cases",
+    "casesLede": "Placeholders — real cases coming soon.",
+    "cases": [
+      { "tag": "Project Alpha", "title": "AI-first SaaS dashboard", "body": "Real-time insights with an embedded copilot. Cuts onboarding time by 60%.", "stack": ["React 19", "RAG", "LangGraph"] },
+      { "tag": "Project Beta", "title": "Agent-based support", "body": "Multi-agent system that resolves tier-1 tickets autonomously and escalates cleanly.", "stack": ["Anthropic", "Tools", "Eval pipeline"] },
+      { "tag": "Project Gamma", "title": "Mobile AI coach app", "body": "Personalized coaching with on-device inference and cloud fallback.", "stack": ["React Native", "MLX", "Streaming"] }
+    ]
+  },
+  "aiDemo": {
+    "eyebrow": "Live Demo",
+    "title": "Talk to a tiny model.",
+    "lede": "Get a feel for what AI inside a product is like. Try a suggestion or ask your own question.",
+    "poweredBy": "Powered by Ollama · Demo",
+    "placeholder": "Ask me anything …",
+    "send": "Send",
+    "greeting": "Hi! I'm the demo bot for ZIAN AI CONCEPTS. Ask me about pricing, courses, or how AI integration actually works.",
+    "error": "Whoops — the endpoint isn't reachable right now.",
+    "suggestions": [
+      "How do the courses work?",
+      "How much does a project cost?",
+      "How do I roll AI into an SMB?",
+      "How long does a prototype take?"
+    ],
+    "replies": {
+      "hello": "Hey! Glad you're here. Ask away — I'll answer with concrete examples.",
+      "pricing": "Pricing depends on scope. Web projects usually start with a 1-2 week discovery sprint. Drop me a line about your project and I'll come back with a concrete quote within 24 hours.",
+      "courses": "Courses come as in-house workshops (1-3 days) or remote sessions. Content is tailored to your team — from prompt engineering to agent architectures.",
+      "integration": "We start with use-case discovery (which workflows really benefit?), prototype quickly on your data, and integrate into existing tools instead of building yet another island.",
+      "timeline": "A prototype is typically visible in 2-4 weeks. Full production roll-outs usually take 6-12 weeks depending on integrations and data readiness.",
+      "fallback": "Great question! In a real setup the answer depends on the model + your context. This is a demo — drop me a line directly and I'll answer in person."
+    }
+  },
+  "contact": {
+    "eyebrow": "05 · Contact",
+    "title": "Let's talk.",
+    "lede": "Tell me briefly what you're up to — I'll get back to you within 24 hours.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send request",
+      "submitting": "Sending …",
+      "success": "Thanks! I'll be in touch.",
+      "error": "Something went wrong. Please reach out via email instead.",
+      "demo": "Demo mode active — set VITE_FORM_ENDPOINT in your .env to receive real submissions.",
+      "required": "Required",
+      "invalidEmail": "Please enter a valid email address."
+    },
+    "or": "or email me directly:"
+  },
+  "consent": {
+    "title": "Privacy",
+    "body": "I use privacy-friendly analytics without cookies to see anonymously which content resonates.",
+    "learnMore": "Read the privacy policy.",
+    "accept": "Accept",
+    "reject": "Decline",
+    "close": "Close banner"
+  },
+  "footer": {
+    "tagline": "AI-driven engineering. Courses. Integration.",
+    "rights": "All rights reserved.",
+    "imprint": "Imprint",
+    "privacy": "Privacy"
+  },
+  "imprint": {
+    "title": "Imprint",
+    "body": "Placeholder — replace with your real details (per §5 TMG for Germany: name, address, contact, VAT-ID if applicable)."
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "body": "Placeholder — replace with your real privacy policy (controller, hosting, contact form data, cookies, data subject rights)."
+  }
+}

@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@import "@fontsource-variable/geist/index.css";
+@import "@fontsource-variable/geist-mono/index.css";
+
+@theme {
+  --color-bg: #0a0a0f;
+  --color-bg-elev: #0f0f17;
+  --color-bg-elev-2: #14141d;
+  --color-fg: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-muted-2: #71717a;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-accent-cyan: #00e5ff;
+  --color-accent-violet: #a855f7;
+
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
+
+  --shadow-glow-cyan: 0 0 24px rgba(0, 229, 255, 0.35), 0 0 64px rgba(0, 229, 255, 0.15);
+  --shadow-glow-violet: 0 0 24px rgba(168, 85, 247, 0.4), 0 0 64px rgba(168, 85, 247, 0.18);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto;
+    -webkit-text-size-adjust: 100%;
+    background: var(--color-bg);
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-fg);
+    background-color: var(--color-bg);
+    background-image:
+      radial-gradient(800px 400px at 80% -10%, rgba(168, 85, 247, 0.14), transparent 60%),
+      radial-gradient(700px 400px at -10% 10%, rgba(0, 229, 255, 0.10), transparent 60%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(0, 229, 255, 0.3);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-sans);
+    letter-spacing: -0.04em;
+    font-weight: 700;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  .text-gradient,
+  .text-gradient .word,
+  .text-gradient .char {
+    background-image: linear-gradient(135deg, var(--color-accent-cyan) 0%, var(--color-accent-violet) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .border-gradient {
+    position: relative;
+  }
+  .border-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.6), rgba(168, 85, 247, 0.6));
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-noise {
+    position: relative;
+  }
+  .bg-noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+
+  .glow-cyan {
+    box-shadow: var(--shadow-glow-cyan);
+  }
+  .glow-violet {
+    box-shadow: var(--shadow-glow-violet);
+  }
+
+  .word,
+  .char {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor body,
+  html.has-custom-cursor a,
+  html.has-custom-cursor button,
+  html.has-custom-cursor input,
+  html.has-custom-cursor textarea,
+  html.has-custom-cursor [data-cursor] {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

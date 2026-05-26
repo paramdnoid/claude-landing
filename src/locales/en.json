@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "about": "About",
+    "showcase": "Services",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "hero": {
+    "eyebrow": "01 · Studio",
+    "title": "ZIAN AI CONCEPTS",
+    "tagline": "AI-driven Engineering. Courses. Integration.",
+    "lede": "I build modern web and app products with AI at their core, run hands-on courses, and integrate generative AI into companies.",
+    "scrollHint": "Scroll to explore"
+  },
+  "about": {
+    "eyebrow": "02 · About",
+    "title": "One person. One clear promise.",
+    "lede": "ZIAN AI CONCEPTS is André Zimmermann — engineer, trainer, AI practitioner. No agency machinery, just a direct partner focused on measurable outcomes.",
+    "milestones": [
+      {
+        "label": "Engineer",
+        "title": "Web & App Engineering",
+        "body": "Deep experience in modern frontend (React, TypeScript) and backend integration. Clean code, fast builds, long-lived architecture."
+      },
+      {
+        "label": "AI Practitioner",
+        "title": "AI in production",
+        "body": "From RAG to agents to bespoke workflows — I build AI that actually solves problems."
+      },
+      {
+        "label": "Trainer",
+        "title": "Courses that stick",
+        "body": "Workshops and courses for teams that want to master AI, not hype it. From prompt engineering to coding with agents."
+      },
+      {
+        "label": "Solo Studio",
+        "title": "Direct line",
+        "body": "You talk to the person who also builds. Short paths, clear ownership, honest advice."
+      }
+    ]
+  },
+  "showcase": {
+    "eyebrow": "03 · Services",
+    "title": "What I build for you.",
+    "lede": "Three core offerings. One consistent quality promise.",
+    "services": [
+      {
+        "tag": "Service 01",
+        "title": "AI Web & App Development",
+        "body": "Idea to product: landing pages, SaaS, mobile apps — all with AI features where it makes sense.",
+        "features": ["React · Next · Vite", "RAG · Agents · LLM APIs", "Design + engineering from one source"]
+      },
+      {
+        "tag": "Service 02",
+        "title": "AI Courses & Training",
+        "body": "Hands-on workshops for developers, teams or leadership — from prompting to productive AI workflows.",
+        "features": ["Custom curriculum", "Live or remote", "Materials included"]
+      },
+      {
+        "tag": "Service 03",
+        "title": "Enterprise AI Integration",
+        "body": "I guide the adoption of AI into existing tools, processes and teams — strategically and technically.",
+        "features": ["Use-case discovery", "Tool-stack setup", "Change support"]
+      }
+    ],
+    "casesTitle": "Selected cases",
+    "casesLede": "Placeholders — real cases coming soon.",
+    "cases": [
+      {
+        "tag": "Project Alpha",
+        "title": "AI-first SaaS dashboard",
+        "body": "Real-time insights with an embedded copilot. Cuts onboarding time by 60%.",
+        "stack": ["React 19", "RAG", "LangGraph"]
+      },
+      {
+        "tag": "Project Beta",
+        "title": "Agent-based support",
+        "body": "Multi-agent system that resolves tier-1 tickets autonomously and escalates cleanly.",
+        "stack": ["Anthropic", "Tools", "Eval pipeline"]
+      },
+      {
+        "tag": "Project Gamma",
+        "title": "Mobile AI coach app",
+        "body": "Personalized coaching with on-device inference and cloud fallback.",
+        "stack": ["React Native", "MLX", "Streaming"]
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "04 · Contact",
+    "title": "Let's talk.",
+    "lede": "Tell me briefly what you're up to — I'll get back to you within 24 hours.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "submit": "Send request",
+      "submitting": "Sending …",
+      "success": "Thanks! I'll be in touch.",
+      "error": "Something went wrong. Please reach out via email instead.",
+      "demo": "Demo mode active — set VITE_FORM_ENDPOINT in your .env to receive real submissions.",
+      "required": "Required",
+      "invalidEmail": "Please enter a valid email address."
+    },
+    "or": "or email me directly:"
+  },
+  "footer": {
+    "tagline": "AI-driven engineering. Courses. Integration.",
+    "rights": "All rights reserved.",
+    "imprint": "Imprint",
+    "privacy": "Privacy"
+  },
+  "imprint": {
+    "title": "Imprint",
+    "body": "Placeholder — replace with your real details (per §5 TMG for Germany: name, address, contact, VAT-ID if applicable)."
+  },
+  "privacy": {
+    "title": "Privacy policy",
+    "body": "Placeholder — replace with your real privacy policy (controller, hosting, contact form data, cookies, data subject rights)."
+  }
+}

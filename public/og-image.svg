@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0a0a0f"/>
+      <stop offset="1" stop-color="#13131c"/>
+    </linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00e5ff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="80" y="320" font-family="system-ui, sans-serif" font-weight="800" font-size="120" fill="url(#g)" letter-spacing="-6">ZIAN AI</text>
+  <text x="80" y="420" font-family="system-ui, sans-serif" font-weight="500" font-size="48" fill="#fafafa" opacity="0.85">CONCEPTS</text>
+  <text x="80" y="510" font-family="ui-monospace, monospace" font-size="24" fill="#71717a">AI-driven Engineering · Kurse · Integration</text>
+</svg>

@@ -1,0 +1,121 @@
+{
+  "nav": {
+    "about": "Über",
+    "showcase": "Leistungen",
+    "contact": "Kontakt",
+    "language": "Sprache"
+  },
+  "hero": {
+    "eyebrow": "01 · Studio",
+    "title": "ZIAN AI CONCEPTS",
+    "tagline": "AI-driven Engineering. Kurse. Integration.",
+    "lede": "Ich entwickle moderne Web- und App-Produkte mit KI im Kern, halte praxisnahe Kurse und integriere generative Modelle in Unternehmen.",
+    "scrollHint": "Scrolle, um mehr zu erfahren"
+  },
+  "about": {
+    "eyebrow": "02 · About",
+    "title": "Ein Mensch. Ein klares Versprechen.",
+    "lede": "Hinter ZIAN AI CONCEPTS steht André Zimmermann — Engineer, Trainer und KI-Praktiker. Keine Agentur-Maschinerie, sondern ein direkter Ansprechpartner mit Fokus auf messbaren Outcome.",
+    "milestones": [
+      {
+        "label": "Engineer",
+        "title": "Web & App Engineering",
+        "body": "Tiefe Erfahrung in modernem Frontend (React, TypeScript) und Backend-Integration. Sauberer Code, schnelle Builds, langlebige Architektur."
+      },
+      {
+        "label": "AI Practitioner",
+        "title": "KI in Produktion",
+        "body": "Von Retrieval-Augmented-Generation über Agents bis zu maßgeschneiderten Workflows — ich baue KI, die wirklich Probleme löst."
+      },
+      {
+        "label": "Trainer",
+        "title": "Kurse, die wirken",
+        "body": "Workshops und Kurse für Teams, die KI nicht hypen, sondern beherrschen wollen. Vom Prompt-Engineering bis zum Coding mit Agents."
+      },
+      {
+        "label": "Solo Studio",
+        "title": "Direkter Draht",
+        "body": "Du sprichst mit der Person, die auch baut. Kurze Wege, klare Verantwortung, ehrliche Empfehlungen."
+      }
+    ]
+  },
+  "showcase": {
+    "eyebrow": "03 · Leistungen",
+    "title": "Was ich für dich baue.",
+    "lede": "Drei Kernangebote. Eine konsistente Qualitätsversprechen.",
+    "services": [
+      {
+        "tag": "Service 01",
+        "title": "KI Web- & App-Entwicklung",
+        "body": "Von der Idee zum Produkt: Landingpages, SaaS, Mobile Apps — alle mit KI-Features wo es Sinn ergibt.",
+        "features": ["React · Next · Vite", "RAG · Agents · LLM APIs", "Design + Engineering aus einer Hand"]
+      },
+      {
+        "tag": "Service 02",
+        "title": "KI-Kurse & Trainings",
+        "body": "Praxisnahe Workshops für Entwickler, Teams oder Führungskräfte — von Prompting bis zu produktiven KI-Workflows.",
+        "features": ["Custom-Curriculum", "Live oder Remote", "Materialien inklusive"]
+      },
+      {
+        "tag": "Service 03",
+        "title": "KI-Integration im Unternehmen",
+        "body": "Ich begleite die Einführung von KI in bestehende Tools, Prozesse und Teams — strategisch und technisch.",
+        "features": ["Use-Case Discovery", "Tool-Stack Setup", "Change-Begleitung"]
+      }
+    ],
+    "casesTitle": "Ausgewählte Cases",
+    "casesLede": "Platzhalter — echte Cases folgen.",
+    "cases": [
+      {
+        "tag": "Project Alpha",
+        "title": "AI-First SaaS-Dashboard",
+        "body": "Echtzeit-Insights mit eingebettetem Copilot. Reduziert Onboarding-Zeit um 60%.",
+        "stack": ["React 19", "RAG", "LangGraph"]
+      },
+      {
+        "tag": "Project Beta",
+        "title": "Agent-basierter Support",
+        "body": "Multi-Agent-System, das Tier-1-Tickets eigenständig löst und sauber eskaliert.",
+        "stack": ["Anthropic", "Tools", "Eval-Pipeline"]
+      },
+      {
+        "tag": "Project Gamma",
+        "title": "Mobile KI-Coach App",
+        "body": "Personalisiertes Coaching mit on-device Inference und Cloud-Fallback.",
+        "stack": ["React Native", "MLX", "Streaming"]
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "04 · Kontakt",
+    "title": "Lass uns reden.",
+    "lede": "Erzähl mir kurz, was du vorhast — ich melde mich innerhalb von 24 Stunden zurück.",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "message": "Nachricht",
+      "submit": "Anfrage senden",
+      "submitting": "Wird gesendet …",
+      "success": "Danke! Ich melde mich bald.",
+      "error": "Etwas ist schiefgelaufen. Versuche es bitte direkt per E-Mail.",
+      "demo": "Demo-Modus aktiv — setze VITE_FORM_ENDPOINT in deiner .env, um Anfragen real zu empfangen.",
+      "required": "Pflichtfeld",
+      "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein."
+    },
+    "or": "oder schreib mir direkt:"
+  },
+  "footer": {
+    "tagline": "AI-driven Engineering. Kurse. Integration.",
+    "rights": "Alle Rechte vorbehalten.",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz"
+  },
+  "imprint": {
+    "title": "Impressum",
+    "body": "Platzhalter — bitte mit deinen echten Angaben gemäß §5 TMG ersetzen (Name, Anschrift, Kontaktdaten, ggf. USt-IdNr.)."
+  },
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "body": "Platzhalter — bitte mit deiner echten Datenschutzerklärung ersetzen (Verantwortlicher, Hosting, Kontaktformular-Daten, Cookies, Rechte der Betroffenen)."
+  }
+}

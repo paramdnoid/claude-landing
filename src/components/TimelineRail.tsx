@@ -3,9 +3,10 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Compass,
-  Sparkles,
+  User,
   Layers,
   GitBranch,
+  Cpu,
   Send,
   CircleDot,
 } from 'lucide-react';
@@ -13,16 +14,17 @@ import {
 type Node = {
   id: string;
   index: string;
-  key: 'overview' | 'manifesto' | 'capabilities' | 'process' | 'contact';
+  key: 'overview' | 'about' | 'services' | 'process' | 'techstack' | 'contact';
   Icon: typeof Compass;
 };
 
 const NODES: Node[] = [
   { id: 'hero', index: '01', key: 'overview', Icon: Compass },
-  { id: 'manifesto', index: '02', key: 'manifesto', Icon: Sparkles },
-  { id: 'capabilities', index: '03', key: 'capabilities', Icon: Layers },
+  { id: 'about', index: '02', key: 'about', Icon: User },
+  { id: 'services', index: '03', key: 'services', Icon: Layers },
   { id: 'process', index: '04', key: 'process', Icon: GitBranch },
-  { id: 'contact', index: '05', key: 'contact', Icon: Send },
+  { id: 'techstack', index: '05', key: 'techstack', Icon: Cpu },
+  { id: 'contact', index: '06', key: 'contact', Icon: Send },
 ];
 
 export default function TimelineRail() {

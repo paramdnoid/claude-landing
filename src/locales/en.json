@@ -1,8 +1,9 @@
 {
   "nav": {
-    "manifesto": "Manifesto",
-    "capabilities": "Capabilities",
+    "about": "About",
+    "services": "Services",
     "process": "Process",
+    "techstack": "Tech stack",
     "contact": "Contact",
     "language": "Language"
   },
@@ -15,9 +16,10 @@
     "online": "Online",
     "items": {
       "overview": "Overview",
-      "manifesto": "Manifesto",
-      "capabilities": "Capabilities",
+      "about": "About",
+      "services": "Services",
       "process": "Process",
+      "techstack": "Tech stack",
       "contact": "Contact"
     }
   },
@@ -25,13 +27,13 @@
     "metricsLabel": "Sprint telemetry",
     "metrics": [
       { "label": "Days to prototype", "value": "21", "delta": "On track" },
-      { "label": "Eval coverage", "value": "94%", "delta": "+6 this week" },
+      { "label": "AI coverage", "value": "94%", "delta": "+6 this week" },
       { "label": "Open blockers", "value": "0", "delta": "Clean" }
     ],
     "terminalLabel": "Live build log",
     "terminalHost": "zian@studio",
     "terminalLines": [
-      "$ pnpm run eval --suite=cohort_v2",
+      "$ pnpm run eval --suite=ai-integration",
       "✓ 142 / 142 passed in 18.4s",
       "$ pnpm deploy --env=staging",
       "→ build  cyan-04   ready",
@@ -39,60 +41,69 @@
       "$ _"
     ],
     "stackLabel": "Stack in motion",
-    "stack": ["React 19", "Edge runtime", "Vector store", "Eval harness"],
+    "stack": ["React 19", "Claude / GPT", "Vector store", "Eval harness"],
     "statusOk": "Systems nominal",
     "statusRegion": "fra1 · eu-central",
     "statusLatency": "p95  84 ms"
   },
   "hero": {
-    "eyebrow": "Studio of one · Andre Zimmermann",
+    "eyebrow": "ZIAN AI Concepts · Andre Zimmermann",
     "title": "ZIAN",
-    "tagline": "AI products, shipped.",
-    "lede": "I design and build AI-native web apps, custom agents and rapid prototypes. Working software in weeks — not roadmaps in quarters.",
+    "tagline": "AI-powered web & app development.",
+    "lede": "I integrate AI into your business — as a solo engineer I build products, automate workflows and train teams. From idea to launch, with AI as co-pilot.",
     "scrollHint": "Scroll"
   },
-  "manifesto": {
-    "eyebrow": "01 — The premise",
-    "lineA": "Most AI demos",
-    "lineB": "are theater.",
-    "lineC": "I ship products.",
-    "body": "I'm Andre. A senior engineer with years of production software behind me, now focused on AI-native products and the agents that run inside them. The gap between an impressive prompt and a thing people actually use — that's where most teams get stuck. I don't get stuck.",
-    "signature": [
-      "No agencies.",
-      "No middlemen.",
-      "No JIRA queues that go nowhere.",
-      "You write me. I build the thing."
+  "about": {
+    "eyebrow": "01 — About",
+    "lineA": "One engineer.",
+    "lineB": "AI as leverage.",
+    "lineC": "Products that ship.",
+    "body": "I'm Andre Zimmermann — founder of ZIAN AI Concepts. I combine classic software engineering discipline with modern AI tooling to build faster and sharper than any agency. No middlemen. No quarterly roadmaps. You talk to the person who also builds.",
+    "stats": [
+      { "value": 8, "suffix": "+", "label": "Years engineering" },
+      { "value": 40, "suffix": "+", "label": "Projects shipped" },
+      { "value": 3, "suffix": " wk", "label": "To working prototype" },
+      { "value": 100, "suffix": "%", "label": "Hands-on, no outsourcing" }
     ],
-    "kicker": "Three weeks to a working prototype. Twelve to a shipped product. Those are the only timelines I work to."
+    "skillsLabel": "Expertise",
+    "skills": [
+      { "name": "Web development", "detail": "React 19 · Next · Vue · Tailwind v4" },
+      { "name": "Mobile apps", "detail": "React Native · Flutter · SwiftUI" },
+      { "name": "AI integration", "detail": "Claude · GPT · Gemini · Custom agents" },
+      { "name": "RAG & knowledge systems", "detail": "Vector DBs · Hybrid retrieval · Evals" },
+      { "name": "Workflow automation", "detail": "n8n · Zapier · Custom pipelines" },
+      { "name": "AI training", "detail": "Workshops · In-house courses · Coaching" }
+    ],
+    "kicker": "If you want to know what AI can actually change in your business — ask me. I'll tell you honestly what's worth it and what's pure theater."
   },
   "capabilities": {
-    "eyebrow": "02 — Capabilities",
-    "title": "Four things I do.",
-    "titleAccent": "All four shipping.",
+    "eyebrow": "02 — Services",
+    "title": "Four ways",
+    "titleAccent": "I help you.",
     "items": [
       {
         "tag": "01",
-        "title": "AI-powered web apps",
-        "body": "Full-stack products with LLMs at the core. Chat surfaces, generative tools, search that understands, agents that act. Built like real software — not demos.",
-        "tags": ["React 19", "Streaming UIs", "LLM APIs"]
+        "title": "AI-powered web development",
+        "body": "Modern web apps and landing pages, built with React and AI co-pilot in the workflow. Performant, animated, SEO-ready. From studio portfolios to production SaaS.",
+        "tags": ["React 19", "Next / Vite", "Tailwind v4"]
       },
       {
         "tag": "02",
-        "title": "Agents & workflow automation",
-        "body": "Custom agents wired into your real systems. Slack, CRMs, internal APIs, browsers — anywhere there's a workflow, there's an agent that can run it.",
-        "tags": ["Tool use", "Browser control", "Eval pipelines"]
+        "title": "App development",
+        "body": "Native and cross-platform mobile apps that feel like premium products. iOS and Android from one codebase, with AI features built in.",
+        "tags": ["React Native", "Expo", "Push & in-app"]
       },
       {
         "tag": "03",
-        "title": "RAG & knowledge systems",
-        "body": "ChatGPT, but on your data. Built right. Retrieval that actually retrieves. Evaluations that prove it. Production-grade, not notebook-grade.",
-        "tags": ["Vector search", "Hybrid retrieval", "Evals"]
+        "title": "AI integration for companies",
+        "body": "I integrate AI where it actually saves work: custom agents, chat interfaces on your data, automated processes. Embedded into your existing systems.",
+        "tags": ["Claude / GPT", "RAG", "Workflow automation"]
       },
       {
         "tag": "04",
-        "title": "Prototypes in 1–3 weeks",
-        "body": "An idea is cheap. A working version is the only thing worth arguing about. I build the version, fast — so you can decide for real.",
-        "tags": ["Spec → live", "On your data", "Kill-criteria included"]
+        "title": "AI courses & workshops",
+        "body": "I bring your team to production-level AI fluency. In-house workshops, individual coaching, and structured courses — from AI basics to agent design.",
+        "tags": ["In-house", "Live sessions", "1:1 coaching"]
       }
     ]
   },
@@ -119,8 +130,32 @@
       }
     ]
   },
+  "techstack": {
+    "eyebrow": "04 — Tech stack",
+    "title": "Tools",
+    "titleAccent": "I build with.",
+    "lede": "A curated selection — not a hype list. What's on here runs in production.",
+    "groups": [
+      {
+        "label": "AI models",
+        "items": ["Claude (Anthropic)", "GPT (OpenAI)", "Gemini", "Llama"]
+      },
+      {
+        "label": "Frontend",
+        "items": ["React 19", "Next.js", "Vite", "Tailwind v4", "GSAP"]
+      },
+      {
+        "label": "Backend & data",
+        "items": ["Node.js", "Postgres", "Supabase", "Vector stores", "Edge runtime"]
+      },
+      {
+        "label": "Mobile & DevOps",
+        "items": ["React Native", "Expo", "Vercel", "Cloudflare", "GitHub Actions"]
+      }
+    ]
+  },
   "contact": {
-    "eyebrow": "04 — Start",
+    "eyebrow": "05 — Start",
     "title": "Tell me what",
     "titleAccent": "you're building.",
     "lede": "A short note works. I reply within 24 hours — usually faster.",
@@ -163,7 +198,7 @@
     "close": "Close banner"
   },
   "footer": {
-    "tagline": "AI products and prototypes — shipped fast.",
+    "tagline": "ZIAN AI Concepts — AI-powered web & app development. Solo. Fast. Direct.",
     "rights": "All rights reserved.",
     "imprint": "Imprint",
     "privacy": "Privacy"

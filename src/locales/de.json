@@ -41,11 +41,41 @@
     "endLine": "Vollständige Case Studies auf Anfrage — schreib mir.",
     "onRequest": "Case Study auf Anfrage",
     "cases": [
-      { "index": "01", "title": "Neurale Kompositionen", "tag": "KI · Generative Audio", "year": "2026", "blurb": "Ein generatives Audiosystem, das latente Musikräume durch LLM-gesteuerte Komposition erkundet." },
-      { "index": "02", "title": "Synthetisches Studio", "tag": "KI · Markensystem", "year": "2025", "blurb": "KI-gestützte Brandidentität: Logosynthese, Typografie-Auswahl und Farbsystemgenerierung in Echtzeit." },
-      { "index": "03", "title": "Atlas des Latenten Raums", "tag": "WebGL · R&D", "year": "2025", "blurb": "Interaktive WebGL-Visualisierung hochdimensionaler Einbettungsräume für Modell-Interpretierbarkeit." },
-      { "index": "04", "title": "Stille Maschinen", "tag": "KI · Interface", "year": "2024", "blurb": "Ambient-Interface-Experiment: Eine KI die auf Aufmerksamkeit und Kontext reagiert, nicht auf Klicks." },
-      { "index": "05", "title": "Soft Protocol", "tag": "Creative Tech · Konzept", "year": "2024", "blurb": "Konzeptprotokoll für dezentrale kreative Zusammenarbeit zwischen Mensch und KI-Agenten." }
+      {
+        "index": "01",
+        "title": "Personalengel",
+        "tag": "HR-Platform · React · Node.js",
+        "year": "2025",
+        "blurb": "Vollstack-Recruiting-Plattform mit Branchensuche, Kandidatenportal und Mitarbeiter-Login."
+      },
+      {
+        "index": "02",
+        "title": "Suprium",
+        "tag": "Brand Platform · React",
+        "year": "2025",
+        "blurb": "Premium-Markenumgebung mit passwortgeschütztem Zugangsbereich und Luxury-Ästhetik."
+      },
+      {
+        "index": "03",
+        "title": "FIECON",
+        "tag": "Consulting · Next.js · i18n",
+        "year": "2025",
+        "blurb": "Internationale Unternehmenswebsite mit mehrsprachigem Content, Team-Profilen und Standorten."
+      },
+      {
+        "index": "04",
+        "title": "Lastizun",
+        "tag": "POS · Self-Checkout · Electron",
+        "year": "2025",
+        "blurb": "24h-Selbstbedienungskasse: Barcode-Scan, Offline-Betrieb, Loyalty und TWINT-Zahlung."
+      },
+      {
+        "index": "05",
+        "title": "Nana's Artistry",
+        "tag": "Fashion · Next.js · Instagram",
+        "year": "2024",
+        "blurb": "Maßgeschneiderte Kleidung auf Bestellung — Portfolio, Galerie und Instagram-Integration."
+      }
     ]
   },
   "capabilities": {
@@ -60,7 +90,7 @@
     ]
   },
   "process": {
-    "eyebrow": "Prozess · 04",
+    "eyebrow": "Prozess · 05",
     "title": "Wie ich arbeite.",
     "steps": [
       { "index": "01", "title": "Verstehen", "body": "Wir starten bei der echten Frage — nicht beim Deliverable. Ich gehe in Problem, Kontext und beteiligte Menschen rein." },
@@ -70,7 +100,7 @@
     ]
   },
   "aiDemo": {
-    "eyebrow": "KI-Demo · 05",
+    "eyebrow": "KI-Demo · 04",
     "title": "Intelligenz erleben.",
     "intro": "Stell mir eine Frage. Ich beantworte sie direkt — kein Formular, kein Warteraum.",
     "placeholder": "Stell mir eine Frage…",
@@ -110,7 +140,7 @@
     "eyebrow": "Werkzeuge in Bewegung"
   },
   "contact": {
-    "eyebrow": "Kontakt · 05",
+    "eyebrow": "Kontakt · 06",
     "title": "Lass uns etwas bauen, das mitdenkt.",
     "email": "hello@andrezimmermann.dev",
     "socials": "Folge mir",

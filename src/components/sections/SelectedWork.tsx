@@ -18,11 +18,19 @@ type Case = RawCase & {
 };
 
 const PALETTES: Record<string, [string, string]> = {
-  '01': ['#a3ff12', '#06b6d4'],
-  '02': ['#06b6d4', '#6366f1'],
-  '03': ['#6366f1', '#a3ff12'],
-  '04': ['#a3ff12', '#6366f1'],
-  '05': ['#06b6d4', '#a3ff12'],
+  '01': ['#c0392b', '#e74c3c'],
+  '02': ['#1a0f06', '#c8860a'],
+  '03': ['#d4c4a8', '#9b7a52'],
+  '04': ['#1a2e1a', '#2d6a2d'],
+  '05': ['#2d1b69', '#8b5cf6'],
+};
+
+const THUMBS: Record<string, string> = {
+  '01': '/work/personalengel.jpg',
+  '02': '/work/suprium.png',
+  '03': '/work/fiecon.png',
+  '04': '/work/lastizun.jpg',
+  '05': '/work/nanas.png',
 };
 
 const FALLBACK_PALETTE: [string, string] = ['#6366f1', '#a3ff12'];
@@ -39,18 +47,16 @@ export default function SelectedWork() {
       rawCases.map((c) => ({
         ...c,
         palette: PALETTES[c.index] ?? FALLBACK_PALETTE,
-        thumb: undefined,
+        thumb: THUMBS[c.index],
         href: undefined,
       })),
     [rawCases],
   );
 
   useLayoutEffect(() => {
-    if (!viewportRef.current || !trackRef.current) return;
+    if (viewportRef.current === null || trackRef.current === null) return;
     const st = horizontalScroll(viewportRef.current, trackRef.current, { snap: true });
 
-    // Nice-to-have: refresh ScrollTrigger once any thumbnail images finish decoding,
-    // so the pinned track has correct measurements even when content loads async.
     const imgs = viewportRef.current.querySelectorAll('img');
     if (imgs.length > 0) {
       const promises = Array.from(imgs).map((img) => img.decode().catch(() => {}));
@@ -61,8 +67,6 @@ export default function SelectedWork() {
       st?.kill();
     };
   }, [cases]);
-
-  const totalLabel = String(cases.length).padStart(2, '0');
 
   return (
     <section id="work" className="relative">
@@ -83,7 +87,7 @@ export default function SelectedWork() {
               background: `linear-gradient(135deg, ${c.palette[0]} 0%, ${c.palette[1]} 100%)`,
             };
 
-            const inner = (
+            const contentInner = (
               <>
                 {c.thumb ? (
                   <img
@@ -91,24 +95,18 @@ export default function SelectedWork() {
                     alt=""
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover object-top"
                   />
                 ) : null}
-                <div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_120%,rgba(5,5,7,0.85)_0%,rgba(5,5,7,0.0)_60%)]" />
-                <div className="absolute inset-0 mix-blend-overlay opacity-30 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.85%22%20numOctaves%3D%222%22%2F%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%2F%3E%3C%2Fsvg%3E')]" />
-                <div className="relative flex h-full flex-col justify-between p-8 md:p-12">
-                  <div className="flex items-center justify-between">
-                    <span className="tag !text-white/80">
-                      {c.index} / {totalLabel}
-                    </span>
-                    <span className="tag !text-white/80">{c.year}</span>
-                  </div>
+                <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,5,7,0.92)_0%,rgba(5,5,7,0.4)_50%,rgba(5,5,7,0.1)_100%)]" />
+                <div className="absolute inset-0 mix-blend-overlay opacity-20 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.85%22%20numOctaves%3D%222%22%2F%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%2F%3E%3C%2Fsvg%3E')]" />
+                <div className="relative flex h-full flex-col justify-end p-8 md:p-12">
                   <div>
-                    <div className="tag !text-white/80 mb-3">{c.tag}</div>
+                    <div className="tag !text-white/70 mb-3">{c.tag}</div>
                     <h3 className="font-display text-4xl text-white md:text-6xl">{c.title}</h3>
                     <p className="mt-2 text-sm text-white/70 md:text-base">{c.blurb}</p>
-                    {!c.href ? (
-                      <div className="tag !text-white/50 border border-white/20 mt-2 inline-block">
+                    {c.href === undefined ? (
+                      <div className="tag !text-white/40 border border-white/15 mt-3 inline-block rounded-full px-3 py-1">
                         {t('work.onRequest')}
                       </div>
                     ) : null}
@@ -120,21 +118,36 @@ export default function SelectedWork() {
             return (
               <article
                 key={c.index}
-                className="relative h-[72vh] w-[78vw] flex-shrink-0 overflow-hidden rounded-[28px] md:w-[58vw] lg:w-[44vw]"
-                style={cardStyle}
+                className="flex flex-col relative h-[72vh] w-[78vw] flex-shrink-0 overflow-hidden rounded-[28px] md:w-[58vw] lg:w-[44vw]"
               >
-                {c.href ? (
-                  <a
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block h-full"
-                  >
-                    {inner}
-                  </a>
-                ) : (
-                  inner
-                )}
+                {/* Browser chrome titlebar */}
+                <div className="relative z-10 flex h-10 flex-shrink-0 items-center border-b border-white/[0.08] bg-[#0d0d0f]/85 px-4 backdrop-blur-sm">
+                  <div className="flex items-center gap-[6px]" aria-hidden="true">
+                    <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
+                    <span className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
+                    <span className="h-3 w-3 rounded-full bg-[#28C840]" />
+                  </div>
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <span className="tag !text-white/40">{c.title}</span>
+                  </div>
+                  <span className="tag !text-white/30 ml-auto">{c.year}</span>
+                </div>
+
+                {/* Content area */}
+                <div className="relative flex-1 overflow-hidden" style={cardStyle}>
+                  {c.href ? (
+                    <a
+                      href={c.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block h-full"
+                    >
+                      {contentInner}
+                    </a>
+                  ) : (
+                    contentInner
+                  )}
+                </div>
               </article>
             );
           })}

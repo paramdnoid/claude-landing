@@ -39,13 +39,43 @@
     "intro": "A rotating selection of recent experiments, products and commissioned work — across AI agents, generative interfaces and creative R&D.",
     "endTag": "More",
     "endLine": "Full case studies on request — drop me a line.",
-    "onRequest": "Case Study on request",
+    "onRequest": "Case study on request",
     "cases": [
-      { "index": "01", "title": "Neural Compositions", "tag": "AI · Generative Audio", "year": "2026", "blurb": "A generative audio system exploring latent musical spaces through LLM-driven composition." },
-      { "index": "02", "title": "Synthetic Studio", "tag": "AI · Brand System", "year": "2025", "blurb": "AI-powered brand identity: logo synthesis, type selection and colour system generation in real time." },
-      { "index": "03", "title": "Atlas of Latent Space", "tag": "WebGL · R&D", "year": "2025", "blurb": "Interactive WebGL visualisation of high-dimensional embedding spaces for model interpretability." },
-      { "index": "04", "title": "Quiet Machines", "tag": "AI · Interface", "year": "2024", "blurb": "Ambient interface experiment: an AI that responds to attention and context, not clicks." },
-      { "index": "05", "title": "Soft Protocol", "tag": "Creative Tech · Concept", "year": "2024", "blurb": "Conceptual protocol for decentralised creative collaboration between humans and AI agents." }
+      {
+        "index": "01",
+        "title": "Personalengel",
+        "tag": "HR Platform · React · Node.js",
+        "year": "2025",
+        "blurb": "Full-stack recruiting platform with industry search, candidate portal and employee login."
+      },
+      {
+        "index": "02",
+        "title": "Suprium",
+        "tag": "Brand Platform · React",
+        "year": "2025",
+        "blurb": "Premium brand environment with a password-protected exclusive area and luxury aesthetic."
+      },
+      {
+        "index": "03",
+        "title": "FIECON",
+        "tag": "Consulting · Next.js · i18n",
+        "year": "2025",
+        "blurb": "International consulting website with multilingual content, team profiles and office locations."
+      },
+      {
+        "index": "04",
+        "title": "Lastizun",
+        "tag": "POS · Self-Checkout · Electron",
+        "year": "2025",
+        "blurb": "24h self-service checkout: barcode scanning, offline support, loyalty and TWINT payment."
+      },
+      {
+        "index": "05",
+        "title": "Nana's Artistry",
+        "tag": "Fashion · Next.js · Instagram",
+        "year": "2024",
+        "blurb": "Custom-made clothing to order — portfolio site with gallery and Instagram integration."
+      }
     ]
   },
   "capabilities": {
@@ -60,7 +90,7 @@
     ]
   },
   "process": {
-    "eyebrow": "Process · 04",
+    "eyebrow": "Process · 05",
     "title": "How I work.",
     "steps": [
       { "index": "01", "title": "Frame", "body": "We start with the real question — not the deliverable. I dig into the problem, the constraints and the people involved." },
@@ -70,7 +100,7 @@
     ]
   },
   "aiDemo": {
-    "eyebrow": "AI Demo · 05",
+    "eyebrow": "AI Demo · 04",
     "title": "Experience intelligence.",
     "intro": "Ask me anything. I answer directly — no form, no waiting room.",
     "placeholder": "Ask me anything…",
@@ -110,7 +140,7 @@
     "eyebrow": "Tools in motion"
   },
   "contact": {
-    "eyebrow": "Get in touch · 05",
+    "eyebrow": "Get in touch · 06",
     "title": "Let's make something that thinks.",
     "email": "hello@andrezimmermann.dev",
     "socials": "Find me",

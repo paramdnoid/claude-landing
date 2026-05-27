@@ -43,7 +43,7 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_60%,transparent_0%,rgba(5,5,7,0.55)_75%,rgba(5,5,7,0.9)_100%)]" />
 
       <div className="relative z-10 flex min-h-[100svh] flex-col justify-between px-6 pb-12 pt-28 md:px-10 md:pb-16 md:pt-32">
-        <div ref={eyebrowRef} className="tag flex items-center gap-3" style={{ opacity: 0 }}>
+        <div ref={eyebrowRef} className="glass glass-pill tag inline-flex w-fit items-center gap-3" style={{ opacity: 0 }}>
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-plasma-lime)] glow-lime" />
           <span>{t('hero.eyebrow')}</span>
         </div>
@@ -57,10 +57,10 @@ export default function Hero() {
           </p>
         </div>
 
-        <div ref={metaRef} className="flex flex-wrap items-end justify-between gap-6">
-          <div className="tag" style={{ opacity: 0 }}>{t('hero.metaRole')}</div>
-          <div className="tag" style={{ opacity: 0 }}>{t('hero.metaLocation')}</div>
-          <div className="tag flex items-center gap-2" style={{ opacity: 0 }}>
+        <div ref={metaRef} className="flex flex-wrap items-end justify-between gap-3">
+          <div className="glass glass-pill tag" style={{ opacity: 0 }}>{t('hero.metaRole')}</div>
+          <div className="glass glass-pill tag" style={{ opacity: 0 }}>{t('hero.metaLocation')}</div>
+          <div className="glass glass-pill tag inline-flex items-center gap-2" style={{ opacity: 0 }}>
             <span>{t('hero.scroll')}</span>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M7 1v12m0 0L1 7m6 6l6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

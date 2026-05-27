@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { horizontalScroll } from '../../lib/animations';
 import { ScrollTrigger } from '../../lib/gsap';
@@ -45,7 +45,7 @@ export default function SelectedWork() {
     [rawCases],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!viewportRef.current || !trackRef.current) return;
     const st = horizontalScroll(viewportRef.current, trackRef.current, { snap: true });
 

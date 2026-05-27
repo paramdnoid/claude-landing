@@ -1,8 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { pinnedTimeline, prefersReducedMotion } from '../../lib/animations';
-import { ScrollTrigger } from '../../lib/gsap';
 
 type Step = { index: string; title: string; body: string };
 
@@ -14,7 +13,7 @@ export default function Process() {
 
   const steps = t('process.steps', { returnObjects: true }) as Step[];
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!sectionRef.current || !stageRef.current) return;
     if (prefersReducedMotion()) {
       stepRefs.current.forEach((el) => el && gsap.set(el, { opacity: 1, y: 0 }));
@@ -24,24 +23,14 @@ export default function Process() {
     gsap.set(els, { opacity: 0.05, y: 30, filter: 'blur(8px)' });
     if (els[0]) gsap.set(els[0], { opacity: 1, y: 0, filter: 'blur(0px)' });
 
-    // Defer pin creation by one animation frame. SelectedWork's pin runs in the
-    // same React commit and only finalizes its pin-spacer height after layout
-    // reflows; measuring the Process stage in the same tick caches a stale
-    // documentTop and the pin engages while the user is still in AiDemo above.
-    let tl: gsap.core.Timeline | null = null;
-    const raf = requestAnimationFrame(() => {
-      if (!stageRef.current) return;
-      tl = pinnedTimeline(stageRef.current, { end: () => `+=${steps.length * 70}%`, scrub: 1 });
-      els.forEach((el, i) => {
-        if (i > 0) tl!.to(el, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1 }, i);
-        if (i < els.length - 1) tl!.to(el, { opacity: 0.18, y: -30, filter: 'blur(4px)', duration: 1 }, i + 0.8);
-      });
-      ScrollTrigger.refresh();
+    const tl = pinnedTimeline(stageRef.current, { end: () => `+=${steps.length * 70}%`, scrub: 1 });
+    els.forEach((el, i) => {
+      if (i > 0) tl.to(el, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1 }, i);
+      if (i < els.length - 1) tl.to(el, { opacity: 0.18, y: -30, filter: 'blur(4px)', duration: 1 }, i + 0.8);
     });
     return () => {
-      cancelAnimationFrame(raf);
-      tl?.scrollTrigger?.kill();
-      tl?.kill();
+      tl.scrollTrigger?.kill();
+      tl.kill();
     };
   }, [steps.length]);
 

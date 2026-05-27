@@ -10,6 +10,12 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? 'github' : 'list',
+  // Run serially. The Loader runs a ~4s GSAP intro and the CookieBanner has a 600ms
+  // reveal timer; both depend on the gsap.ticker / setTimeout queue, which gets
+  // starved under parallel chromium workers and slips past the specs' 3s / 15s
+  // waits. Suite is small enough (~70s serial) that single-worker is the cheaper
+  // fix versus per-spec timeout bumps.
+  workers: 1,
   use: {
     baseURL: BASE_URL,
     trace: 'retain-on-failure',

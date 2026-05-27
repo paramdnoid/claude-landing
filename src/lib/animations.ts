@@ -233,22 +233,7 @@ export function pinnedTimeline(
   return gsap.timeline({
     scrollTrigger: {
       trigger,
-      // Compute start dynamically from the trigger's document offset. We walk up
-      // offsetParents instead of using getBoundingClientRect() because the latter
-      // returns the pinned (viewport-fixed) position once GSAP has engaged the
-      // pin, which then causes refresh to cache a self-defeating start = scrollY.
-      // offsetTop chains read the natural layout position regardless of pin state,
-      // so sibling pins (e.g. SelectedWork) growing the document don't strand
-      // this pin at a stale documentTop.
-      start: () => {
-        let el: HTMLElement | null = trigger;
-        let top = 0;
-        while (el) {
-          top += el.offsetTop;
-          el = el.offsetParent as HTMLElement | null;
-        }
-        return top;
-      },
+      start: 'top top',
       end: opts.end ?? '+=2000',
       pin: true,
       scrub: opts.scrub ?? 1,
@@ -281,6 +266,11 @@ export function horizontalScroll(
     scrub: 1,
     animation: tween,
     invalidateOnRefresh: true,
+    // Higher priority refreshes first. This pin sits above sibling pins (e.g. Process)
+    // in DOM order, so its pin-spacer must be inserted before later pins measure their
+    // start positions — otherwise they cache a documentTop that's short by this
+    // pin-spacer's height and engage prematurely.
+    refreshPriority: 1,
     snap: opts.snap
       ? { snapTo: 1 / Math.max(1, track.children.length - 1), duration: 0.4, ease: 'power2.inOut' }
       : undefined,

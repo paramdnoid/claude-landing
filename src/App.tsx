@@ -107,17 +107,15 @@ export default function App() {
     }
     lenis?.start();
     document.documentElement.classList.remove('lenis-stopped');
-    // Two rAFs to read final positions after the React commit + paint.
-    const raf1 = requestAnimationFrame(() => {
-      requestAnimationFrame(() => ScrollTrigger.refresh());
+    // Single safe-mode refresh after both pinned children have mounted via
+    // useLayoutEffect. `refresh(true)` recalculates every ScrollTrigger in
+    // refreshPriority order, so SelectedWork (priority 1) inserts its pin-spacer
+    // before Process measures its documentTop.
+    const raf = requestAnimationFrame(() => {
+      requestAnimationFrame(() => ScrollTrigger.refresh(true));
     });
-    // GSAP creates pin-spacers asynchronously on its own ticker, so sibling pins
-    // (SelectedWork + Process) can land in different ticks. A second refresh once
-    // every pin has had time to insert its spacer keeps `start` measurements honest.
-    const timer = window.setTimeout(() => ScrollTrigger.refresh(), 300);
     return () => {
-      cancelAnimationFrame(raf1);
-      window.clearTimeout(timer);
+      cancelAnimationFrame(raf);
     };
   }, [loaded]);
 

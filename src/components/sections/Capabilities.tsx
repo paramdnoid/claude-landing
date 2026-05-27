@@ -113,7 +113,7 @@ function CapabilityCard({ item, Icon }: { item: Item; Icon: LucideIcon }) {
     <div
       ref={magnetRef}
       data-cursor="hover"
-      className="cap-card group relative rounded-3xl border border-white/8 bg-[var(--color-bg-elev)]/70 p-8 backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:scale-[1.01] hover:border-white/15 md:p-10"
+      className="cap-card group relative rounded-3xl border border-white/8 bg-[var(--color-bg-elev)]/70 p-8 backdrop-blur-xl transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-white/15 md:p-10"
       style={{ willChange: 'transform' }}
     >
       {/* Chromatic glow on hover — cyan + violet halo */}

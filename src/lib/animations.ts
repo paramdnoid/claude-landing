@@ -15,26 +15,41 @@ export function splitText(el: HTMLElement): HTMLSpanElement[] {
   if (el.dataset.split === 'done') {
     return Array.from(el.querySelectorAll<HTMLSpanElement>('.char'));
   }
-  const text = el.textContent ?? '';
-  el.textContent = '';
   const chars: HTMLSpanElement[] = [];
-  const words = text.split(/(\s+)/);
-  words.forEach((word) => {
-    if (/^\s+$/.test(word)) {
-      el.appendChild(document.createTextNode(' '));
-      return;
+
+  // Walk children: split text nodes into char spans, recurse into elements so
+  // existing markup (e.g. <span class="text-gradient">) is preserved.
+  const splitNode = (node: Node, parent: HTMLElement) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent ?? '';
+      const frag = document.createDocumentFragment();
+      const words = text.split(/(\s+)/);
+      words.forEach((word) => {
+        if (word === '') return;
+        if (/^\s+$/.test(word)) {
+          frag.appendChild(document.createTextNode(word));
+          return;
+        }
+        const wordEl = document.createElement('span');
+        wordEl.className = 'word';
+        wordEl.style.display = 'inline-block';
+        [...word].forEach((c) => {
+          const ch = document.createElement('span');
+          ch.className = 'char';
+          ch.style.display = 'inline-block';
+          ch.textContent = c;
+          wordEl.appendChild(ch);
+          chars.push(ch);
+        });
+        frag.appendChild(wordEl);
+      });
+      parent.replaceChild(frag, node);
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      Array.from(node.childNodes).forEach((child) => splitNode(child, node as HTMLElement));
     }
-    const wordEl = document.createElement('span');
-    wordEl.className = 'word';
-    [...word].forEach((c) => {
-      const ch = document.createElement('span');
-      ch.className = 'char';
-      ch.textContent = c;
-      wordEl.appendChild(ch);
-      chars.push(ch);
-    });
-    el.appendChild(wordEl);
-  });
+  };
+
+  Array.from(el.childNodes).forEach((child) => splitNode(child, el));
   el.dataset.split = 'done';
   return chars;
 }

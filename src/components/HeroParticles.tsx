@@ -75,7 +75,6 @@ export default function HeroParticles() {
           p.y += cos(t * 1.1) * 0.18;
           p.z += sin(t * 0.7) * 0.12;
           // pointer attraction
-          vec2 toPointer = uPointer * 4.0 - p.xy * 0.0;
           float d = distance(p.xy, uPointer * 6.0);
           float k = smoothstep(4.0, 0.0, d) * 0.8;
           p.xy += normalize(uPointer * 6.0 - p.xy) * k;
@@ -128,7 +127,7 @@ export default function HeroParticles() {
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
-      mat.uniforms.uSize.value = 1.4 * renderer.getPixelRatio();
+      mat.uniforms.uSize.value = 0.9 * renderer.getPixelRatio();
     };
     const ro = new ResizeObserver(onResize);
     ro.observe(mount);

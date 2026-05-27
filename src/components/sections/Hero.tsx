@@ -23,7 +23,17 @@ export default function Hero() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
+      const reduced = prefersReducedMotion();
       const taglineChars = taglineRef.current ? splitText(taglineRef.current) : [];
+
+      if (reduced) {
+        gsap.set(
+          [eyebrowRef.current, logoLayerRef.current, ledeRef.current, hintRef.current],
+          { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
+        );
+        gsap.set(taglineChars, { yPercent: 0, opacity: 1 });
+        return;
+      }
 
       const introTl = gsap.timeline({ delay: 0.15 });
       if (eyebrowRef.current) {
@@ -61,8 +71,6 @@ export default function Hero() {
         );
       }
 
-      if (prefersReducedMotion()) return;
-
       const scrubTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -89,7 +97,7 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      aria-label="Hero"
+      aria-labelledby="hero-title"
       className="relative h-screen w-full overflow-hidden bg-noise"
     >
       <div
@@ -128,7 +136,7 @@ export default function Hero() {
         ref={logoLayerRef}
         className="pointer-events-none absolute inset-0 flex items-center justify-center"
       >
-        <div className="relative h-[80vh] w-full max-w-[1600px] px-4 [&_canvas]:pointer-events-auto">
+        <div className="relative h-[80vh] w-full max-w-[1600px] px-4">
           <Suspense fallback={null}>
             <HeroLogotype />
           </Suspense>
@@ -144,7 +152,7 @@ export default function Hero() {
         </span>
 
         {/* SR-only H1 — the visible "ZIAN" is rendered by HeroLogotype. */}
-        <h1 className="sr-only">{t('hero.title')}</h1>
+        <h1 id="hero-title" className="sr-only">{t('hero.title')}</h1>
 
         <div className="mt-auto max-w-3xl">
           <p

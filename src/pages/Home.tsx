@@ -1,20 +1,20 @@
 import Hero from '../components/sections/Hero';
-import AskAndre from '../components/sections/AskAndre';
-import About from '../components/sections/About';
+import Manifesto from '../components/sections/Manifesto';
+import SelectedWork from '../components/sections/SelectedWork';
 import Capabilities from '../components/sections/Capabilities';
 import Process from '../components/sections/Process';
-import TechStack from '../components/sections/TechStack';
+import Marquee from '../components/sections/Marquee';
 import Contact from '../components/sections/Contact';
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <AskAndre />
-      <About />
+      <Manifesto />
+      <SelectedWork />
       <Capabilities />
       <Process />
-      <TechStack />
+      <Marquee />
       <Contact />
     </>
   );

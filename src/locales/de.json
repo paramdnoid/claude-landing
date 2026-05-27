@@ -1,262 +1,91 @@
 {
   "nav": {
-    "ask": "Frag mich",
-    "about": "Über",
-    "services": "Leistungen",
+    "manifesto": "Manifest",
+    "work": "Arbeiten",
+    "capabilities": "Leistungen",
     "process": "Prozess",
-    "techstack": "Tech-Stack",
     "contact": "Kontakt",
     "language": "Sprache"
   },
-  "sidebar": {
-    "aria": "Abschnittsnavigation",
-    "navLabel": "Navigation",
-    "availability": "Verfügbar · Q3",
-    "progress": "Scroll-Fortschritt",
-    "role": "Solo-Engineer",
-    "online": "Online",
-    "items": {
-      "overview": "Übersicht",
-      "ask": "Frag mich",
-      "about": "Über mich",
-      "services": "Leistungen",
-      "process": "Prozess",
-      "techstack": "Tech-Stack",
-      "contact": "Kontakt"
-    }
-  },
-  "processExtras": {
-    "metricsLabel": "Sprint-Telemetrie",
-    "metrics": [
-      { "label": "Tage bis Prototyp", "value": "21", "delta": "Im Plan" },
-      { "label": "KI-Abdeckung", "value": "94%", "delta": "+6 diese Woche" },
-      { "label": "Offene Blocker", "value": "0", "delta": "Sauber" }
-    ],
-    "terminalLabel": "Live-Build-Log",
-    "terminalHost": "zian@studio",
-    "terminalLines": [
-      "$ pnpm run eval --suite=ki-integration",
-      "✓ 142 / 142 bestanden in 18.4s",
-      "$ pnpm deploy --env=staging",
-      "→ build  cyan-04   bereit",
-      "→ deploy ◉ staging.zian-ai.dev",
-      "$ _"
-    ],
-    "stackLabel": "Stack im Einsatz",
-    "stack": ["React 19", "Claude / GPT", "Vector Store", "Eval Harness"],
-    "statusOk": "Alle Systeme stabil",
-    "statusRegion": "fra1 · eu-central",
-    "statusLatency": "p95  84 ms"
+  "loader": {
+    "label": "Szene wird komponiert",
+    "composing": "Lade Shader & Bewegung"
   },
   "hero": {
-    "eyebrow": "ZIAN AI Concepts · Andre Zimmermann",
-    "title": "ZIAN",
-    "tagline": "KI-gestützte Web- & App-Entwicklung.",
-    "lede": "Ich integriere KI in dein Unternehmen — als Solo-Engineer baue ich Produkte, automatisiere Workflows und schule Teams. Von der Idee zum Launch, mit KI als Co-Pilot.",
-    "scrollHint": "Scrollen"
+    "eyebrow": "Andre Zimmermann — KI / Creative Tech",
+    "headline": "Intelligenz gestalten.",
+    "sub": "Ich baue Interfaces, Agenten und kreative Werkzeuge an der Schnittstelle von KI und Bewegung — ein Ein-Personen-Studio, das Software entwickelt, die mitdenkt, reagiert und lebendig wirkt.",
+    "metaRole": "Engineer · Designer · Researcher",
+    "metaLocation": "Verfügbar 2026 · Weltweit",
+    "scroll": "Scrollen"
   },
-  "ask": {
-    "eyebrow": "01 — Frag mich",
-    "title": "Frag meinen",
-    "titleAccent": "KI-Assistenten.",
-    "lede": "Tippe was du wissen willst — oder klick eine der Cards. Die KI kennt mein Angebot, mein Setup und meinen Prozess.",
-    "statusLabel": "Andre's KI-Assistent",
-    "statusOnline": "online",
-    "welcome": "Hi 👋 Ich bin der KI-Assistent von Andre. Ich kann dir Fragen zu seinen Services, Preisen und seinem Prozess beantworten. Womit kann ich dir helfen?",
-    "placeholder": "Schreib eine Frage...",
-    "send": "Senden",
-    "demoBadge": "Demo-Modus",
-    "demoNote": "Aktuell läuft eine Mock-Konversation. Sobald Ollama angebunden ist, antwortet ein echtes lokales LLM.",
-    "thinking": "Tippt",
-    "freeFormResponse": "Gute Frage — die echte KI kann das beantworten, sobald Ollama angebunden ist. Bis dahin: klick eine der Cards oder schreib mir direkt an hello@zian-ai.dev und ich antworte persönlich innerhalb von 24h.",
-    "followupLabel": "Nächster Schritt",
-    "quickReplies": [
-      {
-        "id": "web",
-        "label": "Ich brauche eine Web-App",
-        "userText": "Ich brauche eine Web-App.",
-        "response": "Klare Sache. Andre baut moderne Web-Apps mit React 19, Tailwind v4 und KI im Workflow — von Landing-Pages bis zu produktiven SaaS-Plattformen. Ein typischer Prototyp läuft in 1–3 Wochen, das fertige Produkt in ca. 12 Wochen. Möchtest du Andre direkt schreiben, um dein Projekt zu besprechen?",
-        "ctaLabel": "Projekt mit Andre besprechen →"
-      },
-      {
-        "id": "app",
-        "label": "App-Entwicklung",
-        "userText": "Ich möchte eine App entwickeln lassen.",
-        "response": "Andre entwickelt native und cross-platform Mobile-Apps, hauptsächlich mit React Native und Expo — iOS und Android aus einer Codebase, KI-Features direkt eingebaut. Sag mir grob welche App du im Kopf hast, oder buch direkt ein 30-min-Gespräch.",
-        "ctaLabel": "Termin mit Andre vereinbaren →"
-      },
-      {
-        "id": "ki",
-        "label": "KI-Integration für meine Firma",
-        "userText": "Wir wollen KI in unser Unternehmen integrieren.",
-        "response": "Genau das ist Andre's Spezialgebiet. Er integriert KI dort, wo sie wirklich Arbeit spart: Custom-Agents, Chat-Interfaces auf deinen Daten, automatisierte Workflows — eingebettet in deine bestehenden Systeme (Slack, CRMs, interne APIs). Schreib ihm kurz worum es geht, dann meldet er sich innerhalb von 24h zurück.",
-        "ctaLabel": "Andre für KI-Integration kontaktieren →"
-      },
-      {
-        "id": "kurs",
-        "label": "KI-Kurs / Workshop buchen",
-        "userText": "Ich interessiere mich für einen KI-Kurs oder Workshop.",
-        "response": "Andre bietet Inhouse-Workshops, 1:1-Coaching und strukturierte Kurse an — vom KI-Basis-Setup für Teams bis zu Agent-Design für Entwickler. Sag ihm wie groß dein Team ist und was ihr lernen wollt, dann macht er dir ein passendes Format.",
-        "ctaLabel": "Workshop bei Andre anfragen →"
-      }
+  "manifesto": {
+    "eyebrow": "Manifest · 01",
+    "lines": [
+      "Software sollte sich anfühlen, als denke sie mit dir,",
+      "nicht gegen dich.",
+      "Jedes Pixel, jede Bewegung, jede Modell-Entscheidung",
+      "ist eine Chance, Maschinen menschlich wirken zu lassen.",
+      "Ich baue diesen Unterschied."
     ]
   },
-  "about": {
-    "eyebrow": "02 — Über mich",
-    "lineA": "Ein Engineer.",
-    "lineB": "KI als Hebel.",
-    "lineC": "Produkte, die laufen.",
-    "body": "Ich bin Andre Zimmermann — Gründer von ZIAN AI Concepts. Ich verbinde klassische Software-Engineering-Disziplin mit modernen KI-Tools, um schneller und gezielter zu bauen als jede Agentur. Keine Zwischenschicht. Keine Roadmaps in Quartalen. Du sprichst mit der Person, die auch baut.",
-    "stats": [
-      { "value": 8, "suffix": "+", "label": "Jahre Engineering" },
-      { "value": 40, "suffix": "+", "label": "Ausgelieferte Projekte" },
-      { "value": 3, "suffix": " Wo.", "label": "Bis zum Prototyp" },
-      { "value": 100, "suffix": "%", "label": "Hands-on, kein Outsourcing" }
-    ],
-    "skillsLabel": "Expertise",
-    "skills": [
-      { "name": "Web-Entwicklung", "detail": "React 19 · Next · Vue · Tailwind v4" },
-      { "name": "Mobile-Apps", "detail": "React Native · Flutter · SwiftUI" },
-      { "name": "KI-Integration", "detail": "Claude · GPT · Gemini · Eigene Agents" },
-      { "name": "RAG & Wissens-Systeme", "detail": "Vector DBs · Hybrid Retrieval · Evals" },
-      { "name": "Workflow-Automation", "detail": "n8n · Zapier · Custom Pipelines" },
-      { "name": "KI-Schulungen", "detail": "Workshops · Inhouse-Kurse · Coaching" }
-    ],
-    "kicker": "Wenn du wissen willst, was KI in deinem Unternehmen wirklich verändern kann — frag mich. Ich sage dir ehrlich, was sich lohnt und was reines Theater ist."
+  "work": {
+    "eyebrow": "Ausgewählte Arbeiten · 02",
+    "title": "Was zuletzt entstanden ist.",
+    "intro": "Eine rotierende Auswahl jüngster Experimente, Produkte und Auftragsarbeiten — von KI-Agenten über generative Interfaces bis Creative R&D.",
+    "endTag": "Mehr",
+    "endLine": "Vollständige Case Studies auf Anfrage — schreib mir."
   },
   "capabilities": {
-    "eyebrow": "03 — Leistungen",
-    "title": "Vier Wege,",
-    "titleAccent": "wie ich dir helfe.",
+    "eyebrow": "Leistungen · 03",
+    "title": "Was ich mache.",
+    "intro": "Engineering und Design als eine Praxis — ich gehe ohne Übergaben von der Recherche bis zur Produktion.",
     "items": [
-      {
-        "tag": "01",
-        "title": "KI-gestützte Web-Entwicklung",
-        "body": "Moderne Web-Apps und Landing-Pages, gebaut mit React und KI-Co-Pilot im Workflow. Performant, animiert, SEO-ready. Vom Studio-Portfolio bis zur produktiven SaaS-Plattform.",
-        "tags": ["React 19", "Next / Vite", "Tailwind v4"]
-      },
-      {
-        "tag": "02",
-        "title": "App-Entwicklung",
-        "body": "Native und cross-platform Mobile-Apps, die sich wie Premium-Produkte anfühlen. iOS und Android aus einer Codebase, mit KI-Features direkt eingebaut.",
-        "tags": ["React Native", "Expo", "Push & In-App"]
-      },
-      {
-        "tag": "03",
-        "title": "KI-Integration für Unternehmen",
-        "body": "Ich integriere KI dort, wo sie wirklich Arbeit spart: Custom-Agents, Chat-Interfaces auf deinen Daten, automatisierte Prozesse. Eingebettet in deine bestehenden Systeme.",
-        "tags": ["Claude / GPT", "RAG", "Workflow-Automation"]
-      },
-      {
-        "tag": "04",
-        "title": "KI-Kurse & Workshops",
-        "body": "Ich bringe dein Team auf Produktivitäts-Niveau. Inhouse-Workshops, individuelle Coaching-Sessions und strukturierte Kurse — vom KI-Basis-Setup bis zu Agent-Design.",
-        "tags": ["Inhouse", "Live-Sessions", "1:1 Coaching"]
-      }
+      { "index": "01", "title": "AI Engineering", "body": "Agenten, RAG-Systeme, Evals und produktionsreife LLM-Pipelines mit Claude, GPT und Open-Source-Modellen." },
+      { "index": "02", "title": "Creative Coding", "body": "WebGL, Shader, generative Grafik und Motion-Systeme — performant, ausdrucksstark, eigenständig." },
+      { "index": "03", "title": "Konzept & Strategie", "body": "Von der ersten Idee zum funktionierenden Prototyp — Naming, Narrativ, Systemdenken, Produkt-Framing." },
+      { "index": "04", "title": "Interaction Design", "body": "Interfaces, die antworten, atmen, sich intentional anfühlen. Detailbesessene Mikrointeraktionen und Motion." }
     ]
   },
   "process": {
-    "eyebrow": "04 — So läuft es",
-    "title": "Drei Wochen.",
-    "titleAccent": "Dann entscheidest du.",
-    "lede": "Ein Discovery-Sprint, der mit einem funktionierenden Produkt endet — nicht mit einer Präsentation.",
+    "eyebrow": "Prozess · 04",
+    "title": "Wie ich arbeite.",
     "steps": [
-      {
-        "label": "Woche 01",
-        "title": "Die Wette stecken.",
-        "body": "Wir reden. Ich grabe mich in das Problem, die Daten, die Nutzer, die Constraints. Bis Freitag hast du eine knappe Spec und ein Kill-Kriterien-Dokument. Keine Spec — kein Build."
-      },
-      {
-        "label": "Woche 02",
-        "title": "Die Version bauen.",
-        "body": "Ich baue. Du siehst täglich Fortschritt. Funktionierende Software, keine Folien. Bis Freitag läuft ein echter Prototyp auf echten Daten — auf einer echten URL, die du teilen kannst."
-      },
-      {
-        "label": "Woche 03",
-        "title": "Mit Nutzern live.",
-        "body": "Wir stellen das Ding drei echten Nutzern vor. Ihre Reaktionen entscheiden, was als Nächstes kommt: ausliefern, überarbeiten oder einstampfen. Keine Politik. Keine Fake-Metriken."
-      }
+      { "index": "01", "title": "Verstehen", "body": "Wir starten bei der echten Frage — nicht beim Deliverable. Ich gehe in Problem, Kontext und beteiligte Menschen rein." },
+      { "index": "02", "title": "Skizzieren", "body": "Funktionierende Prototypen in Tagen, nicht Wochen. Ich baue im Browser, im Code, mit echten Daten — nie in Slides." },
+      { "index": "03", "title": "Schärfen", "body": "Iteration gegen die Realität. Echte Nutzer, echte Performance-Budgets, echte Tradeoffs. Streichen, was nichts verdient." },
+      { "index": "04", "title": "Liefern", "body": "Production-grade Handwerk ab Tag 1. Danach: pflegen, messen, weiterentwickeln. Software ist Beziehung, nicht Übergabe." }
     ]
   },
-  "techstack": {
-    "eyebrow": "05 — Tech-Stack",
-    "title": "Tools,",
-    "titleAccent": "mit denen ich baue.",
-    "lede": "Eine kuratierte Auswahl — kein Best-of-Hype-List. Was hier steht, läuft in Produktion.",
-    "groups": [
-      {
-        "label": "KI-Modelle",
-        "items": ["Claude (Anthropic)", "GPT (OpenAI)", "Gemini", "Llama"]
-      },
-      {
-        "label": "Frontend",
-        "items": ["React 19", "Next.js", "Vite", "Tailwind v4", "GSAP"]
-      },
-      {
-        "label": "Backend & Daten",
-        "items": ["Node.js", "Postgres", "Supabase", "Vector Stores", "Edge Runtime"]
-      },
-      {
-        "label": "Mobile & DevOps",
-        "items": ["React Native", "Expo", "Vercel", "Cloudflare", "GitHub Actions"]
-      }
-    ]
+  "marquee": {
+    "eyebrow": "Werkzeuge in Bewegung"
   },
   "contact": {
-    "eyebrow": "06 — Start",
-    "title": "Erzähl mir,",
-    "titleAccent": "was du baust.",
-    "lede": "Kurze Notiz reicht. Ich antworte innerhalb von 24 Stunden — meistens schneller.",
-    "form": {
-      "name": "Name",
-      "email": "E-Mail",
-      "message": "Was baust du?",
-      "timeline": "Timeline",
-      "budget": "Budget",
-      "timelinePlaceholder": "Wählen",
-      "budgetPlaceholder": "Wählen",
-      "timelineOptions": [
-        { "value": "this-week", "label": "Diese Woche" },
-        { "value": "this-month", "label": "Diesen Monat" },
-        { "value": "this-quarter", "label": "Dieses Quartal" },
-        { "value": "exploring", "label": "Schaue mich um" }
-      ],
-      "budgetOptions": [
-        { "value": "lt-15", "label": "Unter 15k €" },
-        { "value": "15-50", "label": "15k – 50k €" },
-        { "value": "gt-50", "label": "50k €+" },
-        { "value": "unsure", "label": "Noch unklar" }
-      ],
-      "submit": "Senden",
-      "submitting": "Wird gesendet",
-      "success": "Hab's. Antwort innerhalb von 24 Stunden.",
-      "error": "Etwas ist schiefgelaufen. Versuche es nochmal oder schreib mir direkt.",
-      "demo": "Demo-Modus — setze VITE_FORM_ENDPOINT in .env, um Anfragen real zu empfangen.",
-      "required": "Pflichtfeld",
-      "invalidEmail": "Bitte eine echte E-Mail."
-    },
-    "or": "oder per Mail"
+    "eyebrow": "Kontakt · 05",
+    "title": "Lass uns etwas bauen, das mitdenkt.",
+    "email": "hello@andrezimmermann.dev",
+    "socials": "Folge mir"
   },
   "consent": {
-    "title": "Privatsphäre",
-    "body": "Ich nutze datenschutzfreundliche Analytics ohne Cookies, um anonym zu sehen, welche Inhalte ankommen.",
-    "learnMore": "Mehr in der Datenschutzerklärung.",
-    "accept": "Einverstanden",
+    "title": "Datenschutz",
+    "body": "Datenschutzfreundliche Analytics ohne Cookies. Nur anonyme Reichweitenmessung.",
+    "learnMore": "Datenschutzerklärung.",
+    "accept": "Akzeptieren",
     "reject": "Ablehnen",
     "close": "Banner schließen"
   },
   "footer": {
-    "tagline": "ZIAN AI Concepts — KI-gestützte Web- & App-Entwicklung. Solo. Schnell. Direkt.",
+    "tagline": "Andre Zimmermann — Intelligenz gestalten. Solo Studio. KI · Motion · Code.",
     "rights": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",
     "privacy": "Datenschutz"
   },
   "imprint": {
     "title": "Impressum",
-    "body": "Platzhalter — bitte mit deinen echten Angaben gemäß §5 TMG ersetzen (Name, Anschrift, Kontaktdaten, ggf. USt-IdNr.)."
+    "body": "Platzhalter — ersetze mit deinen tatsächlichen Angaben (gemäß §5 TMG)."
   },
   "privacy": {
     "title": "Datenschutzerklärung",
-    "body": "Platzhalter — bitte mit deiner echten Datenschutzerklärung ersetzen (Verantwortlicher, Hosting, Kontaktformular-Daten, Cookies, Rechte der Betroffenen)."
+    "body": "Platzhalter — ersetze mit deiner echten Datenschutzerklärung."
   }
 }

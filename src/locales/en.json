@@ -1,262 +1,91 @@
 {
   "nav": {
-    "ask": "Ask me",
-    "about": "About",
-    "services": "Services",
+    "manifesto": "Manifesto",
+    "work": "Work",
+    "capabilities": "Capabilities",
     "process": "Process",
-    "techstack": "Tech stack",
     "contact": "Contact",
     "language": "Language"
   },
-  "sidebar": {
-    "aria": "Section navigation",
-    "navLabel": "Navigation",
-    "availability": "Available · Q3",
-    "progress": "Scroll progress",
-    "role": "Solo engineer",
-    "online": "Online",
-    "items": {
-      "overview": "Overview",
-      "ask": "Ask me",
-      "about": "About",
-      "services": "Services",
-      "process": "Process",
-      "techstack": "Tech stack",
-      "contact": "Contact"
-    }
-  },
-  "processExtras": {
-    "metricsLabel": "Sprint telemetry",
-    "metrics": [
-      { "label": "Days to prototype", "value": "21", "delta": "On track" },
-      { "label": "AI coverage", "value": "94%", "delta": "+6 this week" },
-      { "label": "Open blockers", "value": "0", "delta": "Clean" }
-    ],
-    "terminalLabel": "Live build log",
-    "terminalHost": "zian@studio",
-    "terminalLines": [
-      "$ pnpm run eval --suite=ai-integration",
-      "✓ 142 / 142 passed in 18.4s",
-      "$ pnpm deploy --env=staging",
-      "→ build  cyan-04   ready",
-      "→ deploy ◉ staging.zian-ai.dev",
-      "$ _"
-    ],
-    "stackLabel": "Stack in motion",
-    "stack": ["React 19", "Claude / GPT", "Vector store", "Eval harness"],
-    "statusOk": "Systems nominal",
-    "statusRegion": "fra1 · eu-central",
-    "statusLatency": "p95  84 ms"
+  "loader": {
+    "label": "Composing scene",
+    "composing": "Loading shaders & motion"
   },
   "hero": {
-    "eyebrow": "ZIAN AI Concepts · Andre Zimmermann",
-    "title": "ZIAN",
-    "tagline": "AI-powered web & app development.",
-    "lede": "I integrate AI into your business — as a solo engineer I build products, automate workflows and train teams. From idea to launch, with AI as co-pilot.",
-    "scrollHint": "Scroll"
+    "eyebrow": "Andre Zimmermann — AI / Creative Tech",
+    "headline": "Designing intelligence.",
+    "sub": "I build interfaces, agents and creative tools at the intersection of AI and motion — a one-person studio shipping work that thinks, reacts, and feels alive.",
+    "metaRole": "Engineer · Designer · Researcher",
+    "metaLocation": "Available 2026 · Worldwide",
+    "scroll": "Scroll"
   },
-  "ask": {
-    "eyebrow": "01 — Ask me",
-    "title": "Ask my",
-    "titleAccent": "AI assistant.",
-    "lede": "Type what you want to know — or click one of the cards. The AI knows my services, my setup and my process.",
-    "statusLabel": "Andre's AI assistant",
-    "statusOnline": "online",
-    "welcome": "Hi 👋 I'm Andre's AI assistant. I can answer questions about his services, pricing and process. What can I help you with?",
-    "placeholder": "Type a question...",
-    "send": "Send",
-    "demoBadge": "Demo mode",
-    "demoNote": "Running a mocked conversation right now. Once Ollama is wired up, a real local LLM responds.",
-    "thinking": "Typing",
-    "freeFormResponse": "Good question — the real AI can answer that once Ollama is wired in. Until then: click one of the cards, or email Andre directly at hello@zian-ai.dev. He replies personally within 24h.",
-    "followupLabel": "Next step",
-    "quickReplies": [
-      {
-        "id": "web",
-        "label": "I need a web app",
-        "userText": "I need a web app.",
-        "response": "Solid. Andre builds modern web apps with React 19, Tailwind v4 and AI in the workflow — from landing pages to production SaaS. A typical prototype runs in 1–3 weeks, full product in ~12 weeks. Want to message Andre directly to discuss your project?",
-        "ctaLabel": "Discuss project with Andre →"
-      },
-      {
-        "id": "app",
-        "label": "App development",
-        "userText": "I want a mobile app built.",
-        "response": "Andre builds native and cross-platform mobile apps, mostly with React Native and Expo — iOS and Android from one codebase, AI features built in. Tell me roughly what app you have in mind, or book a 30-min call directly.",
-        "ctaLabel": "Book a call with Andre →"
-      },
-      {
-        "id": "ki",
-        "label": "AI integration for my company",
-        "userText": "We want to integrate AI into our business.",
-        "response": "That's exactly Andre's specialty. He integrates AI where it actually saves work: custom agents, chat interfaces on your data, automated workflows — embedded into your existing systems (Slack, CRMs, internal APIs). Drop him a short brief and he'll get back within 24h.",
-        "ctaLabel": "Contact Andre for AI integration →"
-      },
-      {
-        "id": "kurs",
-        "label": "AI course / workshop",
-        "userText": "I'm interested in an AI course or workshop.",
-        "response": "Andre runs in-house workshops, 1:1 coaching and structured courses — from AI basics for teams to agent design for developers. Tell him how big your team is and what you want to learn, and he'll shape a format for you.",
-        "ctaLabel": "Request a workshop from Andre →"
-      }
+  "manifesto": {
+    "eyebrow": "Manifesto · 01",
+    "lines": [
+      "Software should feel like it's thinking with you,",
+      "not at you.",
+      "Every pixel, every motion, every model decision",
+      "is a chance to make machines feel human.",
+      "I build the difference."
     ]
   },
-  "about": {
-    "eyebrow": "02 — About",
-    "lineA": "One engineer.",
-    "lineB": "AI as leverage.",
-    "lineC": "Products that ship.",
-    "body": "I'm Andre Zimmermann — founder of ZIAN AI Concepts. I combine classic software engineering discipline with modern AI tooling to build faster and sharper than any agency. No middlemen. No quarterly roadmaps. You talk to the person who also builds.",
-    "stats": [
-      { "value": 8, "suffix": "+", "label": "Years engineering" },
-      { "value": 40, "suffix": "+", "label": "Projects shipped" },
-      { "value": 3, "suffix": " wk", "label": "To working prototype" },
-      { "value": 100, "suffix": "%", "label": "Hands-on, no outsourcing" }
-    ],
-    "skillsLabel": "Expertise",
-    "skills": [
-      { "name": "Web development", "detail": "React 19 · Next · Vue · Tailwind v4" },
-      { "name": "Mobile apps", "detail": "React Native · Flutter · SwiftUI" },
-      { "name": "AI integration", "detail": "Claude · GPT · Gemini · Custom agents" },
-      { "name": "RAG & knowledge systems", "detail": "Vector DBs · Hybrid retrieval · Evals" },
-      { "name": "Workflow automation", "detail": "n8n · Zapier · Custom pipelines" },
-      { "name": "AI training", "detail": "Workshops · In-house courses · Coaching" }
-    ],
-    "kicker": "If you want to know what AI can actually change in your business — ask me. I'll tell you honestly what's worth it and what's pure theater."
+  "work": {
+    "eyebrow": "Selected work · 02",
+    "title": "Things I've built lately.",
+    "intro": "A rotating selection of recent experiments, products and commissioned work — across AI agents, generative interfaces and creative R&D.",
+    "endTag": "More",
+    "endLine": "Full case studies on request — drop me a line."
   },
   "capabilities": {
-    "eyebrow": "03 — Services",
-    "title": "Four ways",
-    "titleAccent": "I help you.",
+    "eyebrow": "Capabilities · 03",
+    "title": "What I do.",
+    "intro": "Engineering and design rolled into one practice — I move from research to production without handoffs.",
     "items": [
-      {
-        "tag": "01",
-        "title": "AI-powered web development",
-        "body": "Modern web apps and landing pages, built with React and AI co-pilot in the workflow. Performant, animated, SEO-ready. From studio portfolios to production SaaS.",
-        "tags": ["React 19", "Next / Vite", "Tailwind v4"]
-      },
-      {
-        "tag": "02",
-        "title": "App development",
-        "body": "Native and cross-platform mobile apps that feel like premium products. iOS and Android from one codebase, with AI features built in.",
-        "tags": ["React Native", "Expo", "Push & in-app"]
-      },
-      {
-        "tag": "03",
-        "title": "AI integration for companies",
-        "body": "I integrate AI where it actually saves work: custom agents, chat interfaces on your data, automated processes. Embedded into your existing systems.",
-        "tags": ["Claude / GPT", "RAG", "Workflow automation"]
-      },
-      {
-        "tag": "04",
-        "title": "AI courses & workshops",
-        "body": "I bring your team to production-level AI fluency. In-house workshops, individual coaching, and structured courses — from AI basics to agent design.",
-        "tags": ["In-house", "Live sessions", "1:1 coaching"]
-      }
+      { "index": "01", "title": "AI engineering", "body": "Agents, RAG systems, evals, and production LLM pipelines built with Claude, GPT and open models." },
+      { "index": "02", "title": "Creative coding", "body": "WebGL, shaders, generative graphics and motion systems — performant, expressive, original." },
+      { "index": "03", "title": "Concept & strategy", "body": "From first idea to working prototype — naming, narrative, system thinking and product framing." },
+      { "index": "04", "title": "Interaction design", "body": "Interfaces that respond, breathe, and feel intentional. Detail-obsessed micro-interactions and motion craft." }
     ]
   },
   "process": {
-    "eyebrow": "04 — How it works",
-    "title": "Three weeks.",
-    "titleAccent": "Then you decide.",
-    "lede": "A discovery sprint that ends with a working thing — not a deck.",
+    "eyebrow": "Process · 04",
+    "title": "How I work.",
     "steps": [
-      {
-        "label": "Week 01",
-        "title": "Frame the bet.",
-        "body": "We talk. I dig into the problem, the data, the user, the constraints. By Friday, you have a tight spec and a kill-criteria document. No spec — no build."
-      },
-      {
-        "label": "Week 02",
-        "title": "Build the version.",
-        "body": "I build. You see daily progress. Working software, not slides. By Friday, a real prototype runs on real data — on a real URL you can share."
-      },
-      {
-        "label": "Week 03",
-        "title": "Live with users.",
-        "body": "We put it in front of three real users. Their reactions decide what's next: ship it, refactor it, or kill it. No politics. No fake metrics."
-      }
+      { "index": "01", "title": "Frame", "body": "We start with the real question — not the deliverable. I dig into the problem, the constraints and the people involved." },
+      { "index": "02", "title": "Sketch", "body": "Working prototypes within days, not weeks. I build in the browser, in code, with real data — never in slides." },
+      { "index": "03", "title": "Sharpen", "body": "Iterate against reality. Real users, real performance budgets, real tradeoffs. Cut everything that doesn't earn its place." },
+      { "index": "04", "title": "Ship", "body": "Production-grade craft from day one. Then maintain, measure, evolve. Software is a relationship, not a delivery." }
     ]
   },
-  "techstack": {
-    "eyebrow": "05 — Tech stack",
-    "title": "Tools",
-    "titleAccent": "I build with.",
-    "lede": "A curated selection — not a hype list. What's on here runs in production.",
-    "groups": [
-      {
-        "label": "AI models",
-        "items": ["Claude (Anthropic)", "GPT (OpenAI)", "Gemini", "Llama"]
-      },
-      {
-        "label": "Frontend",
-        "items": ["React 19", "Next.js", "Vite", "Tailwind v4", "GSAP"]
-      },
-      {
-        "label": "Backend & data",
-        "items": ["Node.js", "Postgres", "Supabase", "Vector stores", "Edge runtime"]
-      },
-      {
-        "label": "Mobile & DevOps",
-        "items": ["React Native", "Expo", "Vercel", "Cloudflare", "GitHub Actions"]
-      }
-    ]
+  "marquee": {
+    "eyebrow": "Tools in motion"
   },
   "contact": {
-    "eyebrow": "06 — Start",
-    "title": "Tell me what",
-    "titleAccent": "you're building.",
-    "lede": "A short note works. I reply within 24 hours — usually faster.",
-    "form": {
-      "name": "Name",
-      "email": "Email",
-      "message": "What are you building?",
-      "timeline": "Timeline",
-      "budget": "Budget",
-      "timelinePlaceholder": "Select",
-      "budgetPlaceholder": "Select",
-      "timelineOptions": [
-        { "value": "this-week", "label": "This week" },
-        { "value": "this-month", "label": "This month" },
-        { "value": "this-quarter", "label": "This quarter" },
-        { "value": "exploring", "label": "Just exploring" }
-      ],
-      "budgetOptions": [
-        { "value": "lt-15", "label": "Under €15k" },
-        { "value": "15-50", "label": "€15k – €50k" },
-        { "value": "gt-50", "label": "€50k+" },
-        { "value": "unsure", "label": "Not sure yet" }
-      ],
-      "submit": "Send",
-      "submitting": "Sending",
-      "success": "Got it. Replying within 24 hours.",
-      "error": "Something broke. Try again, or email me directly.",
-      "demo": "Demo mode — set VITE_FORM_ENDPOINT in .env to receive real submissions.",
-      "required": "Required",
-      "invalidEmail": "Use a real email."
-    },
-    "or": "or email"
+    "eyebrow": "Get in touch · 05",
+    "title": "Let's make something that thinks.",
+    "email": "hello@andrezimmermann.dev",
+    "socials": "Find me"
   },
   "consent": {
     "title": "Privacy",
-    "body": "I use privacy-friendly analytics without cookies to see anonymously which content lands.",
-    "learnMore": "Read the privacy policy.",
+    "body": "Privacy-friendly analytics, no cookies. Anonymous reach metrics only.",
+    "learnMore": "Privacy policy.",
     "accept": "Accept",
     "reject": "Decline",
     "close": "Close banner"
   },
   "footer": {
-    "tagline": "ZIAN AI Concepts — AI-powered web & app development. Solo. Fast. Direct.",
+    "tagline": "Andre Zimmermann — designing intelligence. Solo studio. AI · Motion · Code.",
     "rights": "All rights reserved.",
     "imprint": "Imprint",
     "privacy": "Privacy"
   },
   "imprint": {
     "title": "Imprint",
-    "body": "Placeholder — replace with your real details (per §5 TMG for Germany: name, address, contact, VAT-ID if applicable)."
+    "body": "Placeholder — replace with your real details (per §5 TMG for Germany)."
   },
   "privacy": {
     "title": "Privacy policy",
-    "body": "Placeholder — replace with your real privacy policy (controller, hosting, contact form data, cookies, data subject rights)."
+    "body": "Placeholder — replace with your real privacy policy."
   }
 }

@@ -1,0 +1,237 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_QUALITY_GATE": "1",
+    "CLAUDE_QUALITY_GATE_MAX_SECONDS": "300",
+    "CLAUDE_AGENT_TEAM_PROFILE": "senior-react-next-tailwind-ts-i18n-three-gsap"
+  },
+  "teammateMode": "in-process",
+  "skillListingBudgetFraction": 0.02,
+  "permissions": {
+    "defaultMode": "plan",
+    "disableBypassPermissionsMode": "disable",
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Agent",
+      "WebFetch(domain:react.dev)",
+      "WebFetch(domain:nextjs.org)",
+      "WebFetch(domain:tailwindcss.com)",
+      "WebFetch(domain:typescriptlang.org)",
+      "WebFetch(domain:i18next.com)",
+      "WebFetch(domain:react.i18next.com)",
+      "WebFetch(domain:threejs.org)",
+      "WebFetch(domain:gsap.com)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(node --version)",
+      "Bash(npm --version)",
+      "Bash(pnpm --version)",
+      "Bash(yarn --version)",
+      "Bash(bun --version)",
+      "Bash(npm run typecheck*)",
+      "Bash(npm run lint*)",
+      "Bash(npm run test*)",
+      "Bash(npm run build*)",
+      "Bash(pnpm typecheck*)",
+      "Bash(pnpm lint*)",
+      "Bash(pnpm test*)",
+      "Bash(pnpm build*)",
+      "Bash(yarn typecheck*)",
+      "Bash(yarn lint*)",
+      "Bash(yarn test*)",
+      "Bash(yarn build*)",
+      "Bash(bun run typecheck*)",
+      "Bash(bun run lint*)",
+      "Bash(bun test*)",
+      "Bash(bun run build*)",
+      "WebFetch(domain:www.typescriptlang.org)",
+      "WebFetch(domain:www.i18next.com)",
+      "WebFetch(domain:github.com)"
+    ],
+    "ask": [
+      "WebSearch",
+      "WebFetch",
+      "Bash(npm install *)",
+      "Bash(npm i *)",
+      "Bash(npm uninstall *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm remove *)",
+      "Bash(yarn add *)",
+      "Bash(yarn remove *)",
+      "Bash(bun add *)",
+      "Bash(bun remove *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git pull *)",
+      "Bash(gh pr *)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./**/secrets/**)",
+      "Read(./config/credentials.json)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Edit(./secrets/**)",
+      "Edit(./**/secrets/**)",
+      "Write(./.env)",
+      "Write(./.env.*)",
+      "Write(./secrets/**)",
+      "Write(./**/secrets/**)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -fd*)",
+      "Bash(chmod 777 *)",
+      "Bash(chown *)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": false,
+    "autoAllowBashIfSandboxed": true,
+    "excludedCommands": [
+      "docker *"
+    ],
+    "filesystem": {
+      "denyRead": [
+        "~/.aws/credentials",
+        "~/.ssh",
+        "~/.config/gh/hosts.yml"
+      ],
+      "denyWrite": [
+        "/etc",
+        "/usr",
+        "/bin",
+        "/sbin",
+        "/System"
+      ]
+    },
+    "network": {
+      "allowedDomains": [
+        "react.dev",
+        "nextjs.org",
+        "tailwindcss.com",
+        "typescriptlang.org",
+        "i18next.com",
+        "react.i18next.com",
+        "threejs.org",
+        "gsap.com",
+        "registry.npmjs.org",
+        "*.npmjs.org",
+        "registry.yarnpkg.com",
+        "github.com",
+        "www.typescriptlang.org",
+        "www.i18next.com"
+      ]
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/guard_dangerous_bash.py"
+            ],
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/guard_sensitive_files.py"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/mark_validation_needed.py"
+            ],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/quality_gate_stop.py"
+            ],
+            "timeout": 320
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/subagent_context.py"
+            ],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "ConfigChange": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/log_event.py"
+            ],
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/log_event.py"
+            ],
+            "timeout": 2
+          }
+        ]
+      }
+    ]
+  }
+}

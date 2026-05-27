@@ -12,12 +12,20 @@ export default function PageTransition({ children }: { children: React.ReactNode
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (isFirst.current) {
       isFirst.current = false;
+      // Make sure no leftover transform creates a containing block for fixed children.
+      gsap.set(ref.current, { clearProps: 'transform,translate,rotate,scale,willChange,opacity' });
       return;
     }
     gsap.fromTo(
       ref.current,
       { opacity: 0, y: 14 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power3.out',
+        clearProps: 'transform,translate,rotate,scale,willChange',
+      },
     );
   }, [pathname]);
 

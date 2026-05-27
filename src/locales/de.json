@@ -6,6 +6,44 @@
     "contact": "Kontakt",
     "language": "Sprache"
   },
+  "sidebar": {
+    "aria": "Abschnittsnavigation",
+    "navLabel": "Navigation",
+    "availability": "Verfügbar · Q3",
+    "progress": "Scroll-Fortschritt",
+    "role": "Solo-Engineer",
+    "online": "Online",
+    "items": {
+      "overview": "Übersicht",
+      "manifesto": "Manifest",
+      "capabilities": "Leistung",
+      "process": "Prozess",
+      "contact": "Kontakt"
+    }
+  },
+  "processExtras": {
+    "metricsLabel": "Sprint-Telemetrie",
+    "metrics": [
+      { "label": "Tage bis Prototyp", "value": "21", "delta": "Im Plan" },
+      { "label": "Eval-Abdeckung", "value": "94%", "delta": "+6 diese Woche" },
+      { "label": "Offene Blocker", "value": "0", "delta": "Sauber" }
+    ],
+    "terminalLabel": "Live-Build-Log",
+    "terminalHost": "zian@studio",
+    "terminalLines": [
+      "$ pnpm run eval --suite=cohort_v2",
+      "✓ 142 / 142 bestanden in 18.4s",
+      "$ pnpm deploy --env=staging",
+      "→ build  cyan-04   bereit",
+      "→ deploy ◉ staging.zian-ai.dev",
+      "$ _"
+    ],
+    "stackLabel": "Stack im Einsatz",
+    "stack": ["React 19", "Edge Runtime", "Vector Store", "Eval Harness"],
+    "statusOk": "Alle Systeme stabil",
+    "statusRegion": "fra1 · eu-central",
+    "statusLatency": "p95  84 ms"
+  },
   "hero": {
     "eyebrow": "Studio of one · Andre Zimmermann",
     "title": "ZIAN",

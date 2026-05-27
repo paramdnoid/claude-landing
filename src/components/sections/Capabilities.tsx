@@ -79,7 +79,7 @@ export default function Capabilities() {
       ref={sectionRef}
       id="capabilities"
       aria-label="Capabilities"
-      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:py-48"
+      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-[280px] lg:py-48"
     >
       <div className="max-w-4xl">
         <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]">

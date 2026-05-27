@@ -84,7 +84,7 @@ export default function Manifesto() {
       ref={sectionRef}
       id="manifesto"
       aria-label="Manifesto"
-      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:py-48"
+      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-[280px] lg:py-48"
     >
       {/* Soft cyan + violet bloom behind the headlines */}
       <div

@@ -11,7 +11,7 @@ export default function Footer() {
         aria-hidden="true"
         className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent-cyan)]/40 to-transparent"
       />
-      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-12 md:flex-row md:items-end md:justify-between lg:px-10">
+      <div className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-12 md:flex-row md:items-end md:justify-between lg:px-10 lg:pl-[280px]">
         <div className="space-y-3">
           <div className="flex items-center gap-2.5">
             <img src="/logo.svg" alt="" className="h-7 w-7" aria-hidden="true" />

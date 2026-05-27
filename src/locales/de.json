@@ -1,8 +1,9 @@
 {
   "nav": {
-    "manifesto": "Manifest",
-    "capabilities": "Leistung",
+    "about": "Über",
+    "services": "Leistungen",
     "process": "Prozess",
+    "techstack": "Tech-Stack",
     "contact": "Kontakt",
     "language": "Sprache"
   },
@@ -15,9 +16,10 @@
     "online": "Online",
     "items": {
       "overview": "Übersicht",
-      "manifesto": "Manifest",
-      "capabilities": "Leistung",
+      "about": "Über mich",
+      "services": "Leistungen",
       "process": "Prozess",
+      "techstack": "Tech-Stack",
       "contact": "Kontakt"
     }
   },
@@ -25,13 +27,13 @@
     "metricsLabel": "Sprint-Telemetrie",
     "metrics": [
       { "label": "Tage bis Prototyp", "value": "21", "delta": "Im Plan" },
-      { "label": "Eval-Abdeckung", "value": "94%", "delta": "+6 diese Woche" },
+      { "label": "KI-Abdeckung", "value": "94%", "delta": "+6 diese Woche" },
       { "label": "Offene Blocker", "value": "0", "delta": "Sauber" }
     ],
     "terminalLabel": "Live-Build-Log",
     "terminalHost": "zian@studio",
     "terminalLines": [
-      "$ pnpm run eval --suite=cohort_v2",
+      "$ pnpm run eval --suite=ki-integration",
       "✓ 142 / 142 bestanden in 18.4s",
       "$ pnpm deploy --env=staging",
       "→ build  cyan-04   bereit",
@@ -39,60 +41,69 @@
       "$ _"
     ],
     "stackLabel": "Stack im Einsatz",
-    "stack": ["React 19", "Edge Runtime", "Vector Store", "Eval Harness"],
+    "stack": ["React 19", "Claude / GPT", "Vector Store", "Eval Harness"],
     "statusOk": "Alle Systeme stabil",
     "statusRegion": "fra1 · eu-central",
     "statusLatency": "p95  84 ms"
   },
   "hero": {
-    "eyebrow": "Studio of one · Andre Zimmermann",
+    "eyebrow": "ZIAN AI Concepts · Andre Zimmermann",
     "title": "ZIAN",
-    "tagline": "KI-Produkte. Ausgeliefert.",
-    "lede": "Ich entwerfe und baue KI-native Web-Apps, maßgeschneiderte Agents und schnelle Prototypen. Funktionierende Software in Wochen — keine Roadmaps in Quartalen.",
+    "tagline": "KI-gestützte Web- & App-Entwicklung.",
+    "lede": "Ich integriere KI in dein Unternehmen — als Solo-Engineer baue ich Produkte, automatisiere Workflows und schule Teams. Von der Idee zum Launch, mit KI als Co-Pilot.",
     "scrollHint": "Scrollen"
   },
-  "manifesto": {
-    "eyebrow": "01 — Die Prämisse",
-    "lineA": "Die meisten KI-Demos",
-    "lineB": "sind Theater.",
-    "lineC": "Ich liefere Produkte aus.",
-    "body": "Ich bin Andre. Senior Engineer mit Jahren Produktionssoftware im Rücken, heute fokussiert auf KI-native Produkte und die Agents, die darin laufen. Die Lücke zwischen einem beeindruckenden Prompt und einer Sache, die Menschen wirklich benutzen — dort bleiben die meisten Teams hängen. Ich bleibe nicht hängen.",
-    "signature": [
-      "Keine Agentur.",
-      "Keine Zwischenhändler.",
-      "Keine JIRA-Warteschlangen ins Nichts.",
-      "Du schreibst mir. Ich baue die Sache."
+  "about": {
+    "eyebrow": "01 — Über mich",
+    "lineA": "Ein Engineer.",
+    "lineB": "KI als Hebel.",
+    "lineC": "Produkte, die laufen.",
+    "body": "Ich bin Andre Zimmermann — Gründer von ZIAN AI Concepts. Ich verbinde klassische Software-Engineering-Disziplin mit modernen KI-Tools, um schneller und gezielter zu bauen als jede Agentur. Keine Zwischenschicht. Keine Roadmaps in Quartalen. Du sprichst mit der Person, die auch baut.",
+    "stats": [
+      { "value": 8, "suffix": "+", "label": "Jahre Engineering" },
+      { "value": 40, "suffix": "+", "label": "Ausgelieferte Projekte" },
+      { "value": 3, "suffix": " Wo.", "label": "Bis zum Prototyp" },
+      { "value": 100, "suffix": "%", "label": "Hands-on, kein Outsourcing" }
     ],
-    "kicker": "Drei Wochen bis zum funktionierenden Prototyp. Zwölf bis zum ausgelieferten Produkt. Mit anderen Timelines arbeite ich nicht."
+    "skillsLabel": "Expertise",
+    "skills": [
+      { "name": "Web-Entwicklung", "detail": "React 19 · Next · Vue · Tailwind v4" },
+      { "name": "Mobile-Apps", "detail": "React Native · Flutter · SwiftUI" },
+      { "name": "KI-Integration", "detail": "Claude · GPT · Gemini · Eigene Agents" },
+      { "name": "RAG & Wissens-Systeme", "detail": "Vector DBs · Hybrid Retrieval · Evals" },
+      { "name": "Workflow-Automation", "detail": "n8n · Zapier · Custom Pipelines" },
+      { "name": "KI-Schulungen", "detail": "Workshops · Inhouse-Kurse · Coaching" }
+    ],
+    "kicker": "Wenn du wissen willst, was KI in deinem Unternehmen wirklich verändern kann — frag mich. Ich sage dir ehrlich, was sich lohnt und was reines Theater ist."
   },
   "capabilities": {
-    "eyebrow": "02 — Leistung",
-    "title": "Vier Dinge, die ich baue.",
-    "titleAccent": "Alle vier in Produktion.",
+    "eyebrow": "02 — Leistungen",
+    "title": "Vier Wege,",
+    "titleAccent": "wie ich dir helfe.",
     "items": [
       {
         "tag": "01",
-        "title": "KI-gestützte Web-Apps",
-        "body": "Full-Stack-Produkte mit LLMs im Kern. Chat-Oberflächen, generative Tools, Suche, die versteht, Agents, die handeln. Gebaut wie echte Software — keine Demos.",
-        "tags": ["React 19", "Streaming UIs", "LLM APIs"]
+        "title": "KI-gestützte Web-Entwicklung",
+        "body": "Moderne Web-Apps und Landing-Pages, gebaut mit React und KI-Co-Pilot im Workflow. Performant, animiert, SEO-ready. Vom Studio-Portfolio bis zur produktiven SaaS-Plattform.",
+        "tags": ["React 19", "Next / Vite", "Tailwind v4"]
       },
       {
         "tag": "02",
-        "title": "Agents & Workflow-Automation",
-        "body": "Maßgeschneiderte Agents, eingebettet in deine echten Systeme. Slack, CRMs, interne APIs, Browser — wo ein Workflow ist, kann ein Agent ihn ausführen.",
-        "tags": ["Tool Use", "Browser-Steuerung", "Eval-Pipelines"]
+        "title": "App-Entwicklung",
+        "body": "Native und cross-platform Mobile-Apps, die sich wie Premium-Produkte anfühlen. iOS und Android aus einer Codebase, mit KI-Features direkt eingebaut.",
+        "tags": ["React Native", "Expo", "Push & In-App"]
       },
       {
         "tag": "03",
-        "title": "RAG & Wissenssysteme",
-        "body": "ChatGPT, aber auf deinen Daten. Richtig gebaut. Retrieval, das wirklich abruft. Evaluierungen, die es belegen. Production-Grade, nicht Notebook-Grade.",
-        "tags": ["Vector Search", "Hybride Retrieval", "Evals"]
+        "title": "KI-Integration für Unternehmen",
+        "body": "Ich integriere KI dort, wo sie wirklich Arbeit spart: Custom-Agents, Chat-Interfaces auf deinen Daten, automatisierte Prozesse. Eingebettet in deine bestehenden Systeme.",
+        "tags": ["Claude / GPT", "RAG", "Workflow-Automation"]
       },
       {
         "tag": "04",
-        "title": "Prototypen in 1–3 Wochen",
-        "body": "Eine Idee ist billig. Eine funktionierende Version ist das Einzige, worüber zu streiten lohnt. Ich baue die Version — schnell — damit du echt entscheiden kannst.",
-        "tags": ["Spec → Live", "Auf deinen Daten", "Kill-Kriterien inklusive"]
+        "title": "KI-Kurse & Workshops",
+        "body": "Ich bringe dein Team auf Produktivitäts-Niveau. Inhouse-Workshops, individuelle Coaching-Sessions und strukturierte Kurse — vom KI-Basis-Setup bis zu Agent-Design.",
+        "tags": ["Inhouse", "Live-Sessions", "1:1 Coaching"]
       }
     ]
   },
@@ -100,7 +111,7 @@
     "eyebrow": "03 — So läuft es",
     "title": "Drei Wochen.",
     "titleAccent": "Dann entscheidest du.",
-    "lede": "Ein Discovery-Sprint, der mit einem funktionierenden Ding endet — nicht mit einer Präsentation.",
+    "lede": "Ein Discovery-Sprint, der mit einem funktionierenden Produkt endet — nicht mit einer Präsentation.",
     "steps": [
       {
         "label": "Woche 01",
@@ -119,8 +130,32 @@
       }
     ]
   },
+  "techstack": {
+    "eyebrow": "04 — Tech-Stack",
+    "title": "Tools,",
+    "titleAccent": "mit denen ich baue.",
+    "lede": "Eine kuratierte Auswahl — kein Best-of-Hype-List. Was hier steht, läuft in Produktion.",
+    "groups": [
+      {
+        "label": "KI-Modelle",
+        "items": ["Claude (Anthropic)", "GPT (OpenAI)", "Gemini", "Llama"]
+      },
+      {
+        "label": "Frontend",
+        "items": ["React 19", "Next.js", "Vite", "Tailwind v4", "GSAP"]
+      },
+      {
+        "label": "Backend & Daten",
+        "items": ["Node.js", "Postgres", "Supabase", "Vector Stores", "Edge Runtime"]
+      },
+      {
+        "label": "Mobile & DevOps",
+        "items": ["React Native", "Expo", "Vercel", "Cloudflare", "GitHub Actions"]
+      }
+    ]
+  },
   "contact": {
-    "eyebrow": "04 — Start",
+    "eyebrow": "05 — Start",
     "title": "Erzähl mir,",
     "titleAccent": "was du baust.",
     "lede": "Kurze Notiz reicht. Ich antworte innerhalb von 24 Stunden — meistens schneller.",
@@ -163,7 +198,7 @@
     "close": "Banner schließen"
   },
   "footer": {
-    "tagline": "KI-Produkte und Prototypen — schnell ausgeliefert.",
+    "tagline": "ZIAN AI Concepts — KI-gestützte Web- & App-Entwicklung. Solo. Schnell. Direkt.",
     "rights": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",
     "privacy": "Datenschutz"

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { LucideIcon } from 'lucide-react';
-import { LayoutPanelLeft, Workflow, Database, Zap } from 'lucide-react';
+import { Globe, Smartphone, BrainCircuit, GraduationCap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -16,7 +16,7 @@ type Item = {
   tags: string[];
 };
 
-const ICONS: LucideIcon[] = [LayoutPanelLeft, Workflow, Database, Zap];
+const ICONS: LucideIcon[] = [Globe, Smartphone, BrainCircuit, GraduationCap];
 
 export default function Capabilities() {
   const { t, i18n } = useTranslation();
@@ -77,8 +77,8 @@ export default function Capabilities() {
   return (
     <section
       ref={sectionRef}
-      id="capabilities"
-      aria-label="Capabilities"
+      id="services"
+      aria-label="Services"
       className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-70 lg:py-48"
     >
       <div className="max-w-4xl">
@@ -99,7 +99,7 @@ export default function Capabilities() {
         className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8"
       >
         {items.map((item, i) => (
-          <CapabilityCard key={item.tag} item={item} Icon={ICONS[i] ?? Zap} />
+          <CapabilityCard key={item.tag} item={item} Icon={ICONS[i] ?? Globe} />
         ))}
       </div>
     </section>

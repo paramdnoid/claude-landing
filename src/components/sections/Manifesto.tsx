@@ -84,7 +84,7 @@ export default function Manifesto() {
       ref={sectionRef}
       id="manifesto"
       aria-label="Manifesto"
-      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-[280px] lg:py-48"
+      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-70 lg:py-48"
     >
       {/* Soft cyan + violet bloom behind the headlines */}
       <div
@@ -102,7 +102,7 @@ export default function Manifesto() {
       </div>
 
       <div className="mb-10 lg:mb-16">
-        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]">
+        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan">
           {t('manifesto.eyebrow')}
         </span>
       </div>
@@ -110,19 +110,19 @@ export default function Manifesto() {
       <div className="space-y-0">
         <h2
           ref={lineARef}
-          className="font-display text-[clamp(2.5rem,11vw,11rem)] leading-[0.92] tracking-[-0.05em] text-white"
+          className="font-display text-[clamp(2.5rem,11vw,11rem)] leading-[0.92] tracking-tighter text-white"
         >
           {t('manifesto.lineA')}
         </h2>
         <h2
           ref={lineBRef}
-          className="font-display text-[clamp(2.5rem,11vw,11rem)] leading-[0.92] tracking-[-0.05em] text-gradient"
+          className="font-display text-[clamp(2.5rem,11vw,11rem)] leading-[0.92] tracking-tighter text-gradient"
         >
           {t('manifesto.lineB')}
         </h2>
         <h2
           ref={lineCRef}
-          className="font-display text-[clamp(2.5rem,11vw,11rem)] leading-[0.92] tracking-[-0.05em] text-white"
+          className="font-display text-[clamp(2.5rem,11vw,11rem)] leading-[0.92] tracking-tighter text-white"
         >
           {t('manifesto.lineC')}
         </h2>
@@ -131,7 +131,7 @@ export default function Manifesto() {
       <div className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-[1.4fr_1fr] lg:gap-20">
         <p
           ref={bodyRef}
-          className="max-w-xl text-lg leading-relaxed text-[var(--color-muted)] md:text-xl"
+          className="max-w-xl text-lg leading-relaxed text-muted md:text-xl"
         >
           {t('manifesto.body')}
         </p>
@@ -139,7 +139,7 @@ export default function Manifesto() {
         <div className="relative pl-6">
           <span
             aria-hidden="true"
-            className="absolute inset-y-0 left-0 w-px bg-gradient-to-b from-[var(--color-accent-cyan)] via-[var(--color-accent-violet)] to-transparent"
+            className="absolute inset-y-0 left-0 w-px bg-linear-to-b from-accent-cyan via-accent-violet to-transparent"
           />
           <ul ref={sigListRef} className="space-y-3.5">
             {signature.map((line) => (

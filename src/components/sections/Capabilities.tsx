@@ -79,15 +79,15 @@ export default function Capabilities() {
       ref={sectionRef}
       id="capabilities"
       aria-label="Capabilities"
-      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-[280px] lg:py-48"
+      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-70 lg:py-48"
     >
       <div className="max-w-4xl">
-        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]">
+        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan">
           {t('capabilities.eyebrow')}
         </span>
         <h2
           ref={titleRef}
-          className="mt-5 font-display text-[clamp(2rem,6vw,5rem)] leading-[1.0] tracking-[-0.04em] text-white"
+          className="mt-5 font-display text-[clamp(2rem,6vw,5rem)] leading-none tracking-[-0.04em] text-white"
         >
           {t('capabilities.title')}{' '}
           <span className="text-gradient">{t('capabilities.titleAccent')}</span>
@@ -113,7 +113,7 @@ function CapabilityCard({ item, Icon }: { item: Item; Icon: LucideIcon }) {
     <div
       ref={magnetRef}
       data-cursor="hover"
-      className="cap-card group relative rounded-3xl border border-white/8 bg-[var(--color-bg-elev)]/70 p-8 backdrop-blur-xl transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-white/15 md:p-10"
+      className="cap-card group relative rounded-3xl border border-white/8 bg-bg-elev/70 p-8 backdrop-blur-xl transition-[border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-white/15 md:p-10"
       style={{ willChange: 'transform' }}
     >
       {/* Chromatic glow on hover — cyan + violet halo */}
@@ -144,7 +144,7 @@ function CapabilityCard({ item, Icon }: { item: Item; Icon: LucideIcon }) {
         <span className="font-display text-[clamp(3.5rem,7vw,5.5rem)] leading-none tracking-[-0.06em] text-gradient">
           {item.tag}
         </span>
-        <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] text-white/80 transition-colors group-hover:border-[var(--color-accent-cyan)]/60 group-hover:text-[var(--color-accent-cyan)]">
+        <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/3 text-white/80 transition-colors group-hover:border-accent-cyan/60 group-hover:text-accent-cyan">
           <Icon size={18} strokeWidth={1.6} />
         </span>
       </div>
@@ -152,7 +152,7 @@ function CapabilityCard({ item, Icon }: { item: Item; Icon: LucideIcon }) {
       <h3 className="relative mt-8 font-display text-2xl tracking-[-0.02em] text-white md:text-3xl">
         {item.title}
       </h3>
-      <p className="relative mt-3 max-w-md text-base leading-relaxed text-[var(--color-muted)]">
+      <p className="relative mt-3 max-w-md text-base leading-relaxed text-muted">
         {item.body}
       </p>
 
@@ -160,7 +160,7 @@ function CapabilityCard({ item, Icon }: { item: Item; Icon: LucideIcon }) {
         {item.tags.map((tag) => (
           <li
             key={tag}
-            className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-muted)]"
+            className="rounded-full border border-white/10 bg-white/3 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-muted"
           >
             {tag}
           </li>

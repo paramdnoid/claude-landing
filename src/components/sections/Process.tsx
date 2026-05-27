@@ -155,7 +155,7 @@ export default function Process() {
   return (
     <section ref={sectionRef} id="process" aria-label="Process" className="relative">
       {/* Header */}
-      <div className="mx-auto max-w-400 px-6 pt-32 pb-12 lg:px-10 lg:pt-40 lg:pb-16 lg:pl-65">
+      <div className="mx-auto max-w-400 px-6 pt-32 pb-12 lg:px-10 lg:pt-40 lg:pb-16">
         <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan">
           {t('process.eyebrow')}
         </span>
@@ -204,7 +204,7 @@ export default function Process() {
           <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-white/6 to-transparent" />
         </div>
 
-        <div className="relative mx-auto grid h-full max-w-400 gap-10 px-6 pb-20 lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:px-10 lg:pl-65 lg:pb-10 lg:pt-16">
+        <div className="relative mx-auto grid h-full max-w-400 gap-10 px-6 pb-20 lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:px-10 lg:pb-10 lg:pt-16">
           {/* LEFT — product mock with 3 crossfading layers + telemetry */}
           <div className="relative flex h-[70vh] w-full flex-col gap-6 lg:h-auto">
             <div className="relative flex-1">

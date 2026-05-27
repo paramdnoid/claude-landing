@@ -103,19 +103,8 @@ export default function TechStack() {
       ref={sectionRef}
       id="techstack"
       aria-label="Tech stack"
-      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-70 lg:py-48"
+      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-12 lg:py-48"
     >
-      {/* Ambient glow */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div
-          className="absolute left-[10%] top-[20%] h-[50vh] w-[50vh] rounded-full opacity-[0.15] blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.7), transparent 70%)' }}
-        />
-        <div
-          className="absolute right-[15%] bottom-[10%] h-[55vh] w-[55vh] rounded-full opacity-[0.15] blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.7), transparent 70%)' }}
-        />
-      </div>
 
       <div className="max-w-4xl">
         <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan">
@@ -138,7 +127,7 @@ export default function TechStack() {
 
       <div
         ref={gridRef}
-        className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8"
+        className="mt-20 grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-10"
       >
         {groups.map((group, i) => {
           const Icon = GROUP_ICONS[i] ?? Sparkles;
@@ -146,24 +135,17 @@ export default function TechStack() {
             <div
               key={group.label}
               data-cursor="hover"
-              className="stack-card group relative overflow-hidden rounded-3xl border border-white/8 bg-bg-elev/70 p-7 backdrop-blur-xl transition-[border-color,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-white/15 md:p-9"
+              className="stack-card premium-card group relative overflow-hidden p-8 md:p-10"
             >
-              {/* hover glow */}
+              {/* corner gradient blob */}
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                style={{
-                  boxShadow:
-                    '0 30px 80px -30px rgba(0,229,255,0.30), 0 30px 80px -30px rgba(168,85,247,0.25)',
-                }}
-              />
-              {/* corner gradient accent */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-30 blur-2xl transition-opacity duration-500 group-hover:opacity-60"
+                className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-40 blur-3xl transition-opacity duration-700 group-hover:opacity-80"
                 style={{
                   background:
-                    'radial-gradient(circle, rgba(0,229,255,0.5), transparent 70%)',
+                    i % 2 === 0
+                      ? 'radial-gradient(circle, rgba(0,229,255,0.55), transparent 70%)'
+                      : 'radial-gradient(circle, rgba(168,85,247,0.55), transparent 70%)',
                 }}
               />
 
@@ -171,12 +153,12 @@ export default function TechStack() {
                 <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-accent-cyan">
                   {String(i + 1).padStart(2, '0')} / {String(groups.length).padStart(2, '0')}
                 </span>
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/3 text-white/75 transition-colors group-hover:border-accent-cyan/60 group-hover:text-accent-cyan">
-                  <Icon size={16} strokeWidth={1.6} aria-hidden="true" />
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/12 bg-white/4 text-white/85 transition-all duration-500 group-hover:border-accent-cyan/60 group-hover:bg-accent-cyan/8 group-hover:text-accent-cyan group-hover:shadow-[0_0_22px_rgba(0,229,255,0.35)]">
+                  <Icon size={17} strokeWidth={1.5} aria-hidden="true" />
                 </span>
               </div>
 
-              <h3 className="relative mt-6 font-display text-2xl tracking-[-0.02em] text-white md:text-3xl">
+              <h3 className="relative mt-7 font-display text-2xl tracking-[-0.02em] text-white md:text-3xl">
                 {group.label}
               </h3>
 
@@ -184,7 +166,7 @@ export default function TechStack() {
                 {group.items.map((item) => (
                   <li
                     key={item}
-                    className="stack-chip cursor-default rounded-full border border-white/10 bg-white/3 px-3 py-1.5 font-mono text-[11px] tracking-[0.06em] text-white/80 transition-all duration-300 hover:border-accent-cyan/50 hover:bg-accent-cyan/8 hover:text-white hover:shadow-[0_0_16px_rgba(0,229,255,0.25)]"
+                    className="stack-chip cursor-default rounded-full border border-white/10 bg-white/4 px-3.5 py-1.5 font-mono text-[11px] tracking-[0.06em] text-white/80 transition-all duration-300 hover:border-accent-cyan/60 hover:bg-accent-cyan/10 hover:text-white hover:shadow-[0_0_20px_rgba(0,229,255,0.35)]"
                   >
                     {item}
                   </li>

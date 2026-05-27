@@ -140,23 +140,8 @@ export default function About() {
       ref={sectionRef}
       id="about"
       aria-label="About"
-      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-70 lg:py-48"
+      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-12 lg:py-48"
     >
-      {/* Soft cyan + violet bloom */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <div
-          className="absolute left-1/4 top-1/3 h-[60vh] w-[60vh] rounded-full opacity-[0.18] blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.7), transparent 70%)' }}
-        />
-        <div
-          className="absolute right-[10%] top-1/2 h-[55vh] w-[55vh] rounded-full opacity-[0.18] blur-3xl"
-          style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.7), transparent 70%)' }}
-        />
-      </div>
-
       <div className="mb-10 lg:mb-16">
         <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan">
           {t('about.eyebrow')}
@@ -184,7 +169,7 @@ export default function About() {
         </h2>
       </div>
 
-      <div className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+      <div className="mt-16 grid gap-12 lg:mt-24 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <p
           ref={bodyRef}
           className="max-w-xl text-lg leading-relaxed text-muted md:text-xl"
@@ -192,20 +177,22 @@ export default function About() {
           {t('about.body')}
         </p>
 
-        <div className="relative pl-6">
+        <div className="premium-card relative overflow-hidden p-8 md:p-10">
+          {/* corner blob */}
           <span
             aria-hidden="true"
-            className="absolute inset-y-0 left-0 w-px bg-linear-to-b from-accent-cyan via-accent-violet to-transparent"
+            className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-50 blur-3xl"
+            style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.55), transparent 70%)' }}
           />
-          <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent-cyan">
+          <span className="relative font-mono text-[11px] uppercase tracking-[0.28em] text-accent-cyan">
             {t('about.skillsLabel')}
           </span>
-          <ul ref={skillsRef} className="mt-6 space-y-1">
+          <ul ref={skillsRef} className="relative mt-6 space-y-1">
             {skills.map((skill) => (
               <li key={skill.name} className="group relative">
                 <div
                   data-cursor="hover"
-                  className="flex cursor-default items-baseline justify-between gap-4 border-b border-white/5 py-3 transition-colors duration-300 group-hover:border-accent-cyan/40"
+                  className="flex cursor-default items-baseline justify-between gap-4 border-b border-white/8 py-3.5 transition-colors duration-300 group-hover:border-accent-cyan/40"
                 >
                   <span className="font-display text-lg tracking-[-0.01em] text-white/90 transition-colors duration-300 group-hover:text-white">
                     {skill.name}
@@ -226,30 +213,31 @@ export default function About() {
         </div>
       </div>
 
-      {/* Animated stat counters */}
+      {/* Animated stat counters — individual premium cards */}
       <div
         ref={statsRef}
-        className="mt-20 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/8 bg-white/3 lg:mt-28 lg:grid-cols-4"
+        className="mt-24 grid grid-cols-2 gap-5 lg:mt-32 lg:grid-cols-4 lg:gap-6"
       >
         {stats.map((stat) => (
           <div
             key={stat.label}
             data-target={stat.value}
-            className="stat-card relative bg-bg-elev/70 p-6 backdrop-blur-sm md:p-8"
+            className="stat-card premium-card group relative overflow-hidden p-7 md:p-8"
           >
-            <div
+            <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/12 to-transparent"
+              className="pointer-events-none absolute -right-14 -top-14 h-36 w-36 rounded-full opacity-40 blur-2xl transition-opacity duration-500 group-hover:opacity-90"
+              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.55), transparent 70%)' }}
             />
-            <div className="flex items-baseline gap-1">
-              <span className="stat-num font-display text-[clamp(2.5rem,5vw,4rem)] leading-none tracking-[-0.04em] text-gradient tabular-nums">
+            <div className="relative flex items-baseline gap-1">
+              <span className="stat-num font-display text-[clamp(3rem,6vw,5rem)] leading-none tracking-[-0.04em] text-gradient tabular-nums drop-shadow-[0_0_30px_rgba(0,229,255,0.3)]">
                 0
               </span>
               <span className="font-display text-2xl tracking-[-0.04em] text-gradient md:text-3xl">
                 {stat.suffix}
               </span>
             </div>
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+            <p className="relative mt-4 font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
               {stat.label}
             </p>
           </div>

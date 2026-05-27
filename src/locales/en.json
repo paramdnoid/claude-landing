@@ -1,5 +1,6 @@
 {
   "nav": {
+    "ask": "Ask me",
     "about": "About",
     "services": "Services",
     "process": "Process",
@@ -16,6 +17,7 @@
     "online": "Online",
     "items": {
       "overview": "Overview",
+      "ask": "Ask me",
       "about": "About",
       "services": "Services",
       "process": "Process",
@@ -53,8 +55,54 @@
     "lede": "I integrate AI into your business — as a solo engineer I build products, automate workflows and train teams. From idea to launch, with AI as co-pilot.",
     "scrollHint": "Scroll"
   },
+  "ask": {
+    "eyebrow": "01 — Ask me",
+    "title": "Ask my",
+    "titleAccent": "AI assistant.",
+    "lede": "Type what you want to know — or click one of the cards. The AI knows my services, my setup and my process.",
+    "statusLabel": "Andre's AI assistant",
+    "statusOnline": "online",
+    "welcome": "Hi 👋 I'm Andre's AI assistant. I can answer questions about his services, pricing and process. What can I help you with?",
+    "placeholder": "Type a question...",
+    "send": "Send",
+    "demoBadge": "Demo mode",
+    "demoNote": "Running a mocked conversation right now. Once Ollama is wired up, a real local LLM responds.",
+    "thinking": "Typing",
+    "freeFormResponse": "Good question — the real AI can answer that once Ollama is wired in. Until then: click one of the cards, or email Andre directly at hello@zian-ai.dev. He replies personally within 24h.",
+    "followupLabel": "Next step",
+    "quickReplies": [
+      {
+        "id": "web",
+        "label": "I need a web app",
+        "userText": "I need a web app.",
+        "response": "Solid. Andre builds modern web apps with React 19, Tailwind v4 and AI in the workflow — from landing pages to production SaaS. A typical prototype runs in 1–3 weeks, full product in ~12 weeks. Want to message Andre directly to discuss your project?",
+        "ctaLabel": "Discuss project with Andre →"
+      },
+      {
+        "id": "app",
+        "label": "App development",
+        "userText": "I want a mobile app built.",
+        "response": "Andre builds native and cross-platform mobile apps, mostly with React Native and Expo — iOS and Android from one codebase, AI features built in. Tell me roughly what app you have in mind, or book a 30-min call directly.",
+        "ctaLabel": "Book a call with Andre →"
+      },
+      {
+        "id": "ki",
+        "label": "AI integration for my company",
+        "userText": "We want to integrate AI into our business.",
+        "response": "That's exactly Andre's specialty. He integrates AI where it actually saves work: custom agents, chat interfaces on your data, automated workflows — embedded into your existing systems (Slack, CRMs, internal APIs). Drop him a short brief and he'll get back within 24h.",
+        "ctaLabel": "Contact Andre for AI integration →"
+      },
+      {
+        "id": "kurs",
+        "label": "AI course / workshop",
+        "userText": "I'm interested in an AI course or workshop.",
+        "response": "Andre runs in-house workshops, 1:1 coaching and structured courses — from AI basics for teams to agent design for developers. Tell him how big your team is and what you want to learn, and he'll shape a format for you.",
+        "ctaLabel": "Request a workshop from Andre →"
+      }
+    ]
+  },
   "about": {
-    "eyebrow": "01 — About",
+    "eyebrow": "02 — About",
     "lineA": "One engineer.",
     "lineB": "AI as leverage.",
     "lineC": "Products that ship.",
@@ -77,7 +125,7 @@
     "kicker": "If you want to know what AI can actually change in your business — ask me. I'll tell you honestly what's worth it and what's pure theater."
   },
   "capabilities": {
-    "eyebrow": "02 — Services",
+    "eyebrow": "03 — Services",
     "title": "Four ways",
     "titleAccent": "I help you.",
     "items": [
@@ -108,7 +156,7 @@
     ]
   },
   "process": {
-    "eyebrow": "03 — How it works",
+    "eyebrow": "04 — How it works",
     "title": "Three weeks.",
     "titleAccent": "Then you decide.",
     "lede": "A discovery sprint that ends with a working thing — not a deck.",
@@ -131,7 +179,7 @@
     ]
   },
   "techstack": {
-    "eyebrow": "04 — Tech stack",
+    "eyebrow": "05 — Tech stack",
     "title": "Tools",
     "titleAccent": "I build with.",
     "lede": "A curated selection — not a hype list. What's on here runs in production.",
@@ -155,7 +203,7 @@
     ]
   },
   "contact": {
-    "eyebrow": "05 — Start",
+    "eyebrow": "06 — Start",
     "title": "Tell me what",
     "titleAccent": "you're building.",
     "lede": "A short note works. I reply within 24 hours — usually faster.",

@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const SITE_URL = (import.meta.env.VITE_SITE_URL ?? 'https://zian-ai.dev').replace(/\/$/, '');
 const PERSON_NAME = 'André Zimmermann';
 
-const TITLES: Record<string, Record<string, string>> = {
+const SUPPORTED_LANGS = ['de', 'en'] as const;
+type Lang = (typeof SUPPORTED_LANGS)[number];
+
+const TITLES: Record<string, Record<Lang, string>> = {
   '/': {
     de: 'ZIAN AI CONCEPTS — KI-Engineering, Kurse, Integration',
     en: 'ZIAN AI CONCEPTS — AI Engineering, Courses, Integration',
@@ -20,7 +23,7 @@ const TITLES: Record<string, Record<string, string>> = {
   },
 };
 
-const DESC: Record<string, string> = {
+const DESC: Record<Lang, string> = {
   de: 'André Zimmermann baut KI-gestützte Web- & App-Produkte, hält KI-Kurse und integriert KI in Unternehmen.',
   en: 'André Zimmermann builds AI-driven web & app products, runs AI courses and integrates AI into companies.',
 };
@@ -60,15 +63,32 @@ function setJsonLd(id: string, data: object) {
   el.textContent = JSON.stringify(data);
 }
 
+function isLang(value: string | undefined): value is Lang {
+  return value === 'de' || value === 'en';
+}
+
 export default function Seo() {
   const { i18n } = useTranslation();
   const { pathname } = useLocation();
-  const lang = i18n.language.startsWith('en') ? 'en' : 'de';
+  const { lang: paramLang } = useParams<{ lang: string }>();
+
+  const lang: Lang = isLang(paramLang)
+    ? paramLang
+    : i18n.language.startsWith('en')
+      ? 'en'
+      : 'de';
 
   useEffect(() => {
-    const title = TITLES[pathname]?.[lang] ?? TITLES['/'][lang];
+    // Strip leading `/de` or `/en` from pathname to derive the page key.
+    const segments = pathname.split('/').filter(Boolean);
+    const rest = segments[0] === 'de' || segments[0] === 'en' ? segments.slice(1) : segments;
+    const subpath = rest.length === 0 ? '/' : `/${rest.join('/')}`;
+
+    const title = TITLES[subpath]?.[lang] ?? TITLES['/']?.[lang] ?? 'ZIAN AI CONCEPTS';
     const desc = DESC[lang];
-    const canonical = `${SITE_URL}${pathname}`;
+    const canonical = subpath === '/' ? `${SITE_URL}/${lang}` : `${SITE_URL}/${lang}${subpath}`;
+    const altDe = subpath === '/' ? `${SITE_URL}/de` : `${SITE_URL}/de${subpath}`;
+    const altEn = subpath === '/' ? `${SITE_URL}/en` : `${SITE_URL}/en${subpath}`;
 
     document.title = title;
     document.documentElement.lang = lang;
@@ -78,17 +98,17 @@ export default function Seo() {
     setMeta('og:description', desc, 'property');
     setMeta('og:url', canonical, 'property');
     setMeta('og:locale', lang === 'de' ? 'de_DE' : 'en_US', 'property');
-    setMeta('og:image', `${SITE_URL}/og-image.svg`, 'property');
+    setMeta('og:image', `${SITE_URL}/og-image.png`, 'property');
     setMeta('og:type', 'website', 'property');
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', title);
     setMeta('twitter:description', desc);
-    setMeta('twitter:image', `${SITE_URL}/og-image.svg`);
+    setMeta('twitter:image', `${SITE_URL}/og-image.png`);
 
     setLink('canonical', canonical);
-    setLink('alternate', canonical, lang === 'de' ? 'de' : 'en');
-    setLink('alternate', canonical, lang === 'de' ? 'en' : 'de');
-    setLink('alternate', `${SITE_URL}${pathname}`, 'x-default');
+    setLink('alternate', altDe, 'de');
+    setLink('alternate', altEn, 'en');
+    setLink('alternate', altDe, 'x-default');
 
     setJsonLd('person', {
       '@context': 'https://schema.org',
@@ -104,12 +124,44 @@ export default function Seo() {
       '@type': 'ProfessionalService',
       name: 'ZIAN AI CONCEPTS',
       url: SITE_URL,
-      image: `${SITE_URL}/og-image.svg`,
+      image: `${SITE_URL}/og-image.png`,
       description: desc,
       founder: { '@type': 'Person', name: PERSON_NAME },
       areaServed: lang === 'de' ? 'DE' : 'Worldwide',
       knowsAbout: ['Artificial Intelligence', 'Web Development', 'App Development', 'AI Training', 'Enterprise AI Integration'],
     });
+
+    if (subpath === '/') {
+      setJsonLd('website', {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        url: canonical,
+        name: 'ZIAN AI CONCEPTS',
+        inLanguage: lang === 'de' ? 'de-DE' : 'en-US',
+      });
+    }
+
+    if (subpath === '/impressum' || subpath === '/datenschutz') {
+      const pageTitle = TITLES[subpath]?.[lang] ?? title;
+      setJsonLd('breadcrumb', {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'ZIAN AI CONCEPTS',
+            item: `${SITE_URL}/${lang}`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: pageTitle,
+            item: canonical,
+          },
+        ],
+      });
+    }
   }, [pathname, lang]);
 
   return null;

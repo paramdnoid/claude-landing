@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { useEffect, useState, type ReactNode } from 'react';
+import { Navigate, Outlet, Route, Routes, useLocation, useParams } from 'react-router-dom';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -10,8 +10,16 @@ import CookieBanner from './components/CookieBanner';
 import Seo from './components/Seo';
 import PageTransition from './components/PageTransition';
 import Loader from './components/Loader';
+import i18n from './lib/i18n';
 import { destroySmoothScroll, getLenis, initSmoothScroll } from './lib/smoothScroll';
 import { initAnalytics } from './lib/analytics';
+
+const SUPPORTED_LANGS = ['de', 'en'] as const;
+type Lang = (typeof SUPPORTED_LANGS)[number];
+
+function isLang(value: string | undefined): value is Lang {
+  return value === 'de' || value === 'en';
+}
 
 function ScrollRefresh({ ready }: { ready: boolean }) {
   const { pathname } = useLocation();
@@ -19,16 +27,66 @@ function ScrollRefresh({ ready }: { ready: boolean }) {
     if (!ready) return;
     const hash = window.location.hash.slice(1);
     const target = hash ? document.getElementById(hash) : null;
-    if (target) {
-      const lenis = getLenis();
-      if (lenis) lenis.scrollTo(target, { offset: -64, immediate: true });
-      else target.scrollIntoView({ block: 'start' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-    }
-    requestAnimationFrame(() => ScrollTrigger.refresh());
+    // Defer one rAF so this runs after App's [loaded] effect calls lenis.start();
+    // child effects fire before parent effects, so a direct call here would hit a
+    // stopped Lenis on initial mount and be silently discarded.
+    let innerRaf = 0;
+    const raf = requestAnimationFrame(() => {
+      if (target) {
+        const lenis = getLenis();
+        if (lenis) lenis.scrollTo(target, { offset: -64, immediate: true });
+        else target.scrollIntoView({ block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+      }
+      innerRaf = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      if (innerRaf) cancelAnimationFrame(innerRaf);
+    };
   }, [pathname, ready]);
   return null;
+}
+
+function RootRedirect() {
+  const stored = typeof window !== 'undefined' ? window.localStorage.getItem('zian.lang') : null;
+  const browserLang: Lang =
+    typeof navigator !== 'undefined' && navigator.language.toLowerCase().startsWith('en') ? 'en' : 'de';
+  const lang: Lang = isLang(stored ?? undefined) ? (stored as Lang) : browserLang;
+  return <Navigate to={`/${lang}`} replace />;
+}
+
+function LocaleGate({ children }: { children: ReactNode }) {
+  const { lang } = useParams<{ lang: string }>();
+  const valid = isLang(lang);
+
+  useEffect(() => {
+    if (!valid || !lang) return;
+    if (i18n.language !== lang) {
+      void i18n.changeLanguage(lang);
+    }
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+    }
+  }, [lang, valid]);
+
+  if (!valid) {
+    return <Navigate to="/de" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+function LocaleLayout({ ready }: { ready: boolean }) {
+  return (
+    <Layout>
+      <ScrollRefresh ready={ready} />
+      <PageTransition>
+        <Outlet />
+      </PageTransition>
+    </Layout>
+  );
 }
 
 export default function App() {
@@ -48,7 +106,10 @@ export default function App() {
     } else {
       lenis?.start();
       document.documentElement.classList.remove('lenis-stopped');
-      requestAnimationFrame(() => ScrollTrigger.refresh());
+      // Two rAFs: first flushes React commit, second waits for browser layout/paint so ScrollTrigger reads final positions.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+      });
     }
   }, [loaded]);
 
@@ -57,16 +118,22 @@ export default function App() {
       <Seo />
       <Cursor />
       <Loader onDone={() => setLoaded(true)} />
-      <Layout>
-        <ScrollRefresh ready={loaded} />
-        <PageTransition>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/datenschutz" element={<Datenschutz />} />
-          </Routes>
-        </PageTransition>
-      </Layout>
+      <Routes>
+        <Route path="/" element={<RootRedirect />} />
+        <Route
+          path="/:lang"
+          element={
+            <LocaleGate>
+              <LocaleLayout ready={loaded} />
+            </LocaleGate>
+          }
+        >
+          <Route index element={<Home />} />
+          <Route path="impressum" element={<Impressum />} />
+          <Route path="datenschutz" element={<Datenschutz />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/de" replace />} />
+      </Routes>
       <CookieBanner />
     </>
   );

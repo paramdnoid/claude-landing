@@ -248,3 +248,9 @@
     scroll-behavior: auto !important;
   }
 }
+
+@media (prefers-reduced-transparency: reduce) {
+  body::after {
+    display: none;
+  }
+}

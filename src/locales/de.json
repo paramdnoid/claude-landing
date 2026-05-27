@@ -6,7 +6,10 @@
     "process": "Prozess",
     "contact": "Kontakt",
     "language": "Sprache",
-    "menu": "Menü"
+    "menu": "Menü",
+    "skipToContent": "Zum Hauptinhalt springen",
+    "home": "Start",
+    "brandLabel": "ZIAN AI CONCEPTS – Startseite"
   },
   "loader": {
     "label": "Szene wird komponiert",
@@ -35,7 +38,15 @@
     "title": "Was zuletzt entstanden ist.",
     "intro": "Eine rotierende Auswahl jüngster Experimente, Produkte und Auftragsarbeiten — von KI-Agenten über generative Interfaces bis Creative R&D.",
     "endTag": "Mehr",
-    "endLine": "Vollständige Case Studies auf Anfrage — schreib mir."
+    "endLine": "Vollständige Case Studies auf Anfrage — schreib mir.",
+    "onRequest": "Case Study auf Anfrage",
+    "cases": [
+      { "index": "01", "title": "Neurale Kompositionen", "tag": "KI · Generative Audio", "year": "2026", "blurb": "Ein generatives Audiosystem, das latente Musikräume durch LLM-gesteuerte Komposition erkundet." },
+      { "index": "02", "title": "Synthetisches Studio", "tag": "KI · Markensystem", "year": "2025", "blurb": "KI-gestützte Brandidentität: Logosynthese, Typografie-Auswahl und Farbsystemgenerierung in Echtzeit." },
+      { "index": "03", "title": "Atlas des Latenten Raums", "tag": "WebGL · R&D", "year": "2025", "blurb": "Interaktive WebGL-Visualisierung hochdimensionaler Einbettungsräume für Modell-Interpretierbarkeit." },
+      { "index": "04", "title": "Stille Maschinen", "tag": "KI · Interface", "year": "2024", "blurb": "Ambient-Interface-Experiment: Eine KI die auf Aufmerksamkeit und Kontext reagiert, nicht auf Klicks." },
+      { "index": "05", "title": "Soft Protocol", "tag": "Creative Tech · Konzept", "year": "2024", "blurb": "Konzeptprotokoll für dezentrale kreative Zusammenarbeit zwischen Mensch und KI-Agenten." }
+    ]
   },
   "capabilities": {
     "eyebrow": "Leistungen · 03",
@@ -58,6 +69,43 @@
       { "index": "04", "title": "Liefern", "body": "Production-grade Handwerk ab Tag 1. Danach: pflegen, messen, weiterentwickeln. Software ist Beziehung, nicht Übergabe." }
     ]
   },
+  "aiDemo": {
+    "eyebrow": "KI-Demo · 05",
+    "title": "Intelligenz erleben.",
+    "intro": "Stell mir eine Frage. Ich beantworte sie direkt — kein Formular, kein Warteraum.",
+    "placeholder": "Stell mir eine Frage…",
+    "suggestions": [
+      "Was macht ZIAN AI CONCEPTS?",
+      "Wie läuft eine Zusammenarbeit ab?",
+      "Welche KI-Modelle nutzt du?",
+      "Was unterscheidet dich von einer Agentur?"
+    ],
+    "status": {
+      "idle": "Bereit",
+      "streaming": "Antwortet…",
+      "error": "Fehler aufgetreten",
+      "stopped": "Gestoppt"
+    },
+    "controls": {
+      "send": "Senden",
+      "stop": "Stoppen",
+      "reset": "Zurücksetzen"
+    },
+    "disclaimer": "Fragen werden lokal verarbeitet und nicht gespeichert.",
+    "liveDisclaimer": "Prompts werden direkt an den Ollama-Endpunkt gesendet, niemals an Dritte.",
+    "modelLabel": "Modell",
+    "poweredBy": "Betrieben von Ollama",
+    "demoMode": "Demo-Modus",
+    "mock": {
+      "replies": [
+        "ZIAN AI CONCEPTS ist ein Ein-Personen-Studio für KI-Engineering, Creative Coding und Interaction Design. Ich baue Interfaces, Agenten und generative Systeme — von der Konzeptidee bis zur Produktion.",
+        "Eine Zusammenarbeit startet meistens mit einem kurzen Kick-off-Call. Danach iterieren wir eng zusammen: ich liefere schnell funktionierende Prototypen statt langer Spezifikationsdokumente.",
+        "Hauptsächlich nutze ich Claude von Anthropic und open-source Modelle über Ollama — je nach Use-Case. Für Produktionsanwendungen bevorzuge ich Claude aufgrund seiner Zuverlässigkeit und Reasoning-Stärke.",
+        "Anders als eine Agentur gibt es bei mir keine Account-Manager oder Übergaben. Du arbeitest direkt mit mir — was schnellere Entscheidungen, weniger Overhead und mehr Kohärenz im Produkt bedeutet."
+      ],
+      "fallback": "Gute Frage! Ich bin André Zimmermann, KI-Engineer und Designer bei ZIAN AI CONCEPTS. Schreib mir direkt, wenn du mehr erfahren möchtest."
+    }
+  },
   "marquee": {
     "eyebrow": "Werkzeuge in Bewegung"
   },
@@ -65,7 +113,28 @@
     "eyebrow": "Kontakt · 05",
     "title": "Lass uns etwas bauen, das mitdenkt.",
     "email": "hello@andrezimmermann.dev",
-    "socials": "Folge mir"
+    "socials": "Folge mir",
+    "github": "GitHub",
+    "twitter": "X / Twitter",
+    "linkedin": "LinkedIn",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Dein Name",
+      "email": "E-Mail",
+      "emailPlaceholder": "deine@email.com",
+      "message": "Nachricht",
+      "messagePlaceholder": "Womit kann ich dir helfen?",
+      "send": "Nachricht senden",
+      "sending": "Wird gesendet…",
+      "successTitle": "Danke, {{name}}!",
+      "successBody": "Ich melde mich in der Regel innerhalb von 24 Stunden.",
+      "sendAnother": "Weitere Nachricht senden",
+      "errorTitle": "Etwas ist schiefgelaufen.",
+      "errorBody": "Bitte versuche es erneut oder schreib mir direkt per E-Mail.",
+      "required": "Pflichtfeld",
+      "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "demoNote": "[Demo] Nachricht wurde nicht wirklich gesendet."
+    }
   },
   "consent": {
     "title": "Datenschutz",

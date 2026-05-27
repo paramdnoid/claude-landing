@@ -1,13 +1,15 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import { BlendFunction } from 'postprocessing';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import WebGL from 'three/examples/jsm/capabilities/WebGL.js';
+import { ScrollTrigger } from '../../lib/gsap';
+import { prefersReducedMotion } from '../../lib/animations';
 import { liquidGradientFragment, liquidGradientVertex } from './liquidGradientShader';
+import StaticGradientFallback from './StaticGradientFallback';
 
-gsap.registerPlugin(ScrollTrigger);
+const webGL2Available = typeof document !== 'undefined' ? WebGL.isWebGL2Available() : true;
 
 type Props = {
   /** id of the section that drives uScroll progress */
@@ -61,6 +63,7 @@ function GradientPlane({ scrollTriggerId }: Props) {
       start: 'top top',
       end: 'bottom top',
       scrub: 0.6,
+      invalidateOnRefresh: true,
       onUpdate: (self) => {
         if (materialRef.current) {
           (materialRef.current.uniforms.uScroll as { value: number }).value = self.progress;
@@ -75,6 +78,13 @@ function GradientPlane({ scrollTriggerId }: Props) {
       (materialRef.current.uniforms.uTime as { value: number }).value += dt;
     }
   });
+
+  // explicit disposal of the ShaderMaterial on unmount
+  useEffect(() => {
+    return () => {
+      materialRef.current?.dispose();
+    };
+  }, []);
 
   return (
     <mesh frustumCulled={false}>
@@ -92,6 +102,21 @@ function GradientPlane({ scrollTriggerId }: Props) {
 }
 
 export default function LiquidGradientMesh({ scrollTriggerId }: Props) {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < 768,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  if (prefersReducedMotion() || !webGL2Available) {
+    return <StaticGradientFallback />;
+  }
+
   return (
     <Canvas
       gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }}
@@ -102,13 +127,19 @@ export default function LiquidGradientMesh({ scrollTriggerId }: Props) {
     >
       <GradientPlane scrollTriggerId={scrollTriggerId} />
       <EffectComposer multisampling={0}>
-        <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
-        <ChromaticAberration
-          offset={[0.0008, 0.0008] as unknown as [number, number]}
-          blendFunction={BlendFunction.NORMAL}
-          radialModulation={false}
-          modulationOffset={0}
-        />
+        {isMobile ? (
+          <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
+        ) : (
+          <>
+            <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
+            <ChromaticAberration
+              offset={[0.0008, 0.0008] as unknown as [number, number]}
+              blendFunction={BlendFunction.NORMAL}
+              radialModulation={false}
+              modulationOffset={0}
+            />
+          </>
+        )}
       </EffectComposer>
     </Canvas>
   );

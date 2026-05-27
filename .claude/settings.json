@@ -2,7 +2,9 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_QUALITY_GATE": "1",
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
     "CLAUDE_QUALITY_GATE_MAX_SECONDS": "300",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "opus",
     "CLAUDE_AGENT_TEAM_PROFILE": "senior-react-next-tailwind-ts-i18n-three-gsap"
   },
   "teammateMode": "in-process",

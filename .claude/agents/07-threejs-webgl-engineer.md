@@ -3,6 +3,7 @@ name: threejs-webgl-engineer
 description: "Three.js/WebGL specialist. Use for scenes, cameras, renderers, controls, assets, animation loops, cleanup, performance and React/Next client integration."
 tools: "Read, Glob, Grep, Edit, Write, Bash, WebFetch, WebSearch"
 model: sonnet
+color: "#FF6F61"
 effort: high
 maxTurns: 24
 ---

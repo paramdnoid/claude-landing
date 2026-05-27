@@ -1,8 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 export default function Footer() {
   const { t } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const locale = lang ?? 'de';
   const year = new Date().getFullYear();
 
   return (
@@ -20,10 +22,10 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-3 font-mono text-xs uppercase tracking-[0.18em]">
           <div className="flex flex-wrap gap-6">
-            <Link to="/impressum" className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)]">
+            <Link to={`/${locale}/impressum`} className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)]">
               {t('footer.imprint')}
             </Link>
-            <Link to="/datenschutz" className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)]">
+            <Link to={`/${locale}/datenschutz`} className="text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)]">
               {t('footer.privacy')}
             </Link>
           </div>

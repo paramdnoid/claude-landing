@@ -4,7 +4,7 @@ description: "Create a multi-agent implementation plan for React/Next.js/Tailwin
 argument-hint: "[task]"
 disable-model-invocation: true
 allowed-tools: "Read Glob Grep Agent Bash(git status *) Bash(git diff *)"
-model: sonnet
+model: opus
 effort: high
 ---
 

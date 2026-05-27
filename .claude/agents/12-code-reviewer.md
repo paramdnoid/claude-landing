@@ -2,8 +2,9 @@
 name: senior-code-reviewer
 description: "General senior code reviewer. Use after any implementation to review correctness, maintainability, tests, architecture, style and project conventions."
 tools: "Read, Glob, Grep, Bash"
-model: sonnet
-effort: high
+model: opus
+color: "red"
+effort: "xhigh"
 maxTurns: 20
 ---
 

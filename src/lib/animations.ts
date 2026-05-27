@@ -1,7 +1,8 @@
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from './gsap';
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof document !== 'undefined') {
+  document.fonts.ready.then(() => ScrollTrigger.refresh());
+}
 
 export const prefersReducedMotion = (): boolean =>
   typeof window !== 'undefined' &&
@@ -52,6 +53,15 @@ export function splitText(el: HTMLElement): HTMLSpanElement[] {
   Array.from(el.childNodes).forEach((child) => splitNode(child, el));
   el.dataset.split = 'done';
   return chars;
+}
+
+export function splitTextReset(el: HTMLElement): void {
+  const text = Array.from(el.querySelectorAll<HTMLElement>('.word'))
+    .map((w) => w.textContent ?? '')
+    .join(' ');
+  el.innerHTML = text;
+  delete el.dataset.split;
+  delete el.dataset.splitWords;
 }
 
 export function revealChars(
@@ -217,7 +227,7 @@ export function revealWordsOnScroll(
  */
 export function pinnedTimeline(
   trigger: HTMLElement,
-  opts: { end?: string; scrub?: boolean | number } = {},
+  opts: { end?: string | (() => string); scrub?: boolean | number } = {},
 ): gsap.core.Timeline {
   if (prefersReducedMotion()) return gsap.timeline();
   return gsap.timeline({
@@ -228,6 +238,7 @@ export function pinnedTimeline(
       pin: true,
       scrub: opts.scrub ?? 1,
       anticipatePin: 1,
+      invalidateOnRefresh: true,
     },
   });
 }

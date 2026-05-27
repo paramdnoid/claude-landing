@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LangToggle from './LangToggle';
 import { getLenis } from '../lib/smoothScroll';
@@ -10,6 +10,10 @@ type NavId = (typeof NAV_IDS)[number];
 export default function Header() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const { lang } = useParams<{ lang: string }>();
+  const locale = lang ?? 'de';
+  const homePath = `/${locale}`;
+  const isHome = pathname === homePath || pathname === `${homePath}/`;
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<NavId | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -26,7 +30,7 @@ export default function Header() {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 40);
-      if (pathname !== '/') return;
+      if (!isHome) return;
       const midline = window.innerHeight * 0.35;
       let current: NavId | null = null;
       for (const id of NAV_IDS) {
@@ -43,7 +47,7 @@ export default function Header() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, [pathname]);
+  }, [isHome]);
 
   const scrollToId = (id: string) => {
     const target = document.getElementById(id);
@@ -69,7 +73,7 @@ export default function Header() {
         className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[var(--color-plasma-lime)] glow-lime"
       />
     );
-    return pathname === '/' ? (
+    return isHome ? (
       <a
         href={`#${id}`}
         className={cls}
@@ -78,7 +82,7 @@ export default function Header() {
         <span className="relative">{label}{indicator}</span>
       </a>
     ) : (
-      <Link to={`/#${id}`} className={cls}>
+      <Link to={`${homePath}#${id}`} className={cls}>
         <span className="relative">{label}{indicator}</span>
       </Link>
     );
@@ -93,7 +97,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
-        <Link to="/" className="group flex items-center gap-3" aria-label="ZIAN AI CONCEPTS — Andre Zimmermann">
+        <Link to={homePath} className="group flex items-center gap-3" aria-label={t('nav.brandLabel')}>
           <img
             src="/logo.svg"
             alt=""
@@ -136,12 +140,13 @@ export default function Header() {
       <nav
         id="mobile-nav"
         aria-hidden={!menuOpen}
-        className={`md:hidden overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-2xl transition-[max-height,opacity] duration-300 ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
+        inert={!menuOpen || undefined}
+        className={`md:hidden overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-2xl transition-[max-height,opacity] duration-300 ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
       >
         <ul className="flex flex-col gap-1 px-6 py-4 font-mono text-sm uppercase tracking-[0.18em]">
           {NAV_IDS.map((id) => (
             <li key={id}>
-              {pathname === '/' ? (
+              {isHome ? (
                 <a
                   href={`#${id}`}
                   className="block py-2 text-[var(--color-fg)]"
@@ -150,7 +155,7 @@ export default function Header() {
                   {t(`nav.${id}`)}
                 </a>
               ) : (
-                <Link to={`/#${id}`} className="block py-2 text-[var(--color-fg)]">
+                <Link to={`${homePath}#${id}`} className="block py-2 text-[var(--color-fg)]">
                   {t(`nav.${id}`)}
                 </Link>
               )}

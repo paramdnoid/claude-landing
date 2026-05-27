@@ -14,6 +14,7 @@ void i18n
     },
     fallbackLng: 'de',
     supportedLngs: ['de', 'en'],
+    returnNull: false,
     interpolation: { escapeValue: false },
     detection: {
       order: ['localStorage', 'navigator'],

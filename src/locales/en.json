@@ -5,7 +5,8 @@
     "capabilities": "Capabilities",
     "process": "Process",
     "contact": "Contact",
-    "language": "Language"
+    "language": "Language",
+    "menu": "Menu"
   },
   "loader": {
     "label": "Composing scene",

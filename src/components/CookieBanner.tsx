@@ -27,7 +27,7 @@ export default function CookieBanner() {
       className="fixed inset-x-4 bottom-4 z-[80] mx-auto max-w-2xl rounded-2xl border border-white/10 bg-[var(--color-bg-elev)]/95 p-5 shadow-2xl backdrop-blur md:inset-x-auto md:bottom-6 md:right-6 md:left-auto md:w-[420px]"
     >
       <div className="flex items-start gap-3">
-        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/3 text-accent-cyan">
+        <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-[var(--color-plasma-cyan)]">
           <Cookie size={16} strokeWidth={1.75} />
         </span>
         <div className="flex-1">

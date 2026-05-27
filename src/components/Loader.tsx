@@ -8,6 +8,8 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 export default function Loader({ onDone }: { onDone: () => void }) {
   const { t } = useTranslation();
+  const onDoneRef = useRef(onDone);
+  onDoneRef.current = onDone;
   const rootRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -22,7 +24,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
   useEffect(() => {
     if (prefersReducedMotion()) {
       setDone(true);
-      onDone();
+      onDoneRef.current();
       return;
     }
     const ctx = gsap.context(() => {
@@ -57,7 +59,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
       const tl = gsap.timeline({
         onComplete: () => {
           setDone(true);
-          onDone();
+          onDoneRef.current();
         },
       });
 
@@ -105,7 +107,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         );
     }, rootRef);
     return () => ctx.revert();
-  }, [onDone]);
+  }, []);
 
   if (done) return null;
 

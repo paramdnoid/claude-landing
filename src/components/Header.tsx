@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LangToggle from './LangToggle';
+import { getLenis } from '../lib/smoothScroll';
 
 const NAV_IDS = ['manifesto', 'work', 'capabilities', 'process', 'contact'] as const;
 type NavId = (typeof NAV_IDS)[number];
@@ -11,6 +12,16 @@ export default function Header() {
   const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<NavId | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenuOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -34,6 +45,19 @@ export default function Header() {
     };
   }, [pathname]);
 
+  const scrollToId = (id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    const lenis = getLenis();
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -64, duration: 1.2 });
+    } else {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    history.replaceState(null, '', `#${id}`);
+    setMenuOpen(false);
+  };
+
   const navLink = (id: NavId, label: string) => {
     const isActive = active === id;
     const cls = `relative transition-colors duration-300 ${
@@ -46,7 +70,11 @@ export default function Header() {
       />
     );
     return pathname === '/' ? (
-      <a href={`#${id}`} className={cls}>
+      <a
+        href={`#${id}`}
+        className={cls}
+        onClick={(e) => { e.preventDefault(); scrollToId(id); }}
+      >
         <span className="relative">{label}{indicator}</span>
       </a>
     ) : (
@@ -86,8 +114,49 @@ export default function Header() {
           {navLink('process', t('nav.process'))}
           {navLink('contact', t('nav.contact'))}
         </nav>
-        <LangToggle />
+        <div className="flex items-center gap-2">
+          <LangToggle />
+          <button
+            type="button"
+            aria-label={t('nav.menu')}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setMenuOpen((v) => !v)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[var(--color-fg)] md:hidden"
+          >
+            <span aria-hidden="true" className="relative flex h-3 w-4 flex-col justify-between">
+              <span className={`block h-0.5 w-full bg-current transition-transform duration-300 ${menuOpen ? 'translate-y-[5px] rotate-45' : ''}`} />
+              <span className={`block h-0.5 w-full bg-current transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block h-0.5 w-full bg-current transition-transform duration-300 ${menuOpen ? '-translate-y-[5px] -rotate-45' : ''}`} />
+            </span>
+          </button>
+        </div>
       </div>
+      <nav
+        id="mobile-nav"
+        aria-hidden={!menuOpen}
+        className={`md:hidden overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-2xl transition-[max-height,opacity] duration-300 ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
+      >
+        <ul className="flex flex-col gap-1 px-6 py-4 font-mono text-sm uppercase tracking-[0.18em]">
+          {NAV_IDS.map((id) => (
+            <li key={id}>
+              {pathname === '/' ? (
+                <a
+                  href={`#${id}`}
+                  className="block py-2 text-[var(--color-fg)]"
+                  onClick={(e) => { e.preventDefault(); scrollToId(id); }}
+                >
+                  {t(`nav.${id}`)}
+                </a>
+              ) : (
+                <Link to={`/#${id}`} className="block py-2 text-[var(--color-fg)]">
+                  {t(`nav.${id}`)}
+                </Link>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 }

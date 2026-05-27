@@ -15,6 +15,7 @@ export default function Cursor() {
 
     document.documentElement.classList.add('has-custom-cursor');
 
+    let firstMove = true;
     const dotX = gsap.quickTo(dot, 'x', { duration: 0.12, ease: 'power3' });
     const dotY = gsap.quickTo(dot, 'y', { duration: 0.12, ease: 'power3' });
     const ringX = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3' });
@@ -23,6 +24,11 @@ export default function Cursor() {
     let hovering = false;
 
     const onMove = (e: PointerEvent) => {
+      if (firstMove) {
+        firstMove = false;
+        gsap.set([dot, ring], { x: e.clientX, y: e.clientY });
+        gsap.to([dot, ring], { opacity: 1, duration: 0.2 });
+      }
       dotX(e.clientX);
       dotY(e.clientY);
       ringX(e.clientX);
@@ -75,13 +81,13 @@ export default function Cursor() {
       <div
         ref={ringRef}
         aria-hidden="true"
-        className="custom-cursor-ring pointer-events-none fixed left-0 top-0 z-100 hidden h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border lg:block"
+        className="custom-cursor-ring pointer-events-none fixed left-0 top-0 z-[100] hidden h-9 w-9 opacity-0 -translate-x-1/2 -translate-y-1/2 rounded-full border lg:block"
         style={{ borderColor: 'rgba(255,255,255,0.35)', mixBlendMode: 'difference' }}
       />
       <div
         ref={dotRef}
         aria-hidden="true"
-        className="custom-cursor-dot pointer-events-none fixed left-0 top-0 z-100 hidden h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white lg:block"
+        className="custom-cursor-dot pointer-events-none fixed left-0 top-0 z-[100] hidden h-1.5 w-1.5 opacity-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white lg:block"
       />
     </>
   );

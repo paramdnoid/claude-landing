@@ -24,7 +24,7 @@ Before making recommendations or edits, follow these project documents when rele
 Hard rules:
 1. Prefer current official docs over memory for version-sensitive framework behavior.
 2. Use strict TypeScript and avoid `any`.
-3. Respect React Rules of Hooks and Next.js Server/Client Component boundaries.
+3. Respect React Rules of Hooks and browser-only boundaries. Apply Next.js Server/Client Component rules only when Next.js is in scope.
 4. No hardcoded user-facing UI strings when i18n is in scope.
 5. Clean up GSAP and Three.js side effects.
 6. Return a concise report with assumptions, files inspected, changes, validation and risks.

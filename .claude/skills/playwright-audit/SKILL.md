@@ -28,7 +28,7 @@ Use `playwright-e2e-visual-qa-engineer`.
    - reduced-motion behavior
    - GSAP/Three.js fallback behavior when relevant
    - browser console errors
-   - hydration/runtime errors
+   - runtime/build errors
 5. Run the narrowest relevant Playwright command first.
 6. Run full E2E suite before final pass when available.
 7. If failures occur, report exact reproduction commands and likely root cause.

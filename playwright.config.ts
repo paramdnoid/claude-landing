@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = 5173;
-const BASE_URL = `http://localhost:${PORT}`;
+const HOST = '127.0.0.1';
+const BASE_URL = `http://${HOST}:${PORT}`;
 
 export default defineConfig({
   testDir: './tests',
@@ -34,16 +35,16 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
+    command: `npm run dev -- --host ${HOST} --port ${PORT} --strictPort`,
     url: BASE_URL,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     stdout: 'ignore',
     stderr: 'pipe',
     timeout: 120_000,
     // Provide a stub analytics URL so the CookieBanner component renders.
     // Tests use page.route() to fulfill the script request without network.
     env: {
-      VITE_ANALYTICS_SCRIPT_URL: 'http://localhost:5173/__playwright_noop_analytics.js',
+      VITE_ANALYTICS_SCRIPT_URL: `${BASE_URL}/__playwright_noop_analytics.js`,
     },
   },
 });

@@ -1,6 +1,6 @@
 ---
 name: tailwind-design-system-engineer
-description: "Tailwind CSS and design-system engineer. Use for utility classes, responsive UI, dark mode, design tokens, Tailwind v4 CSS-first config and component styling."
+description: "Tailwind v4 design-system engineer. Use for tokens, responsive UI, states, accessibility, and component styling."
 tools: "Read, Glob, Grep, Edit, Write, Bash, WebFetch, WebSearch"
 model: sonnet
 effort: high

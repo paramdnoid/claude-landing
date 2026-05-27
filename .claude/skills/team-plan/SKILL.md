@@ -1,6 +1,6 @@
 ---
 name: team-plan
-description: "Create a multi-agent implementation plan for React/Next.js/Tailwind/TypeScript/i18next/Three/GSAP work without changing code."
+description: "Create a Vite/React frontend implementation plan with specialist assignments and validation, without editing files."
 argument-hint: "[task]"
 disable-model-invocation: true
 allowed-tools: "Read Glob Grep Agent Bash(git status *) Bash(git diff *)"

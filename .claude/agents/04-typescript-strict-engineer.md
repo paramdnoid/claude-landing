@@ -1,6 +1,6 @@
 ---
 name: typescript-strict-engineer
-description: "Strict TypeScript specialist. Use for type design, tsconfig quality, generics, discriminated unions, public API typing and eliminating any/unsafe assertions."
+description: "Strict TypeScript specialist. Use for tsconfig, props, public types, generics, unions, and unsafe assertion cleanup."
 tools: "Read, Glob, Grep, Edit, Write, Bash"
 model: sonnet
 effort: high

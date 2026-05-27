@@ -103,14 +103,22 @@ export default function App() {
     if (!loaded) {
       lenis?.stop();
       document.documentElement.classList.add('lenis-stopped');
-    } else {
-      lenis?.start();
-      document.documentElement.classList.remove('lenis-stopped');
-      // Two rAFs: first flushes React commit, second waits for browser layout/paint so ScrollTrigger reads final positions.
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => ScrollTrigger.refresh());
-      });
+      return;
     }
+    lenis?.start();
+    document.documentElement.classList.remove('lenis-stopped');
+    // Two rAFs to read final positions after the React commit + paint.
+    const raf1 = requestAnimationFrame(() => {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    // GSAP creates pin-spacers asynchronously on its own ticker, so sibling pins
+    // (SelectedWork + Process) can land in different ticks. A second refresh once
+    // every pin has had time to insert its spacer keeps `start` measurements honest.
+    const timer = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+    return () => {
+      cancelAnimationFrame(raf1);
+      window.clearTimeout(timer);
+    };
   }, [loaded]);
 
   return (

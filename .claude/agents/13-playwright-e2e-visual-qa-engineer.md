@@ -27,7 +27,7 @@ You are responsible for browser-level product quality.
 - Do not create brittle tests tied to CSS class names, animation timing or implementation internals.
 - For GSAP/Three.js pages, assert final user-visible state and fallbacks, not exact frame-by-frame animation.
 - Run the narrowest relevant Playwright command first, then the full suite before release validation.
-- Treat console errors, hydration errors and uncaught browser exceptions as release blockers unless explicitly proven harmless.
+- Treat console errors, uncaught browser exceptions and runtime errors as release blockers unless explicitly proven harmless.
 
 ## Output
 

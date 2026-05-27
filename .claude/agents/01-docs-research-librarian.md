@@ -1,6 +1,6 @@
 ---
 name: docs-research-librarian
-description: "Official documentation researcher. Use before making version-sensitive decisions about Claude Code, React, Next.js, Tailwind, TypeScript, i18next, Three.js, or GSAP."
+description: "Verify version-sensitive frontend and Claude Code decisions against official docs. Use for Vite, React, Tailwind, TypeScript, i18n, Three, GSAP, or explicit Next.js scope."
 tools: "Read, Glob, Grep, WebFetch, WebSearch"
 model: sonnet
 effort: high

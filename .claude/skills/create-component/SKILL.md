@@ -1,6 +1,6 @@
 ---
 name: create-component
-description: "Create or upgrade a React/Next.js component with TypeScript, Tailwind, accessibility, i18n and tests where appropriate."
+description: "Create or upgrade a Vite/React component with TypeScript, Tailwind, accessibility, i18n, and tests."
 argument-hint: "[ComponentName] [purpose]"
 disable-model-invocation: true
 allowed-tools: "Read Glob Grep Edit Write Agent Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
@@ -15,8 +15,8 @@ Create or improve component: `$ARGUMENTS`
 
 Requirements:
 
-1. Determine whether the component should be Server or Client.
-2. If Client, keep the client boundary minimal.
+1. Determine whether the component needs browser-only behavior.
+2. Keep browser-only code and heavy imports as narrow as practical.
 3. Type props strictly.
 4. Use Tailwind according to existing project conventions.
 5. Add i18n keys for user-facing text.

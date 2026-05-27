@@ -1,6 +1,6 @@
 ---
 name: senior-code-reviewer
-description: "General senior code reviewer. Use after any implementation to review correctness, maintainability, tests, architecture, style and project conventions."
+description: "Senior code reviewer. Use after implementation to review correctness, maintainability, tests, architecture, and project conventions."
 tools: "Read, Glob, Grep, Bash"
 model: opus
 color: "red"

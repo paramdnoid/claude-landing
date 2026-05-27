@@ -9,7 +9,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-SCRIPT_PRIORITY = ["typecheck", "lint", "test:ci", "test", "build"]
+SCRIPT_PRIORITY = ["typecheck", "lint", "test:ci", "test", "build", "test:e2e"]
 PACKAGE_MANAGERS = [
     ("pnpm-lock.yaml", ["pnpm"]),
     ("yarn.lock", ["yarn"]),

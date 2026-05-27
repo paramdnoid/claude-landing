@@ -14,7 +14,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing', 'postprocessing'],
-          gsap: ['gsap', 'gsap/ScrollTrigger', 'lenis'],
+          gsap: ['gsap', 'gsap/ScrollTrigger', 'lenis', '@gsap/react'],
           i18n: ['i18next', 'i18next-browser-languagedetector', 'react-i18next'],
         },
       },

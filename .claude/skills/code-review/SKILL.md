@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: "Run a senior multi-agent code review over a path, diff or feature area."
+description: "Run a senior Vite/React code review over a path, diff, branch, or feature."
 argument-hint: "[scope: path, diff, branch, feature]"
 disable-model-invocation: true
 allowed-tools: "Read Glob Grep Agent Bash(git status *) Bash(git diff *) Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
@@ -19,6 +19,6 @@ Review scope: `$ARGUMENTS`
    - `typescript-strict-engineer`
    - `qa-a11y-performance-engineer`
    - `security-reviewer`
-   - relevant specialist agents for React/Next/Tailwind/i18n/Three/GSAP.
+   - relevant specialist agents for Vite/React/Tailwind/i18n/Three/GSAP, and Next.js only when explicitly in scope.
 3. Do not edit unless the user explicitly asked for fixes.
 4. Return a severity-grouped review with exact file references and required validation.

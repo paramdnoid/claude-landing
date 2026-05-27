@@ -1,6 +1,6 @@
 ---
 name: performance-a11y-audit
-description: "Audit frontend performance, accessibility, Core Web Vitals risks, hydration, bundle size and interaction quality."
+description: "Audit frontend performance, accessibility, Core Web Vitals risks, runtime behavior, bundle size, and interaction quality."
 argument-hint: "[scope]"
 disable-model-invocation: true
 allowed-tools: "Read Glob Grep Agent Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
@@ -17,9 +17,9 @@ Use `qa-a11y-performance-engineer`, plus stack specialists as needed.
 
 Check:
 
-- Server/Client Component boundaries.
+- Browser-only boundaries.
 - Bundle-heavy imports.
-- Unnecessary hydration.
+- Unnecessary client runtime work.
 - Semantic HTML and ARIA.
 - Keyboard/focus management.
 - Reduced motion.

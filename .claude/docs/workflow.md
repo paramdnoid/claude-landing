@@ -27,9 +27,9 @@
 
 Use `/docs-refresh <topic>` before implementing when touching:
 
-- Next.js App Router caching, routing, Server Actions or metadata.
+- Vite build behavior, React Router flow, env handling or metadata/SEO helpers.
 - Tailwind v4 configuration/theme syntax.
-- i18next typed resources or Next.js integration.
+- i18next typed resources or routing integration.
 - Three.js renderer/asset APIs.
 - GSAP React integration.
 - Claude Code agents/hooks/skills/settings.

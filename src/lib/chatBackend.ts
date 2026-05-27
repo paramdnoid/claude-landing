@@ -43,6 +43,7 @@ export async function sendChat(
   messages: ChatMessage[],
   locale: 'de' | 'en',
   onToken?: (chunk: string) => void,
+  signal?: AbortSignal,
 ): Promise<string> {
   if (!isLiveBackend()) {
     // Mock mode — handled by caller via canned responses.
@@ -60,6 +61,7 @@ export async function sendChat(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
+    signal,
   });
   if (!res.ok || !res.body) {
     throw new Error(`Ollama responded ${res.status}`);
@@ -70,27 +72,32 @@ export async function sendChat(
   let full = '';
   let buffer = '';
 
-  while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    buffer += decoder.decode(value, { stream: true });
-    // Ollama streams newline-delimited JSON objects.
-    let nl: number;
-    while ((nl = buffer.indexOf('\n')) >= 0) {
-      const line = buffer.slice(0, nl).trim();
-      buffer = buffer.slice(nl + 1);
-      if (!line) continue;
-      try {
-        const obj = JSON.parse(line) as { message?: { content?: string }; done?: boolean };
-        const chunk = obj.message?.content ?? '';
-        if (chunk) {
-          full += chunk;
-          onToken?.(chunk);
+  try {
+    while (true) {
+      if (signal?.aborted) break;
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      // Ollama streams newline-delimited JSON objects.
+      let nl: number;
+      while ((nl = buffer.indexOf('\n')) >= 0) {
+        const line = buffer.slice(0, nl).trim();
+        buffer = buffer.slice(nl + 1);
+        if (!line) continue;
+        try {
+          const obj = JSON.parse(line) as { message?: { content?: string }; done?: boolean };
+          const chunk = obj.message?.content ?? '';
+          if (chunk) {
+            full += chunk;
+            onToken?.(chunk);
+          }
+        } catch {
+          /* ignore malformed line */
         }
-      } catch {
-        /* ignore malformed line */
       }
     }
+  } finally {
+    reader.cancel().catch(() => undefined);
   }
 
   return full;

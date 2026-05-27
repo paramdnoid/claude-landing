@@ -5,7 +5,7 @@
 - **Team Lead Orchestrator**: decomposes work, assigns agents, prevents file conflicts, synthesizes output.
 - **Docs Research Librarian**: verifies current official documentation and summarizes version-sensitive guidance.
 - **Specialist Engineers**: implement only in their domain and document tradeoffs.
-- **Integration Engineer**: resolves cross-cutting interactions between React, Next.js, i18n, motion and 3D.
+- **Integration Engineer**: resolves cross-cutting interactions between Vite, React, i18n, motion and 3D.
 - **Quality/Security Reviewers**: independently inspect code without assuming implementers are correct.
 
 ## Delegation Rules
@@ -15,6 +15,7 @@
 3. Read-only review agents must not edit files; they return findings with severity and file references.
 4. Implementation agents must produce a validation plan before editing.
 5. The lead must reconcile conflicting recommendations explicitly.
+6. When `team-lead-orchestrator` is invoked as a subagent, it plans and synthesizes only; the main session or an Agent Team lead performs actual delegation.
 
 ## Standard Agent Output
 

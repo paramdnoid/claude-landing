@@ -19,6 +19,8 @@ Audited for this setup on 2026-05-27. Agents must prefer current official docs o
 - React docs: https://react.dev/
 - React Rules of Hooks: https://react.dev/reference/rules/rules-of-hooks
 - React purity rules: https://react.dev/reference/rules/components-and-hooks-must-be-pure
+- Vite docs: https://vite.dev/guide/
+- React Router docs: https://reactrouter.com/
 - Next.js App Router docs: https://nextjs.org/docs/app
 - Next.js Server and Client Components: https://nextjs.org/docs/app/getting-started/server-and-client-components
 - Next.js TypeScript config: https://nextjs.org/docs/app/api-reference/config/typescript
@@ -42,6 +44,7 @@ Audited for this setup on 2026-05-27. Agents must prefer current official docs o
 
 1. Use official docs first.
 2. Use release notes/changelogs for version-sensitive behavior.
-3. If docs conflict with codebase conventions, state the conflict and propose the safest adaptation.
-4. Never invent APIs. If unsure, search/fetch docs or inspect installed package types.
-5. Include source links in implementation notes when a design depends on a specific framework behavior.
+3. Treat Vite/React as the current project default. Use Next.js docs only when Next.js exists in the repo or a migration is explicitly requested.
+4. If docs conflict with codebase conventions, state the conflict and propose the safest adaptation.
+5. Never invent APIs. If unsure, search/fetch docs or inspect installed package types.
+6. Include source links in implementation notes when a design depends on a specific framework behavior.

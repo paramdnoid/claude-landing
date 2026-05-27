@@ -8,7 +8,10 @@ from pathlib import Path
 from typing import Any
 
 SENSITIVE_PATTERNS = [
-    r"(^|/)\.env(\..*)?$",
+    r"(^|/)\.env$",
+    r"(^|/)\.env\.local$",
+    r"(^|/)\.env\..*\.local$",
+    r"(^|/)\.env\.(development|production|test|staging)$",
     r"(^|/)secrets?(/|$)",
     r"(^|/)credentials?(\.|/|$)",
     r"(^|/)\.aws(/|$)",
@@ -57,6 +60,8 @@ def main() -> None:
 
     normalized = file_path.replace("\\", "/")
     base = os.path.basename(normalized)
+    if base == ".env.example":
+        sys.exit(0)
 
     for pattern in SENSITIVE_PATTERNS:
         if re.search(pattern, normalized, flags=re.IGNORECASE) or re.search(pattern, base, flags=re.IGNORECASE):

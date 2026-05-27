@@ -11,15 +11,15 @@
 - Avoid stale closures with correct dependency arrays.
 - Clean up subscriptions, timers, observers, GSAP contexts, Three.js render loops and event listeners.
 
-## Next.js App Router
+## Vite / React App Structure
 
-- Server Components by default.
-- Add `use client` only to the smallest boundary requiring state, effects, event handlers, browser APIs, GSAP or Three.js.
-- Keep Server Actions in dedicated server files when used by Client Components.
-- Avoid importing Node-only or server-only modules into Client Components.
-- Use framework metadata APIs for SEO where possible.
-- Use dynamic imports for heavy client-only modules.
-- Do not hardcode route assumptions; inspect the app directory structure.
+- Treat this repo as a Vite-powered React SPA unless a Next.js migration is explicitly in scope.
+- Keep browser-only code inside effects, event handlers or browser-safe modules.
+- Avoid importing Node-only modules into browser bundles.
+- Use app-local SEO helpers and static assets consistently.
+- Use dynamic imports for heavy browser-only modules.
+- Do not hardcode route assumptions; inspect the router and page structure.
+- Apply Next.js App Router rules only when Next.js files/config exist or the task explicitly adds them.
 
 ## TypeScript
 
@@ -46,11 +46,11 @@
 - Use typed resources where possible.
 - Use plurals and interpolation instead of string concatenation.
 - Keep translation keys stable and semantic.
-- Ensure server/client translation APIs align with Next.js routing strategy.
+- Ensure translation APIs align with the active Vite/React routing strategy.
 
 ## Three.js
 
-- Three.js code belongs behind a Client Component boundary.
+- Three.js code belongs behind a browser-only React boundary.
 - Dispose geometries, materials, textures, render targets and controls.
 - Stop animation loops on unmount.
 - Handle resize with cleanup.
@@ -61,7 +61,7 @@
 ## GSAP
 
 - Use `@gsap/react` and `useGSAP` when GSAP runs in React.
-- Register plugins once in client-only code.
+- Register plugins once in browser-safe code.
 - Scope selectors with refs/context.
 - Revert/cleanup animations on unmount.
 - Honor `prefers-reduced-motion` and provide non-motion fallback.

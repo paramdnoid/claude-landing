@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { pinnedTimeline, prefersReducedMotion } from '../../lib/animations';
@@ -13,7 +13,7 @@ export default function Process() {
 
   const steps = t('process.steps', { returnObjects: true }) as Step[];
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!sectionRef.current || !stageRef.current) return;
     if (prefersReducedMotion()) {
       stepRefs.current.forEach((el) => el && gsap.set(el, { opacity: 1, y: 0 }));
@@ -23,12 +23,15 @@ export default function Process() {
     gsap.set(els, { opacity: 0.05, y: 30, filter: 'blur(8px)' });
     if (els[0]) gsap.set(els[0], { opacity: 1, y: 0, filter: 'blur(0px)' });
 
-    const tl = pinnedTimeline(stageRef.current, { end: `+=${steps.length * 70}%`, scrub: 1 });
+    const tl = pinnedTimeline(stageRef.current, { end: () => `+=${steps.length * 70}%`, scrub: 1 });
     els.forEach((el, i) => {
       if (i > 0) tl.to(el, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1 }, i);
       if (i < els.length - 1) tl.to(el, { opacity: 0.18, y: -30, filter: 'blur(4px)', duration: 1 }, i + 0.8);
     });
-    return () => { tl.scrollTrigger?.kill(); tl.kill(); };
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
   }, [steps.length]);
 
   return (

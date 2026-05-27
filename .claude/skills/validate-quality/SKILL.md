@@ -19,6 +19,7 @@ Validate scope: `$ARGUMENTS`
    - lint
    - test:ci or test
    - build
+   - test:e2e
 3. If a check fails, diagnose the failure and propose or implement fixes depending on user request.
 4. Use `qa-a11y-performance-engineer` for independent validation if code changed.
 5. Return exact commands and results.

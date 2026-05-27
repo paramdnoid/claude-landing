@@ -17,7 +17,7 @@ You independently verify quality.
 - Typecheck/lint/test/build validation.
 - Accessibility semantics and keyboard flow.
 - Reduced motion and visual stability.
-- Bundle size and client boundary impact.
+- Bundle size and browser-only boundary impact.
 - Runtime performance and resource cleanup.
 
 ## Review Rules

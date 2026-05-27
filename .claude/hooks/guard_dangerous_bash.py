@@ -29,6 +29,7 @@ def main() -> None:
 
     command = str(data.get("tool_input", {}).get("command", "")).strip()
     normalized = re.sub(r"\s+", " ", command.lower())
+    env_sensitive_command = re.sub(r"(^|[^\w./-])\.env\.example($|[^\w./-])", " ", normalized)
 
     hard_blocks = [
         (r"(^|[;&|]\s*)rm\s+-[^\n]*r[^\n]*f\b", "Destructive recursive force removal is blocked."),
@@ -47,7 +48,8 @@ def main() -> None:
     ]
 
     for pattern, reason in hard_blocks:
-        if re.search(pattern, normalized):
+        target = env_sensitive_command if ".env" in pattern else normalized
+        if re.search(pattern, target):
             deny(reason)
 
     # Conservative protection against deleting project roots via ambiguous variables.

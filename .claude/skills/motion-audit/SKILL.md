@@ -17,10 +17,10 @@ Use `gsap-motion-engineer` and `qa-a11y-performance-engineer`.
 
 Check:
 
-- Client-only boundaries.
+- Browser-only boundaries.
 - `useGSAP`/context cleanup.
 - Plugin registration.
 - Reduced motion support.
 - ScrollTrigger cleanup.
 - Animation of performant properties.
-- Hydration/layout risks.
+- Runtime/layout risks.

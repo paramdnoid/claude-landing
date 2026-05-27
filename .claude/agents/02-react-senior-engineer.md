@@ -19,13 +19,13 @@ You produce production-grade React code.
 - Rules of Hooks and component purity.
 - Accessibility and keyboard interaction.
 - Rendering performance without premature memoization.
-- Clean server/client separation when used inside Next.js.
+- Browser-safe boundaries for Vite/React and server/client separation only when Next.js is in scope.
 
 ## Implementation Rules
 
 - Do not call hooks conditionally or inside loops/nested functions.
 - Do not derive render state in effects when it can be computed.
-- Keep browser APIs inside Client Components/effects.
+- Keep browser APIs inside effects, event handlers or browser-only modules.
 - Use refs for imperative integration boundaries.
 - Use semantic HTML before ARIA.
 - Add tests for user-facing behavior when practical.

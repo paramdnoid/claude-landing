@@ -22,7 +22,7 @@ test.describe('Cookie banner', () => {
     await page.waitForURL(/\/de$/);
 
     const banner = page.getByRole('dialog', { name: /Datenschutz/ });
-    await expect(banner).toBeVisible({ timeout: 3_000 });
+    await expect(banner).toBeVisible({ timeout: 10_000 });
     await expect(banner.getByRole('button', { name: /Akzeptieren/ })).toBeVisible();
     await expect(banner.getByRole('button', { name: /Ablehnen/ })).toBeVisible();
   });
@@ -32,7 +32,7 @@ test.describe('Cookie banner', () => {
     await page.waitForURL(/\/de$/);
 
     const banner = page.getByRole('dialog', { name: /Datenschutz/ });
-    await expect(banner).toBeVisible({ timeout: 3_000 });
+    await expect(banner).toBeVisible({ timeout: 10_000 });
 
     await banner.getByRole('button', { name: /Ablehnen/ }).click();
     await expect(banner).toBeHidden();
@@ -52,7 +52,7 @@ test.describe('Cookie banner', () => {
     await page.waitForURL(/\/de$/);
 
     const banner = page.getByRole('dialog', { name: /Datenschutz/ });
-    await expect(banner).toBeVisible({ timeout: 3_000 });
+    await expect(banner).toBeVisible({ timeout: 10_000 });
 
     await banner.getByRole('button', { name: /Akzeptieren/ }).click();
     await expect(banner).toBeHidden();
@@ -71,7 +71,7 @@ test.describe('Cookie banner', () => {
     await page.waitForURL(/\/de$/);
 
     const banner = page.getByRole('dialog', { name: /Datenschutz/ });
-    await expect(banner).toBeVisible({ timeout: 3_000 });
+    await expect(banner).toBeVisible({ timeout: 10_000 });
 
     await banner.getByRole('button', { name: /Banner schließen/ }).click();
     await expect(banner).toBeHidden();

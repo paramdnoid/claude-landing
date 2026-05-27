@@ -1,127 +1,131 @@
 {
   "nav": {
-    "about": "Über",
+    "manifesto": "Manifest",
+    "capabilities": "Leistung",
     "process": "Prozess",
-    "showcase": "Leistungen",
     "contact": "Kontakt",
     "language": "Sprache"
   },
   "hero": {
-    "eyebrow": "01 · Studio",
-    "title": "ZIAN AI CONCEPTS",
-    "tagline": "AI-driven Engineering. Kurse. Integration.",
-    "lede": "Ich entwickle moderne Web- und App-Produkte mit KI im Kern, halte praxisnahe Kurse und integriere generative Modelle in Unternehmen.",
-    "scrollHint": "Scrolle, um mehr zu erfahren"
+    "eyebrow": "Studio of one · Andre Zimmermann",
+    "title": "ZIAN",
+    "tagline": "KI-Produkte. Ausgeliefert.",
+    "lede": "Ich entwerfe und baue KI-native Web-Apps, maßgeschneiderte Agents und schnelle Prototypen. Funktionierende Software in Wochen — keine Roadmaps in Quartalen.",
+    "scrollHint": "Scrollen"
   },
-  "clients": {
-    "label": "Vertraut von Studios, Startups & Mittelstand"
+  "manifesto": {
+    "eyebrow": "01 — Die Prämisse",
+    "lineA": "Die meisten KI-Demos",
+    "lineB": "sind Theater.",
+    "lineC": "Ich liefere Produkte aus.",
+    "body": "Ich bin Andre. Senior Engineer mit Jahren Produktionssoftware im Rücken, heute fokussiert auf KI-native Produkte und die Agents, die darin laufen. Die Lücke zwischen einem beeindruckenden Prompt und einer Sache, die Menschen wirklich benutzen — dort bleiben die meisten Teams hängen. Ich bleibe nicht hängen.",
+    "signature": [
+      "Keine Agentur.",
+      "Keine Zwischenhändler.",
+      "Keine JIRA-Warteschlangen ins Nichts.",
+      "Du schreibst mir. Ich baue die Sache."
+    ],
+    "kicker": "Drei Wochen bis zum funktionierenden Prototyp. Zwölf bis zum ausgelieferten Produkt. Mit anderen Timelines arbeite ich nicht."
   },
-  "about": {
-    "eyebrow": "02 · About",
-    "title": "Ein Mensch. Ein klares Versprechen.",
-    "lede": "Hinter ZIAN AI CONCEPTS steht André Zimmermann — Engineer, Trainer und KI-Praktiker. Keine Agentur-Maschinerie, sondern ein direkter Ansprechpartner mit Fokus auf messbaren Outcome.",
-    "milestones": [
-      { "label": "Engineer", "title": "Web & App Engineering", "body": "Tiefe Erfahrung in modernem Frontend (React, TypeScript) und Backend-Integration. Sauberer Code, schnelle Builds, langlebige Architektur." },
-      { "label": "AI Practitioner", "title": "KI in Produktion", "body": "Von Retrieval-Augmented-Generation über Agents bis zu maßgeschneiderten Workflows — ich baue KI, die wirklich Probleme löst." },
-      { "label": "Trainer", "title": "Kurse, die wirken", "body": "Workshops und Kurse für Teams, die KI nicht hypen, sondern beherrschen wollen. Vom Prompt-Engineering bis zum Coding mit Agents." },
-      { "label": "Solo Studio", "title": "Direkter Draht", "body": "Du sprichst mit der Person, die auch baut. Kurze Wege, klare Verantwortung, ehrliche Empfehlungen." }
+  "capabilities": {
+    "eyebrow": "02 — Leistung",
+    "title": "Vier Dinge, die ich baue.",
+    "titleAccent": "Alle vier in Produktion.",
+    "items": [
+      {
+        "tag": "01",
+        "title": "KI-gestützte Web-Apps",
+        "body": "Full-Stack-Produkte mit LLMs im Kern. Chat-Oberflächen, generative Tools, Suche, die versteht, Agents, die handeln. Gebaut wie echte Software — keine Demos.",
+        "tags": ["React 19", "Streaming UIs", "LLM APIs"]
+      },
+      {
+        "tag": "02",
+        "title": "Agents & Workflow-Automation",
+        "body": "Maßgeschneiderte Agents, eingebettet in deine echten Systeme. Slack, CRMs, interne APIs, Browser — wo ein Workflow ist, kann ein Agent ihn ausführen.",
+        "tags": ["Tool Use", "Browser-Steuerung", "Eval-Pipelines"]
+      },
+      {
+        "tag": "03",
+        "title": "RAG & Wissenssysteme",
+        "body": "ChatGPT, aber auf deinen Daten. Richtig gebaut. Retrieval, das wirklich abruft. Evaluierungen, die es belegen. Production-Grade, nicht Notebook-Grade.",
+        "tags": ["Vector Search", "Hybride Retrieval", "Evals"]
+      },
+      {
+        "tag": "04",
+        "title": "Prototypen in 1–3 Wochen",
+        "body": "Eine Idee ist billig. Eine funktionierende Version ist das Einzige, worüber zu streiten lohnt. Ich baue die Version — schnell — damit du echt entscheiden kannst.",
+        "tags": ["Spec → Live", "Auf deinen Daten", "Kill-Kriterien inklusive"]
+      }
     ]
   },
   "process": {
-    "eyebrow": "03 · Prozess",
-    "title": "Wie ich arbeite.",
-    "lede": "Klare Schritte, kein Zauber. Wechsle die Perspektive je nach Vorhaben.",
-    "variantLabel": "Prozess-Variante",
-    "standard": {
-      "label": "Build",
-      "steps": [
-        { "label": "Discovery", "title": "Verstehen, nicht annehmen", "body": "Wir klären Ziel, Nutzer, Risiken und Erfolgsmaß bevor eine Zeile Code entsteht." },
-        { "label": "Architecture", "title": "Tragfähige Struktur", "body": "Schlanke Tech-Wahl, klare Module, sinnvolle Abhängigkeiten — alles begründet, nichts modisch." },
-        { "label": "Build", "title": "Schnell sichtbar, sauber gebaut", "body": "Iterativ in kurzen Zyklen mit funktionierenden Builds — Feedback statt Wasserfall." },
-        { "label": "Train", "title": "Wissen übergeben", "body": "Dokumentation, Walk-throughs und optionale Mini-Workshops für dein Team." },
-        { "label": "Handover", "title": "Klare Übergabe", "body": "Repo, Deploy, Runbook und ein optionaler Wartungs-Retainer falls gewünscht." }
-      ]
-    },
-    "ai": {
-      "label": "AI Integration",
-      "steps": [
-        { "label": "Listen", "title": "Zuhören vor Liefern", "body": "Interviews mit den Menschen die mit KI arbeiten sollen — nicht nur mit der Führung." },
-        { "label": "Use-Case", "title": "Realistische Anwendungsfälle", "body": "Wir priorisieren nach Wirkung × Machbarkeit, nicht nach Buzz." },
-        { "label": "Prototype", "title": "Schneller Nachweis", "body": "Innerhalb von 2-4 Wochen ein funktionierender Prototyp am echten Datensatz." },
-        { "label": "Integrate", "title": "In bestehende Tools", "body": "Wir bauen KI in deine Workflows — nicht eine weitere Tool-Insel." },
-        { "label": "Train", "title": "Team befähigen", "body": "Workshops + Spielregeln, damit dein Team das Tooling selbstständig weiterentwickelt." }
-      ]
-    }
-  },
-  "showcase": {
-    "eyebrow": "04 · Leistungen",
-    "title": "Was ich für dich baue.",
-    "lede": "Drei Kernangebote. Eine konsistente Qualitätsversprechen.",
-    "services": [
-      { "tag": "Service 01", "title": "KI Web- & App-Entwicklung", "body": "Von der Idee zum Produkt: Landingpages, SaaS, Mobile Apps — alle mit KI-Features wo es Sinn ergibt.", "features": ["React · Next · Vite", "RAG · Agents · LLM APIs", "Design + Engineering aus einer Hand"] },
-      { "tag": "Service 02", "title": "KI-Kurse & Trainings", "body": "Praxisnahe Workshops für Entwickler, Teams oder Führungskräfte — von Prompting bis zu produktiven KI-Workflows.", "features": ["Custom-Curriculum", "Live oder Remote", "Materialien inklusive"] },
-      { "tag": "Service 03", "title": "KI-Integration im Unternehmen", "body": "Ich begleite die Einführung von KI in bestehende Tools, Prozesse und Teams — strategisch und technisch.", "features": ["Use-Case Discovery", "Tool-Stack Setup", "Change-Begleitung"] }
-    ],
-    "casesTitle": "Ausgewählte Cases",
-    "casesLede": "Platzhalter — echte Cases folgen.",
-    "cases": [
-      { "tag": "Project Alpha", "title": "AI-First SaaS-Dashboard", "body": "Echtzeit-Insights mit eingebettetem Copilot. Reduziert Onboarding-Zeit um 60%.", "stack": ["React 19", "RAG", "LangGraph"] },
-      { "tag": "Project Beta", "title": "Agent-basierter Support", "body": "Multi-Agent-System, das Tier-1-Tickets eigenständig löst und sauber eskaliert.", "stack": ["Anthropic", "Tools", "Eval-Pipeline"] },
-      { "tag": "Project Gamma", "title": "Mobile KI-Coach App", "body": "Personalisiertes Coaching mit on-device Inference und Cloud-Fallback.", "stack": ["React Native", "MLX", "Streaming"] }
+    "eyebrow": "03 — So läuft es",
+    "title": "Drei Wochen.",
+    "titleAccent": "Dann entscheidest du.",
+    "lede": "Ein Discovery-Sprint, der mit einem funktionierenden Ding endet — nicht mit einer Präsentation.",
+    "steps": [
+      {
+        "label": "Woche 01",
+        "title": "Die Wette stecken.",
+        "body": "Wir reden. Ich grabe mich in das Problem, die Daten, die Nutzer, die Constraints. Bis Freitag hast du eine knappe Spec und ein Kill-Kriterien-Dokument. Keine Spec — kein Build."
+      },
+      {
+        "label": "Woche 02",
+        "title": "Die Version bauen.",
+        "body": "Ich baue. Du siehst täglich Fortschritt. Funktionierende Software, keine Folien. Bis Freitag läuft ein echter Prototyp auf echten Daten — auf einer echten URL, die du teilen kannst."
+      },
+      {
+        "label": "Woche 03",
+        "title": "Mit Nutzern live.",
+        "body": "Wir stellen das Ding drei echten Nutzern vor. Ihre Reaktionen entscheiden, was als Nächstes kommt: ausliefern, überarbeiten oder einstampfen. Keine Politik. Keine Fake-Metriken."
+      }
     ]
   },
-  "aiDemo": {
-    "eyebrow": "Live Demo",
-    "title": "Sprich mit einem Mini-Modell.",
-    "lede": "So fühlt sich KI im Produkt an. Nutze die Vorschläge oder stelle eine eigene Frage.",
-    "poweredBy": "Powered by Ollama · Demo",
-    "placeholder": "Frag mich etwas …",
-    "send": "Senden",
-    "greeting": "Hallo! Ich bin der Demo-Bot von ZIAN AI CONCEPTS. Frag mich nach Preisen, Kursen oder wie KI-Integration konkret läuft.",
-    "error": "Ups — der Endpoint ist gerade nicht erreichbar.",
-    "suggestions": [
-      "Wie laufen die Kurse?",
-      "Was kostet ein Projekt?",
-      "Wie integriere ich KI im Mittelstand?",
-      "Wie lange dauert ein Prototyp?"
-    ],
-    "replies": {
-      "hello": "Hi! Schön dass du da bist. Frag ruhig — ich antworte mit echten Beispielen.",
-      "pricing": "Preise variieren je nach Scope. Web-Projekte starten meist bei einem Discovery-Sprint (ca. 1-2 Wochen). Schreib mir kurz dein Vorhaben und ich melde mich mit einem konkreten Angebot innerhalb 24h.",
-      "courses": "Kurse gibt's als Inhouse-Workshop (1-3 Tage) oder als Remote-Sessions. Inhalte werden auf dein Team zugeschnitten — von Prompt-Engineering bis Agent-Architekturen.",
-      "integration": "Wir starten mit Use-Case-Discovery (welche Workflows profitieren wirklich?), prototypen schnell auf deinem Datensatz und integrieren in bestehende Tools statt eine Insel zu bauen.",
-      "timeline": "Ein Prototyp ist meistens in 2-4 Wochen sichtbar. Full-Production-Rollouts brauchen typischerweise 6-12 Wochen je nach Integration und Datenlage.",
-      "fallback": "Spannende Frage! Im echten Setup hängt die Antwort am Modell + deinem Kontext. Hier ist eine Demo — schreib mir gern direkt, dann antworte ich persönlich."
-    }
-  },
   "contact": {
-    "eyebrow": "05 · Kontakt",
-    "title": "Lass uns reden.",
-    "lede": "Erzähl mir kurz, was du vorhast — ich melde mich innerhalb von 24 Stunden zurück.",
+    "eyebrow": "04 — Start",
+    "title": "Erzähl mir,",
+    "titleAccent": "was du baust.",
+    "lede": "Kurze Notiz reicht. Ich antworte innerhalb von 24 Stunden — meistens schneller.",
     "form": {
       "name": "Name",
       "email": "E-Mail",
-      "message": "Nachricht",
-      "submit": "Anfrage senden",
-      "submitting": "Wird gesendet …",
-      "success": "Danke! Ich melde mich bald.",
-      "error": "Etwas ist schiefgelaufen. Versuche es bitte direkt per E-Mail.",
-      "demo": "Demo-Modus aktiv — setze VITE_FORM_ENDPOINT in deiner .env, um Anfragen real zu empfangen.",
+      "message": "Was baust du?",
+      "timeline": "Timeline",
+      "budget": "Budget",
+      "timelinePlaceholder": "Wählen",
+      "budgetPlaceholder": "Wählen",
+      "timelineOptions": [
+        { "value": "this-week", "label": "Diese Woche" },
+        { "value": "this-month", "label": "Diesen Monat" },
+        { "value": "this-quarter", "label": "Dieses Quartal" },
+        { "value": "exploring", "label": "Schaue mich um" }
+      ],
+      "budgetOptions": [
+        { "value": "lt-15", "label": "Unter 15k €" },
+        { "value": "15-50", "label": "15k – 50k €" },
+        { "value": "gt-50", "label": "50k €+" },
+        { "value": "unsure", "label": "Noch unklar" }
+      ],
+      "submit": "Senden",
+      "submitting": "Wird gesendet",
+      "success": "Hab's. Antwort innerhalb von 24 Stunden.",
+      "error": "Etwas ist schiefgelaufen. Versuche es nochmal oder schreib mir direkt.",
+      "demo": "Demo-Modus — setze VITE_FORM_ENDPOINT in .env, um Anfragen real zu empfangen.",
       "required": "Pflichtfeld",
-      "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein."
+      "invalidEmail": "Bitte eine echte E-Mail."
     },
-    "or": "oder schreib mir direkt:"
+    "or": "oder per Mail"
   },
   "consent": {
     "title": "Privatsphäre",
-    "body": "Ich nutze datenschutzfreundliche Analytics ohne Cookies, um anonym zu sehen welche Inhalte ankommen.",
+    "body": "Ich nutze datenschutzfreundliche Analytics ohne Cookies, um anonym zu sehen, welche Inhalte ankommen.",
     "learnMore": "Mehr in der Datenschutzerklärung.",
     "accept": "Einverstanden",
     "reject": "Ablehnen",
     "close": "Banner schließen"
   },
   "footer": {
-    "tagline": "AI-driven Engineering. Kurse. Integration.",
+    "tagline": "KI-Produkte und Prototypen — schnell ausgeliefert.",
     "rights": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",
     "privacy": "Datenschutz"

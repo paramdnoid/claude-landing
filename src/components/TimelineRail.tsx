@@ -5,9 +5,9 @@ type Node = { id: string; label: string };
 
 const NODES: Node[] = [
   { id: 'hero', label: '01' },
-  { id: 'about', label: '02' },
-  { id: 'process', label: '03' },
-  { id: 'showcase', label: '04' },
+  { id: 'manifesto', label: '02' },
+  { id: 'capabilities', label: '03' },
+  { id: 'process', label: '04' },
   { id: 'contact', label: '05' },
 ];
 

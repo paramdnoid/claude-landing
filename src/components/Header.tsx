@@ -45,9 +45,9 @@ export default function Header() {
           </span>
         </Link>
         <nav className="hidden items-center gap-8 font-mono text-xs uppercase tracking-[0.18em] md:flex">
-          {navLink('about', t('nav.about'))}
+          {navLink('manifesto', t('nav.manifesto'))}
+          {navLink('capabilities', t('nav.capabilities'))}
           {navLink('process', t('nav.process'))}
-          {navLink('showcase', t('nav.showcase'))}
           {navLink('contact', t('nav.contact'))}
         </nav>
         <LangToggle />

@@ -85,3 +85,47 @@ export function fadeUp(
     },
   );
 }
+
+/**
+ * Reveal a chunk of chars when its trigger enters the viewport.
+ * Wraps splitText + revealChars + a ScrollTrigger in one call.
+ */
+export function revealLineOnScroll(
+  el: HTMLElement,
+  opts: { start?: string; stagger?: number; duration?: number } = {},
+): gsap.core.Tween {
+  const chars = splitText(el);
+  if (prefersReducedMotion()) {
+    gsap.set(chars, { y: 0, opacity: 1 });
+    return gsap.to(chars, { duration: 0 });
+  }
+  return gsap.fromTo(
+    chars,
+    { yPercent: 110, opacity: 0 },
+    {
+      yPercent: 0,
+      opacity: 1,
+      duration: opts.duration ?? 1,
+      ease: 'expo.out',
+      stagger: opts.stagger ?? 0.016,
+      scrollTrigger: { trigger: el, start: opts.start ?? 'top 85%', once: true },
+    },
+  );
+}
+
+/**
+ * Brief cyan-tinted flash on a target — used for success transitions.
+ * Animates background-color/boxShadow back to its starting value.
+ */
+export function chromaticPulse(el: HTMLElement, opts: { color?: string; duration?: number } = {}): gsap.core.Timeline {
+  const tl = gsap.timeline();
+  if (prefersReducedMotion()) return tl;
+  const color = opts.color ?? 'rgba(0, 229, 255, 0.18)';
+  const duration = opts.duration ?? 0.6;
+  tl.fromTo(
+    el,
+    { boxShadow: '0 0 0 0 rgba(0,229,255,0)' },
+    { boxShadow: `0 0 0 6px ${color}, 0 0 60px ${color}`, duration: duration * 0.4, ease: 'power2.out' },
+  ).to(el, { boxShadow: '0 0 0 0 rgba(0,229,255,0)', duration: duration * 0.6, ease: 'power2.inOut' });
+  return tl;
+}

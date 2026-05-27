@@ -68,7 +68,7 @@ export default function TimelineRail() {
       aria-label={t('sidebar.aria')}
       className="pointer-events-none fixed left-5 top-1/2 z-30 hidden -translate-y-1/2 lg:block"
     >
-      <div className="pointer-events-auto relative w-[232px] overflow-hidden rounded-2xl border border-white/[0.07] bg-[var(--color-bg-elev)]/70 p-3 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8),0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl">
+      <div className="pointer-events-auto relative w-[232px] overflow-hidden rounded-2xl border border-white/7 bg-bg-elev/70 p-3 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8),0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl">
         {/* soft inner glow */}
         <div
           aria-hidden="true"
@@ -117,7 +117,7 @@ export default function TimelineRail() {
                 className={`group relative flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm transition-colors ${
                   isActive
                     ? 'text-white'
-                    : 'text-[var(--color-muted)] hover:text-white'
+                    : 'text-muted hover:text-white'
                 }`}
               >
                 {/* Active background glow */}
@@ -125,11 +125,11 @@ export default function TimelineRail() {
                   <>
                     <span
                       aria-hidden="true"
-                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-white/[0.06] to-transparent"
+                      className="absolute inset-0 rounded-lg bg-linear-to-r from-white/[0.06] to-transparent"
                     />
                     <span
                       aria-hidden="true"
-                      className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-gradient-to-b from-[var(--color-accent-cyan)] to-[var(--color-accent-violet)] shadow-[0_0_10px_rgba(0,229,255,0.7)]"
+                      className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-linear-to-b from-accent-cyan to-accent-violet shadow-[0_0_10px_rgba(0,229,255,0.7)]"
                     />
                   </>
                 )}
@@ -137,8 +137,8 @@ export default function TimelineRail() {
                 <span
                   className={`relative grid h-7 w-7 place-items-center rounded-md border transition-colors ${
                     isActive
-                      ? 'border-white/15 bg-white/[0.04] text-white'
-                      : 'border-white/[0.06] bg-white/[0.02] text-white/55 group-hover:border-white/15 group-hover:text-white/85'
+                      ? 'border-white/15 bg-white/4 text-white'
+                      : 'border-white/6 bg-white/2 text-white/55 group-hover:border-white/15 group-hover:text-white/85'
                   }`}
                 >
                   <Icon size={13} strokeWidth={1.75} aria-hidden="true" />
@@ -150,7 +150,7 @@ export default function TimelineRail() {
                   </span>
                   <span
                     className={`font-mono text-[9px] uppercase tracking-[0.2em] transition-colors ${
-                      isActive ? 'text-[var(--color-accent-cyan)]' : 'text-white/25'
+                      isActive ? 'text-accent-cyan' : 'text-white/25'
                     }`}
                   >
                     {node.index}
@@ -162,7 +162,7 @@ export default function TimelineRail() {
         </nav>
 
         {/* Progress block */}
-        <div className="relative mt-3 rounded-lg border border-white/[0.06] bg-black/30 p-3">
+        <div className="relative mt-3 rounded-lg border border-white/6 bg-black/30 p-3">
           <div className="flex items-center justify-between">
             <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-white/40">
               {t('sidebar.progress')}
@@ -173,17 +173,17 @@ export default function TimelineRail() {
           </div>
           <div className="relative mt-2 h-1 w-full overflow-hidden rounded-full bg-white/[0.05]">
             <div
-              className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[var(--color-accent-cyan)] to-[var(--color-accent-violet)] shadow-[0_0_10px_rgba(0,229,255,0.6)]"
+              className="absolute left-0 top-0 h-full rounded-full bg-linear-to-r from-accent-cyan to-accent-violet shadow-[0_0_10px_rgba(0,229,255,0.6)]"
               style={{ width: `${pct}%` }}
             />
           </div>
         </div>
 
         {/* Status footer */}
-        <div className="relative mt-2 flex items-center justify-between rounded-lg border border-white/[0.05] bg-white/[0.015] px-3 py-2">
+        <div className="relative mt-2 flex items-center justify-between rounded-lg border border-white/[0.05] bg-white/1.5 px-3 py-2">
           <div className="flex items-center gap-2">
-            <span className="grid h-6 w-6 place-items-center rounded-md border border-white/10 bg-white/[0.04]">
-              <CircleDot size={11} strokeWidth={1.75} className="text-[var(--color-accent-cyan)]" aria-hidden="true" />
+            <span className="grid h-6 w-6 place-items-center rounded-md border border-white/10 bg-white/4">
+              <CircleDot size={11} strokeWidth={1.75} className="text-accent-cyan" aria-hidden="true" />
             </span>
             <div className="flex flex-col leading-tight">
               <span className="text-[11px] text-white/85">Andre Z.</span>

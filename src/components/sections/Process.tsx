@@ -155,20 +155,20 @@ export default function Process() {
   return (
     <section ref={sectionRef} id="process" aria-label="Process" className="relative">
       {/* Header */}
-      <div className="mx-auto max-w-[1600px] px-6 pt-32 pb-12 lg:px-10 lg:pt-40 lg:pb-16 lg:pl-[260px]">
-        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]">
+      <div className="mx-auto max-w-400 px-6 pt-32 pb-12 lg:px-10 lg:pt-40 lg:pb-16 lg:pl-65">
+        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan">
           {t('process.eyebrow')}
         </span>
         <h2
           ref={titleRef}
-          className="mt-5 font-display text-[clamp(2rem,7vw,6rem)] leading-[1.0] tracking-[-0.04em] text-white"
+          className="mt-5 font-display text-[clamp(2rem,7vw,6rem)] leading-none tracking-[-0.04em] text-white"
         >
           {t('process.title')}{' '}
           <span className="text-gradient">{t('process.titleAccent')}</span>
         </h2>
         <p
           ref={ledeRef}
-          className="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-muted)]"
+          className="mt-6 max-w-2xl text-lg leading-relaxed text-muted"
         >
           {t('process.lede')}
         </p>
@@ -200,11 +200,11 @@ export default function Process() {
                 'radial-gradient(600px 320px at 22% 35%, rgba(0,229,255,0.10), transparent 65%), radial-gradient(620px 360px at 80% 70%, rgba(168,85,247,0.10), transparent 65%)',
             }}
           />
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/8 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-white/6 to-transparent" />
         </div>
 
-        <div className="relative mx-auto grid h-full max-w-[1600px] gap-10 px-6 pb-20 lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:px-10 lg:pl-[260px] lg:pb-10 lg:pt-16">
+        <div className="relative mx-auto grid h-full max-w-400 gap-10 px-6 pb-20 lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:px-10 lg:pl-65 lg:pb-10 lg:pt-16">
           {/* LEFT — product mock with 3 crossfading layers + telemetry */}
           <div className="relative flex h-[70vh] w-full flex-col gap-6 lg:h-auto">
             <div className="relative flex-1">
@@ -239,17 +239,17 @@ export default function Process() {
               {metrics.map((m) => (
                 <div
                   key={m.label}
-                  className="relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.015] p-3 backdrop-blur-sm"
+                  className="relative overflow-hidden rounded-xl border border-white/7 bg-white/1.5 p-3 backdrop-blur-sm"
                 >
                   <div
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/12 to-transparent"
                   />
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/35">
                       {m.label}
                     </span>
-                    <Activity size={11} strokeWidth={1.5} className="text-[var(--color-accent-cyan)]/70" aria-hidden="true" />
+                    <Activity size={11} strokeWidth={1.5} className="text-accent-cyan/70" aria-hidden="true" />
                   </div>
                   <div className="mt-1.5 font-display text-2xl tabular-nums text-white">
                     {m.value}
@@ -268,7 +268,7 @@ export default function Process() {
             <div className="pointer-events-none absolute -left-1 top-2 hidden h-[calc(100%-1rem)] w-px bg-white/10 lg:block">
               <div
                 ref={progressRef}
-                className="h-full w-px bg-gradient-to-b from-[var(--color-accent-cyan)] via-[var(--color-accent-cyan)] to-[var(--color-accent-violet)]"
+                className="h-full w-px bg-linear-to-b from-accent-cyan via-accent-cyan to-accent-violet"
                 style={{ transformOrigin: 'top center' }}
               />
             </div>
@@ -279,13 +279,13 @@ export default function Process() {
                   key={step.label}
                   className="process-step transition-opacity duration-500"
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-[var(--color-accent-cyan)]">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-accent-cyan">
                     {step.label}
                   </span>
                   <h3 className="mt-3 font-display text-2xl tracking-[-0.02em] text-white md:text-3xl lg:text-[2rem]">
                     {step.title}
                   </h3>
-                  <p className="mt-3 max-w-md text-base leading-relaxed text-[var(--color-muted)]">
+                  <p className="mt-3 max-w-md text-base leading-relaxed text-muted">
                     {step.body}
                   </p>
                 </li>
@@ -302,7 +302,7 @@ export default function Process() {
             </div>
 
             {/* Status dock */}
-            <div className="mt-4 hidden items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.015] px-4 py-3 lg:ml-8 lg:flex">
+            <div className="mt-4 hidden items-center justify-between rounded-xl border border-white/7 bg-white/1.5 px-4 py-3 lg:ml-8 lg:flex">
               <div className="flex items-center gap-3">
                 <span className="relative inline-flex h-1.5 w-1.5">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
@@ -332,7 +332,7 @@ export default function Process() {
               {stack.map((s) => (
                 <span
                   key={s}
-                  className="rounded-full border border-white/[0.08] bg-white/[0.02] px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-white/70"
+                  className="rounded-full border border-white/8 bg-white/2 px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-white/70"
                 >
                   {s}
                 </span>
@@ -357,10 +357,10 @@ function TerminalPanel({
   lines: string[];
 }) {
   return (
-    <div className="relative overflow-hidden rounded-xl border border-white/[0.07] bg-black/40 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm">
+    <div className="relative overflow-hidden rounded-xl border border-white/7 bg-black/40 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/12 to-transparent"
       />
       <div
         aria-hidden="true"
@@ -371,7 +371,7 @@ function TerminalPanel({
         }}
       />
       {/* header bar */}
-      <div className="relative flex items-center justify-between border-b border-white/[0.06] px-3 py-2">
+      <div className="relative flex items-center justify-between border-b border-white/6 px-3 py-2">
         <div className="flex items-center gap-2">
           <Terminal size={12} strokeWidth={1.75} className="text-white/50" aria-hidden="true" />
           <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
@@ -395,7 +395,7 @@ function TerminalPanel({
                 isPass
                   ? 'text-emerald-300/85'
                   : isArrow
-                    ? 'text-[var(--color-accent-cyan)]/85'
+                    ? 'text-accent-cyan/85'
                     : isPrompt
                       ? 'text-white/85'
                       : 'text-white/65'
@@ -417,7 +417,7 @@ function TerminalPanel({
 
 function WireframeMock() {
   return (
-    <div className="relative aspect-[4/3] w-full max-w-[680px] rounded-2xl border border-white/15 bg-[var(--color-bg-elev)]/40 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
+    <div className="relative aspect-4/3 w-full max-w-170 rounded-2xl border border-white/15 bg-bg-elev/40 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
       <div className="mb-4 flex items-center gap-1.5">
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
@@ -444,56 +444,56 @@ function WireframeMock() {
 
 function PrototypeMock() {
   return (
-    <div className="relative aspect-[4/3] w-full max-w-[720px] rounded-2xl border border-white/12 bg-[var(--color-bg-elev)]/80 p-6 shadow-[0_40px_100px_-40px_rgba(0,229,255,0.25)] backdrop-blur">
+    <div className="relative aspect-4/3 w-full max-w-180 rounded-2xl border border-white/12 bg-bg-elev/80 p-6 shadow-[0_40px_100px_-40px_rgba(0,229,255,0.25)] backdrop-blur">
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-accent-cyan)]/60" />
+          <span className="h-2.5 w-2.5 rounded-full bg-accent-cyan/60" />
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
         </div>
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted-2)]">
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-2">
           prototype
         </span>
       </div>
       <div className="grid grid-cols-[1fr_1.4fr] gap-4">
         {/* Chart panel */}
-        <div className="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+        <div className="rounded-lg border border-white/10 bg-white/3 p-3">
           <div className="mb-2 h-2 w-1/2 rounded bg-white/20" />
           <div className="flex h-24 items-end gap-1.5">
             {[40, 70, 55, 90, 65, 80, 50].map((h, i) => (
               <div
                 key={i}
-                className="flex-1 rounded-t bg-gradient-to-t from-[var(--color-accent-cyan)]/70 to-[var(--color-accent-violet)]/70"
+                className="flex-1 rounded-t bg-linear-to-t from-accent-cyan/70 to-accent-violet/70"
                 style={{ height: `${h}%` }}
               />
             ))}
           </div>
         </div>
         {/* Chat panel */}
-        <div className="space-y-2 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+        <div className="space-y-2 rounded-lg border border-white/10 bg-white/3 p-3">
           <div className="ml-auto max-w-[80%] rounded-lg rounded-tr-sm bg-white/10 px-3 py-2 text-[10px] text-white/70">
             Pull last quarter's churn cohort
           </div>
-          <div className="max-w-[80%] rounded-lg rounded-tl-sm bg-[var(--color-accent-cyan)]/15 px-3 py-2 text-[10px] text-white/80">
+          <div className="max-w-[80%] rounded-lg rounded-tl-sm bg-accent-cyan/15 px-3 py-2 text-[10px] text-white/80">
             Running query on cohort_v2…
           </div>
-          <div className="max-w-[90%] rounded-lg rounded-tl-sm bg-[var(--color-accent-violet)]/15 px-3 py-2 text-[10px] text-white/80">
+          <div className="max-w-[90%] rounded-lg rounded-tl-sm bg-accent-violet/15 px-3 py-2 text-[10px] text-white/80">
             12 accounts dropped after day 14 — 7 are SMB.
           </div>
         </div>
       </div>
       <div className="mt-4 grid grid-cols-3 gap-3">
-        <div className="rounded-md border border-white/10 bg-white/[0.03] p-3">
+        <div className="rounded-md border border-white/10 bg-white/3 p-3">
           <div className="h-1.5 w-2/3 rounded bg-white/20" />
           <div className="mt-2 h-1.5 w-1/2 rounded bg-white/12" />
         </div>
-        <div className="rounded-md border border-white/10 bg-white/[0.03] p-3">
+        <div className="rounded-md border border-white/10 bg-white/3 p-3">
           <div className="h-1.5 w-1/2 rounded bg-white/20" />
           <div className="mt-2 h-1.5 w-2/3 rounded bg-white/12" />
         </div>
-        <div className="rounded-md border border-[var(--color-accent-cyan)]/30 bg-[var(--color-accent-cyan)]/10 p-3">
-          <div className="h-1.5 w-3/4 rounded bg-[var(--color-accent-cyan)]/70" />
-          <div className="mt-2 h-1.5 w-1/2 rounded bg-[var(--color-accent-cyan)]/40" />
+        <div className="rounded-md border border-accent-cyan/30 bg-accent-cyan/10 p-3">
+          <div className="h-1.5 w-3/4 rounded bg-accent-cyan/70" />
+          <div className="mt-2 h-1.5 w-1/2 rounded bg-accent-cyan/40" />
         </div>
       </div>
     </div>
@@ -502,7 +502,7 @@ function PrototypeMock() {
 
 function LiveMock() {
   return (
-    <div className="relative aspect-[4/3] w-full max-w-[740px] rounded-2xl border border-[var(--color-accent-cyan)]/25 bg-[var(--color-bg-elev)]/90 p-6 shadow-[0_50px_120px_-30px_rgba(0,229,255,0.45),0_30px_80px_-30px_rgba(168,85,247,0.35)] backdrop-blur">
+    <div className="relative aspect-4/3 w-full max-w-185 rounded-2xl border border-accent-cyan/25 bg-bg-elev/90 p-6 shadow-[0_50px_120px_-30px_rgba(0,229,255,0.45),0_30px_80px_-30px_rgba(168,85,247,0.35)] backdrop-blur">
       {/* LIVE pill */}
       <div className="absolute -top-3 left-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-emerald-300">
         <span className="relative inline-flex h-1.5 w-1.5">
@@ -524,7 +524,7 @@ function LiveMock() {
       </div>
 
       <div className="grid grid-cols-[1fr_1.4fr] gap-4">
-        <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
+        <div className="rounded-lg border border-white/10 bg-white/4 p-3">
           <div className="mb-2 flex items-center justify-between">
             <div className="h-2 w-1/2 rounded bg-white/30" />
             <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-emerald-300/80">
@@ -535,17 +535,17 @@ function LiveMock() {
             {[60, 80, 70, 95, 75, 90, 85].map((h, i) => (
               <div
                 key={i}
-                className="flex-1 rounded-t bg-gradient-to-t from-[var(--color-accent-cyan)] to-[var(--color-accent-violet)] shadow-[0_0_12px_rgba(0,229,255,0.45)]"
+                className="flex-1 rounded-t bg-linear-to-t from-accent-cyan to-accent-violet shadow-[0_0_12px_rgba(0,229,255,0.45)]"
                 style={{ height: `${h}%` }}
               />
             ))}
           </div>
         </div>
-        <div className="space-y-2 rounded-lg border border-white/10 bg-white/[0.04] p-3">
+        <div className="space-y-2 rounded-lg border border-white/10 bg-white/4 p-3">
           <div className="ml-auto max-w-[80%] rounded-lg rounded-tr-sm bg-white/15 px-3 py-2 text-[10px] text-white/85">
             How fast can we ship V2?
           </div>
-          <div className="max-w-[90%] rounded-lg rounded-tl-sm bg-gradient-to-br from-[var(--color-accent-cyan)]/25 to-[var(--color-accent-violet)]/25 px-3 py-2 text-[10px] text-white/95">
+          <div className="max-w-[90%] rounded-lg rounded-tl-sm bg-linear-to-br from-accent-cyan/25 to-accent-violet/25 px-3 py-2 text-[10px] text-white/95">
             Two weeks. I'll have a working version Friday.
             <span className="ml-1 inline-block h-2 w-1 translate-y-0.5 animate-pulse bg-white/90" />
           </div>
@@ -556,7 +556,7 @@ function LiveMock() {
       </div>
       <div className="mt-4 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
         <span>03 users · 41 events · 0 errors</span>
-        <span className="text-[var(--color-accent-cyan)]/80">shipped</span>
+        <span className="text-accent-cyan/80">shipped</span>
       </div>
     </div>
   );

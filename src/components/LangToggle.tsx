@@ -10,7 +10,7 @@ export default function LangToggle() {
     <div
       role="group"
       aria-label={t('nav.language')}
-      className="flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] px-1 py-1 font-mono text-xs uppercase tracking-widest backdrop-blur"
+      className="flex items-center gap-1 rounded-full border border-white/10 bg-white/3 px-1 py-1 font-mono text-xs uppercase tracking-widest backdrop-blur"
     >
       {LANGS.map((lng) => {
         const active = current === lng;
@@ -23,7 +23,7 @@ export default function LangToggle() {
             className={`rounded-full px-2.5 py-1 transition-colors ${
               active
                 ? 'bg-white text-[var(--color-bg)]'
-                : 'text-[var(--color-muted)] hover:text-white'
+                : 'text-muted hover:text-white'
             }`}
           >
             {lng}

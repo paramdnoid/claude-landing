@@ -75,13 +75,13 @@ export default function Cursor() {
       <div
         ref={ringRef}
         aria-hidden="true"
-        className="custom-cursor-ring pointer-events-none fixed left-0 top-0 z-[100] hidden h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border lg:block"
+        className="custom-cursor-ring pointer-events-none fixed left-0 top-0 z-100 hidden h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border lg:block"
         style={{ borderColor: 'rgba(255,255,255,0.35)', mixBlendMode: 'difference' }}
       />
       <div
         ref={dotRef}
         aria-hidden="true"
-        className="custom-cursor-dot pointer-events-none fixed left-0 top-0 z-[100] hidden h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white lg:block"
+        className="custom-cursor-dot pointer-events-none fixed left-0 top-0 z-100 hidden h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white lg:block"
       />
     </>
   );

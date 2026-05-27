@@ -116,7 +116,7 @@ export default function Hero() {
       </Suspense>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-[5]"
+        className="pointer-events-none absolute inset-0 z-[-5]"
         style={{
           background:
             'radial-gradient(ellipse 55% 50% at 50% 50%, rgba(10,10,15,0.55) 0%, rgba(10,10,15,0.2) 45%, transparent 80%)',
@@ -124,7 +124,7 @@ export default function Hero() {
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-[6]"
+        className="pointer-events-none absolute inset-0 z-[-6]"
         style={{
           background:
             'radial-gradient(circle at 75% 25%, rgba(168,85,247,0.22), transparent 55%), radial-gradient(circle at 18% 75%, rgba(0,229,255,0.20), transparent 55%)',
@@ -136,17 +136,17 @@ export default function Hero() {
         ref={logoLayerRef}
         className="pointer-events-none absolute inset-0 flex items-center justify-center"
       >
-        <div className="relative h-[80vh] w-full max-w-[1600px] px-4">
+        <div className="relative h-[80vh] w-full max-w-400 px-4">
           <Suspense fallback={null}>
             <HeroLogotype />
           </Suspense>
         </div>
       </div>
 
-      <div className="relative mx-auto flex h-full max-w-7xl flex-col items-start justify-between px-6 pt-32 pb-16 lg:px-10 lg:pl-[280px] lg:pt-40 lg:pb-20">
+      <div className="relative mx-auto flex h-full max-w-7xl flex-col items-start justify-between px-6 pt-32 pb-16 lg:px-10 lg:pl-70 lg:pt-40 lg:pb-20">
         <span
           ref={eyebrowRef}
-          className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]"
+          className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan"
         >
           {t('hero.eyebrow')}
         </span>
@@ -163,7 +163,7 @@ export default function Hero() {
           </p>
           <p
             ref={ledeRef}
-            className="mt-7 max-w-2xl text-base leading-relaxed text-[var(--color-muted)] md:text-lg"
+            className="mt-7 max-w-2xl text-base leading-relaxed text-muted md:text-lg"
           >
             {t('hero.lede')}
           </p>
@@ -171,10 +171,10 @@ export default function Hero() {
 
         <div
           ref={hintRef}
-          className="absolute bottom-8 left-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--color-muted-2)] lg:left-10"
+          className="absolute bottom-8 left-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.28em] text-muted-2 lg:left-10"
         >
           <span className="relative inline-block h-8 w-px overflow-hidden">
-            <span className="absolute inset-x-0 top-0 h-3 animate-[scrollHint_2s_ease-in-out_infinite] bg-[var(--color-accent-cyan)]" />
+            <span className="absolute inset-x-0 top-0 h-3 animate-[scrollHint_2s_ease-in-out_infinite] bg-accent-cyan" />
           </span>
           {t('hero.scrollHint')}
         </div>

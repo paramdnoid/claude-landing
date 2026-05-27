@@ -346,7 +346,7 @@ export default function HeroLogotype() {
     <div
       ref={mountRef}
       aria-hidden="true"
-      className="absolute inset-0 -z-[1] flex items-center justify-center"
+      className="absolute inset-0 z-[-1] flex items-center justify-center"
       // Reserve a deterministic box so the canvas has explicit size from first paint.
       style={{ contain: 'strict' }}
     />

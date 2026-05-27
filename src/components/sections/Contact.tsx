@@ -119,10 +119,10 @@ export default function Contact() {
       ref={sectionRef}
       id="contact"
       aria-label="Contact"
-      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-[280px] lg:py-40"
+      className="relative mx-auto max-w-7xl px-6 py-32 lg:px-10 lg:pl-70 lg:py-40"
     >
       <div className="mb-16 max-w-4xl">
-        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]">
+        <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-cyan">
           {t('contact.eyebrow')}
         </span>
         <h2
@@ -139,7 +139,7 @@ export default function Contact() {
             {t('contact.titleAccent')}
           </span>
         </h2>
-        <p className="mt-6 text-lg leading-relaxed text-[var(--color-muted)]">
+        <p className="mt-6 text-lg leading-relaxed text-muted">
           {t('contact.lede')}
         </p>
       </div>
@@ -205,7 +205,7 @@ export default function Contact() {
           >
             <span
               aria-hidden="true"
-              className="absolute inset-0 -z-10 bg-gradient-to-r from-[var(--color-accent-cyan)] to-[var(--color-accent-violet)] opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute inset-0 -z-10 bg-linear-to-r from-accent-cyan to-accent-violet opacity-0 transition-opacity group-hover:opacity-100"
             />
             <span className="transition-colors group-hover:text-white">
               {status === 'submitting' ? t('contact.form.submitting') : t('contact.form.submit')}
@@ -220,7 +220,7 @@ export default function Contact() {
           {status === 'success' && (
             <p
               role="status"
-              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-accent-cyan)]"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-accent-cyan"
             >
               <Check size={14} strokeWidth={2.4} aria-hidden="true" />
               {t('contact.form.success')}
@@ -238,12 +238,12 @@ export default function Contact() {
         </form>
 
         <aside className="flex flex-col justify-end gap-6">
-          <span className="font-mono text-xs uppercase tracking-[0.22em] text-[var(--color-muted-2)]">
+          <span className="font-mono text-xs uppercase tracking-[0.22em] text-muted-2">
             {t('contact.or')}
           </span>
           <a
             href={`mailto:${contactEmail}`}
-            className="group inline-flex items-center gap-3 font-display text-2xl text-white transition-colors hover:text-[var(--color-accent-cyan)] md:text-3xl"
+            className="group inline-flex items-center gap-3 font-display text-2xl text-white transition-colors hover:text-accent-cyan md:text-3xl"
           >
             <Mail size={24} className="transition-transform group-hover:-translate-y-0.5" />
             <span className="underline decoration-white/20 underline-offset-8 transition-colors group-hover:decoration-[var(--color-accent-cyan)]">
@@ -311,7 +311,7 @@ function Field({
       )}
       <label
         htmlFor={id}
-        className="pointer-events-none absolute left-4 top-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted-2)] transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-[var(--color-muted)] peer-focus:top-2 peer-focus:text-[10px] peer-focus:tracking-[0.2em] peer-focus:text-[var(--color-accent-cyan)]"
+        className="pointer-events-none absolute left-4 top-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-2 transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm peer-placeholder-shown:tracking-normal peer-placeholder-shown:text-muted peer-focus:top-2 peer-focus:text-[10px] peer-focus:tracking-[0.2em] peer-focus:text-accent-cyan"
       >
         {label}
       </label>
@@ -369,15 +369,15 @@ function SelectField({ id, label, placeholder, options, error }: SelectFieldProp
         htmlFor={id}
         className={`pointer-events-none absolute left-4 transition-all ${
           filled
-            ? 'top-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted-2)] peer-focus:text-[var(--color-accent-cyan)]'
-            : 'top-4 text-sm text-[var(--color-muted)]'
+            ? 'top-2 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-2 peer-focus:text-accent-cyan'
+            : 'top-4 text-sm text-muted'
         }`}
       >
         {label}
       </label>
       <ChevronDown
         size={16}
-        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-muted)] transition-transform peer-focus:text-[var(--color-accent-cyan)]"
+        className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-muted transition-transform peer-focus:text-accent-cyan"
         aria-hidden="true"
       />
       {error && (

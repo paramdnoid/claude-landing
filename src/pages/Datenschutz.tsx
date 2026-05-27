@@ -8,12 +8,12 @@ export default function Datenschutz() {
     <section className="mx-auto max-w-3xl px-6 py-32 lg:px-10">
       <Link
         to="/"
-        className="mb-10 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-[var(--color-muted)] transition-colors hover:text-white"
+        className="mb-10 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-muted transition-colors hover:text-white"
       >
         <ArrowLeft size={14} /> Home
       </Link>
       <h1 className="font-display text-4xl text-white md:text-5xl">{t('privacy.title')}</h1>
-      <p className="mt-6 text-[var(--color-muted)]">{t('privacy.body')}</p>
+      <p className="mt-6 text-muted">{t('privacy.body')}</p>
     </section>
   );
 }

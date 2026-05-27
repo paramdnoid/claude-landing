@@ -37,7 +37,7 @@ export default function Header() {
           : 'border-b border-transparent'
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10 lg:pl-[280px]">
         <Link to="/" className="flex items-center gap-2.5 group">
           <img src="/logo.svg" alt="" className="h-7 w-7" aria-hidden="true" />
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white transition-opacity group-hover:opacity-80">

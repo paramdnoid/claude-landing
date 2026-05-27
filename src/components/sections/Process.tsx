@@ -2,11 +2,13 @@ import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Activity, Terminal, Cpu, Signal } from 'lucide-react';
 import { prefersReducedMotion, splitText } from '../../lib/animations';
 
 gsap.registerPlugin(ScrollTrigger);
 
 type Step = { label: string; title: string; body: string };
+type Metric = { label: string; value: string; delta: string };
 
 export default function Process() {
   const { t, i18n } = useTranslation();
@@ -21,6 +23,9 @@ export default function Process() {
   const progressRef = useRef<HTMLDivElement>(null);
 
   const steps = t('process.steps', { returnObjects: true }) as Step[];
+  const metrics = t('processExtras.metrics', { returnObjects: true }) as Metric[];
+  const terminalLines = t('processExtras.terminalLines', { returnObjects: true }) as string[];
+  const stack = t('processExtras.stack', { returnObjects: true }) as string[];
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -150,7 +155,7 @@ export default function Process() {
   return (
     <section ref={sectionRef} id="process" aria-label="Process" className="relative">
       {/* Header */}
-      <div className="mx-auto max-w-7xl px-6 pt-32 pb-12 lg:px-10 lg:pt-40 lg:pb-16">
+      <div className="mx-auto max-w-[1600px] px-6 pt-32 pb-12 lg:px-10 lg:pt-40 lg:pb-16 lg:pl-[260px]">
         <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]">
           {t('process.eyebrow')}
         </span>
@@ -174,10 +179,35 @@ export default function Process() {
         ref={pinRef}
         className="relative w-full overflow-hidden lg:h-screen"
       >
-        <div className="mx-auto grid h-full max-w-7xl gap-10 px-6 pb-20 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:px-10 lg:pb-0 lg:pt-24">
-          {/* LEFT — product mock with 3 crossfading layers */}
-          <div className="relative h-[70vh] w-full lg:h-auto">
-            <div className="relative h-full w-full">
+        {/* Ambient backdrop: grid + radial glows */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div
+            className="absolute inset-0 opacity-[0.5]"
+            style={{
+              backgroundImage:
+                'linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px)',
+              backgroundSize: '64px 64px',
+              maskImage:
+                'radial-gradient(ellipse 80% 60% at 50% 50%, #000 30%, transparent 75%)',
+              WebkitMaskImage:
+                'radial-gradient(ellipse 80% 60% at 50% 50%, #000 30%, transparent 75%)',
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(600px 320px at 22% 35%, rgba(0,229,255,0.10), transparent 65%), radial-gradient(620px 360px at 80% 70%, rgba(168,85,247,0.10), transparent 65%)',
+            }}
+          />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        </div>
+
+        <div className="relative mx-auto grid h-full max-w-[1600px] gap-10 px-6 pb-20 lg:grid-cols-[1.15fr_1fr] lg:gap-10 lg:px-10 lg:pl-[260px] lg:pb-10 lg:pt-16">
+          {/* LEFT — product mock with 3 crossfading layers + telemetry */}
+          <div className="relative flex h-[70vh] w-full flex-col gap-6 lg:h-auto">
+            <div className="relative flex-1">
               {/* Layer A — Wireframe */}
               <div
                 ref={layerARef}
@@ -203,10 +233,37 @@ export default function Process() {
                 <LiveMock />
               </div>
             </div>
+
+            {/* Metrics strip below the mock */}
+            <div className="relative hidden grid-cols-3 gap-3 lg:grid">
+              {metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="relative overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.015] p-3 backdrop-blur-sm"
+                >
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
+                  />
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/35">
+                      {m.label}
+                    </span>
+                    <Activity size={11} strokeWidth={1.5} className="text-[var(--color-accent-cyan)]/70" aria-hidden="true" />
+                  </div>
+                  <div className="mt-1.5 font-display text-2xl tabular-nums text-white">
+                    {m.value}
+                  </div>
+                  <div className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-emerald-300/75">
+                    {m.delta}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* RIGHT — step entries */}
-          <div ref={stepsWrapRef} className="relative">
+          {/* RIGHT — step entries + premium modules */}
+          <div ref={stepsWrapRef} className="relative flex flex-col">
             {/* Vertical progress rail */}
             <div className="pointer-events-none absolute -left-1 top-2 hidden h-[calc(100%-1rem)] w-px bg-white/10 lg:block">
               <div
@@ -216,7 +273,7 @@ export default function Process() {
               />
             </div>
 
-            <ol className="space-y-12 lg:space-y-16 lg:pl-8">
+            <ol className="space-y-10 lg:space-y-12 lg:pl-8">
               {steps.map((step) => (
                 <li
                   key={step.label}
@@ -225,7 +282,7 @@ export default function Process() {
                   <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-[var(--color-accent-cyan)]">
                     {step.label}
                   </span>
-                  <h3 className="mt-3 font-display text-2xl tracking-[-0.02em] text-white md:text-3xl lg:text-4xl">
+                  <h3 className="mt-3 font-display text-2xl tracking-[-0.02em] text-white md:text-3xl lg:text-[2rem]">
                     {step.title}
                   </h3>
                   <p className="mt-3 max-w-md text-base leading-relaxed text-[var(--color-muted)]">
@@ -234,6 +291,53 @@ export default function Process() {
                 </li>
               ))}
             </ol>
+
+            {/* Terminal / build log — fills empty right-side area */}
+            <div className="mt-10 hidden lg:ml-8 lg:block">
+              <TerminalPanel
+                label={t('processExtras.terminalLabel')}
+                host={t('processExtras.terminalHost')}
+                lines={terminalLines}
+              />
+            </div>
+
+            {/* Status dock */}
+            <div className="mt-4 hidden items-center justify-between rounded-xl border border-white/[0.07] bg-white/[0.015] px-4 py-3 lg:ml-8 lg:flex">
+              <div className="flex items-center gap-3">
+                <span className="relative inline-flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-300" />
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
+                  {t('processExtras.statusOk')}
+                </span>
+              </div>
+              <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                <span className="flex items-center gap-1.5">
+                  <Signal size={11} strokeWidth={1.5} aria-hidden="true" />
+                  {t('processExtras.statusLatency')}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Cpu size={11} strokeWidth={1.5} aria-hidden="true" />
+                  {t('processExtras.statusRegion')}
+                </span>
+              </div>
+            </div>
+
+            {/* Stack chips */}
+            <div className="mt-4 hidden flex-wrap items-center gap-2 lg:ml-8 lg:flex">
+              <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-white/30">
+                {t('processExtras.stackLabel')}
+              </span>
+              {stack.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-full border border-white/[0.08] bg-white/[0.02] px-2.5 py-1 font-mono text-[10px] tracking-[0.08em] text-white/70"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -241,11 +345,79 @@ export default function Process() {
   );
 }
 
+/* -------------------- premium right-side terminal -------------------- */
+
+function TerminalPanel({
+  label,
+  host,
+  lines,
+}: {
+  label: string;
+  host: string;
+  lines: string[];
+}) {
+  return (
+    <div className="relative overflow-hidden rounded-xl border border-white/[0.07] bg-black/40 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-50"
+        style={{
+          background:
+            'radial-gradient(400px 200px at 90% 0%, rgba(0,229,255,0.06), transparent 70%)',
+        }}
+      />
+      {/* header bar */}
+      <div className="relative flex items-center justify-between border-b border-white/[0.06] px-3 py-2">
+        <div className="flex items-center gap-2">
+          <Terminal size={12} strokeWidth={1.75} className="text-white/50" aria-hidden="true" />
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55">
+            {label}
+          </span>
+        </div>
+        <span className="font-mono text-[10px] tracking-[0.08em] text-white/30">
+          {host}
+        </span>
+      </div>
+      {/* body */}
+      <div className="relative px-4 py-3 font-mono text-[11px] leading-relaxed text-white/75">
+        {lines.map((line, i) => {
+          const isPass = line.startsWith('✓');
+          const isArrow = line.startsWith('→');
+          const isPrompt = line.startsWith('$');
+          return (
+            <div
+              key={i}
+              className={`whitespace-pre ${
+                isPass
+                  ? 'text-emerald-300/85'
+                  : isArrow
+                    ? 'text-[var(--color-accent-cyan)]/85'
+                    : isPrompt
+                      ? 'text-white/85'
+                      : 'text-white/65'
+              }`}
+            >
+              {line}
+              {i === lines.length - 1 && (
+                <span className="ml-0 inline-block h-3 w-1.5 translate-y-0.5 animate-pulse bg-white/80 align-middle" />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 /* -------------------- mock layers -------------------- */
 
 function WireframeMock() {
   return (
-    <div className="relative aspect-[4/3] w-full max-w-[560px] rounded-2xl border border-white/15 bg-[var(--color-bg-elev)]/40 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
+    <div className="relative aspect-[4/3] w-full max-w-[680px] rounded-2xl border border-white/15 bg-[var(--color-bg-elev)]/40 p-6 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)]">
       <div className="mb-4 flex items-center gap-1.5">
         <span className="h-2 w-2 rounded-full bg-white/15" />
         <span className="h-2 w-2 rounded-full bg-white/15" />
@@ -272,7 +444,7 @@ function WireframeMock() {
 
 function PrototypeMock() {
   return (
-    <div className="relative aspect-[4/3] w-full max-w-[600px] rounded-2xl border border-white/12 bg-[var(--color-bg-elev)]/80 p-6 shadow-[0_40px_100px_-40px_rgba(0,229,255,0.25)] backdrop-blur">
+    <div className="relative aspect-[4/3] w-full max-w-[720px] rounded-2xl border border-white/12 bg-[var(--color-bg-elev)]/80 p-6 shadow-[0_40px_100px_-40px_rgba(0,229,255,0.25)] backdrop-blur">
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[var(--color-accent-cyan)]/60" />
@@ -330,7 +502,7 @@ function PrototypeMock() {
 
 function LiveMock() {
   return (
-    <div className="relative aspect-[4/3] w-full max-w-[620px] rounded-2xl border border-[var(--color-accent-cyan)]/25 bg-[var(--color-bg-elev)]/90 p-6 shadow-[0_50px_120px_-30px_rgba(0,229,255,0.45),0_30px_80px_-30px_rgba(168,85,247,0.35)] backdrop-blur">
+    <div className="relative aspect-[4/3] w-full max-w-[740px] rounded-2xl border border-[var(--color-accent-cyan)]/25 bg-[var(--color-bg-elev)]/90 p-6 shadow-[0_50px_120px_-30px_rgba(0,229,255,0.45),0_30px_80px_-30px_rgba(168,85,247,0.35)] backdrop-blur">
       {/* LIVE pill */}
       <div className="absolute -top-3 left-6 inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-emerald-300">
         <span className="relative inline-flex h-1.5 w-1.5">

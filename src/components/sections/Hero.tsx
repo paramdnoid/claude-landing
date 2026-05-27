@@ -143,7 +143,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative mx-auto flex h-full max-w-7xl flex-col items-start justify-between px-6 pt-32 pb-16 lg:px-10 lg:pt-40 lg:pb-20">
+      <div className="relative mx-auto flex h-full max-w-7xl flex-col items-start justify-between px-6 pt-32 pb-16 lg:px-10 lg:pl-[280px] lg:pt-40 lg:pb-20">
         <span
           ref={eyebrowRef}
           className="font-mono text-[11px] uppercase tracking-[0.3em] text-[var(--color-accent-cyan)]"

@@ -1,21 +1,35 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import {
+  Compass,
+  Sparkles,
+  Layers,
+  GitBranch,
+  Send,
+  CircleDot,
+} from 'lucide-react';
 
-type Node = { id: string; label: string };
+type Node = {
+  id: string;
+  index: string;
+  key: 'overview' | 'manifesto' | 'capabilities' | 'process' | 'contact';
+  Icon: typeof Compass;
+};
 
 const NODES: Node[] = [
-  { id: 'hero', label: '01' },
-  { id: 'manifesto', label: '02' },
-  { id: 'capabilities', label: '03' },
-  { id: 'process', label: '04' },
-  { id: 'contact', label: '05' },
+  { id: 'hero', index: '01', key: 'overview', Icon: Compass },
+  { id: 'manifesto', index: '02', key: 'manifesto', Icon: Sparkles },
+  { id: 'capabilities', index: '03', key: 'capabilities', Icon: Layers },
+  { id: 'process', index: '04', key: 'process', Icon: GitBranch },
+  { id: 'contact', index: '05', key: 'contact', Icon: Send },
 ];
 
 export default function TimelineRail() {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
   const [active, setActive] = useState<string>('hero');
   const [progress, setProgress] = useState(0);
-  const railRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (pathname !== '/') return;
@@ -47,44 +61,142 @@ export default function TimelineRail() {
 
   if (pathname !== '/') return null;
 
+  const pct = Math.round(progress * 100);
+
   return (
-    <div
-      ref={railRef}
-      aria-hidden="true"
+    <aside
+      aria-label={t('sidebar.aria')}
       className="pointer-events-none fixed left-5 top-1/2 z-30 hidden -translate-y-1/2 lg:block"
     >
-      <div className="relative flex h-[60vh] w-6 flex-col items-center justify-between">
-        <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-white/10" />
+      <div className="pointer-events-auto relative w-[232px] overflow-hidden rounded-2xl border border-white/[0.07] bg-[var(--color-bg-elev)]/70 p-3 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.8),0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl">
+        {/* soft inner glow */}
         <div
-          className="absolute left-1/2 top-0 w-px -translate-x-1/2 bg-gradient-to-b from-[var(--color-accent-cyan)] to-[var(--color-accent-violet)] transition-[height] duration-200 ease-out"
-          style={{ height: `${progress * 100}%` }}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 rounded-2xl opacity-60"
+          style={{
+            background:
+              'radial-gradient(220px 140px at 10% 0%, rgba(0,229,255,0.10), transparent 70%), radial-gradient(220px 180px at 90% 100%, rgba(168,85,247,0.10), transparent 70%)',
+          }}
         />
-        {NODES.map((node) => {
-          const isActive = active === node.id;
-          return (
-            <a
-              key={node.id}
-              href={`#${node.id}`}
-              className="pointer-events-auto group relative flex items-center"
-            >
-              <span
-                className={`relative z-10 h-2.5 w-2.5 rounded-full border transition-all ${
+
+        {/* Header / brand-row */}
+        <div className="relative flex items-center justify-between px-2 pb-3 pt-1">
+          <div className="flex items-center gap-2">
+            <span className="relative inline-flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-300" />
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">
+              {t('sidebar.availability')}
+            </span>
+          </div>
+          <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/30">
+            v1
+          </span>
+        </div>
+
+        {/* Section label */}
+        <div className="relative flex items-center gap-2 px-2 pb-2">
+          <span className="h-px flex-1 bg-white/[0.06]" />
+          <span className="font-mono text-[9px] uppercase tracking-[0.28em] text-white/30">
+            {t('sidebar.navLabel')}
+          </span>
+          <span className="h-px flex-1 bg-white/[0.06]" />
+        </div>
+
+        {/* Nav */}
+        <nav className="relative flex flex-col gap-0.5">
+          {NODES.map((node) => {
+            const isActive = active === node.id;
+            const Icon = node.Icon;
+            return (
+              <a
+                key={node.id}
+                href={`#${node.id}`}
+                aria-current={isActive ? 'true' : undefined}
+                className={`group relative flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm transition-colors ${
                   isActive
-                    ? 'border-transparent bg-white shadow-[0_0_18px_rgba(0,229,255,0.7)]'
-                    : 'border-white/30 bg-[var(--color-bg)]'
-                }`}
-              />
-              <span
-                className={`absolute left-6 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.2em] transition-opacity ${
-                  isActive ? 'text-white opacity-100' : 'text-[var(--color-muted-2)] opacity-0 group-hover:opacity-100'
+                    ? 'text-white'
+                    : 'text-[var(--color-muted)] hover:text-white'
                 }`}
               >
-                {node.label}
+                {/* Active background glow */}
+                {isActive && (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 rounded-lg bg-gradient-to-r from-white/[0.06] to-transparent"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-y-1 left-0 w-[2px] rounded-full bg-gradient-to-b from-[var(--color-accent-cyan)] to-[var(--color-accent-violet)] shadow-[0_0_10px_rgba(0,229,255,0.7)]"
+                    />
+                  </>
+                )}
+
+                <span
+                  className={`relative grid h-7 w-7 place-items-center rounded-md border transition-colors ${
+                    isActive
+                      ? 'border-white/15 bg-white/[0.04] text-white'
+                      : 'border-white/[0.06] bg-white/[0.02] text-white/55 group-hover:border-white/15 group-hover:text-white/85'
+                  }`}
+                >
+                  <Icon size={13} strokeWidth={1.75} aria-hidden="true" />
+                </span>
+
+                <span className="relative flex flex-1 items-baseline justify-between">
+                  <span className="font-medium tracking-[-0.005em]">
+                    {t(`sidebar.items.${node.key}`)}
+                  </span>
+                  <span
+                    className={`font-mono text-[9px] uppercase tracking-[0.2em] transition-colors ${
+                      isActive ? 'text-[var(--color-accent-cyan)]' : 'text-white/25'
+                    }`}
+                  >
+                    {node.index}
+                  </span>
+                </span>
+              </a>
+            );
+          })}
+        </nav>
+
+        {/* Progress block */}
+        <div className="relative mt-3 rounded-lg border border-white/[0.06] bg-black/30 p-3">
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-white/40">
+              {t('sidebar.progress')}
+            </span>
+            <span className="font-mono text-[10px] tabular-nums text-white/80">
+              {String(pct).padStart(2, '0')}%
+            </span>
+          </div>
+          <div className="relative mt-2 h-1 w-full overflow-hidden rounded-full bg-white/[0.05]">
+            <div
+              className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-[var(--color-accent-cyan)] to-[var(--color-accent-violet)] shadow-[0_0_10px_rgba(0,229,255,0.6)]"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Status footer */}
+        <div className="relative mt-2 flex items-center justify-between rounded-lg border border-white/[0.05] bg-white/[0.015] px-3 py-2">
+          <div className="flex items-center gap-2">
+            <span className="grid h-6 w-6 place-items-center rounded-md border border-white/10 bg-white/[0.04]">
+              <CircleDot size={11} strokeWidth={1.75} className="text-[var(--color-accent-cyan)]" aria-hidden="true" />
+            </span>
+            <div className="flex flex-col leading-tight">
+              <span className="text-[11px] text-white/85">Andre Z.</span>
+              <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/35">
+                {t('sidebar.role')}
               </span>
-            </a>
-          );
-        })}
+            </div>
+          </div>
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-emerald-300/80">
+            {t('sidebar.online')}
+          </span>
+        </div>
       </div>
-    </div>
+    </aside>
   );
 }

@@ -97,7 +97,6 @@ export default function Seo() {
       url: SITE_URL,
       jobTitle: lang === 'de' ? 'KI-Engineer & Trainer' : 'AI Engineer & Trainer',
       worksFor: { '@type': 'Organization', name: 'ZIAN AI CONCEPTS' },
-      sameAs: [],
     });
 
     setJsonLd('service', {

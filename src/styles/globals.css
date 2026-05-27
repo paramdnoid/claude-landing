@@ -78,6 +78,28 @@
 
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; padding: 0; }
+
+  .skip-link {
+    position: fixed;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 200;
+    padding: 0.5rem 0.9rem;
+    background: var(--color-plasma-lime);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    transform: translateY(-150%);
+    transition: transform 200ms ease;
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 2px solid var(--color-fg);
+    outline-offset: 2px;
+  }
 }
 
 @layer utilities {

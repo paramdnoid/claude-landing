@@ -6,7 +6,6 @@ import { prefersReducedMotion } from '../../lib/animations';
 
 export default function Manifesto() {
   const { t } = useTranslation();
-  const sectionRef = useRef<HTMLElement>(null);
   const lineRefs = useRef<(HTMLParagraphElement | null)[]>([]);
 
   useEffect(() => {
@@ -40,7 +39,7 @@ export default function Manifesto() {
   const lines: string[] = t('manifesto.lines', { returnObjects: true }) as string[];
 
   return (
-    <section ref={sectionRef} id="manifesto" className="relative px-6 py-32 md:px-10 md:py-48">
+    <section id="manifesto" className="relative px-6 py-32 md:px-10 md:py-48">
       <div className="mx-auto max-w-[1400px]">
         <div className="tag mb-12">{t('manifesto.eyebrow')}</div>
         <div className="space-y-4 md:space-y-6">

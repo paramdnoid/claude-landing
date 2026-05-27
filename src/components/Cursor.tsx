@@ -8,6 +8,7 @@ export default function Cursor() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const dot = dotRef.current;
     const ring = ringRef.current;

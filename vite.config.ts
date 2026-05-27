@@ -13,12 +13,12 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          three: ['three'],
+          three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing', 'postprocessing'],
           gsap: ['gsap', 'gsap/ScrollTrigger', 'lenis'],
           i18n: ['i18next', 'i18next-browser-languagedetector', 'react-i18next'],
         },
       },
     },
-    chunkSizeWarningLimit: 700,
+    chunkSizeWarningLimit: 1200,
   },
 });

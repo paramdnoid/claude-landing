@@ -38,9 +38,9 @@ export default function Contact() {
 
           <div className="flex flex-col gap-2 md:items-end">
             <div className="tag mb-2">{t('contact.socials')}</div>
-            <a className="hover:text-[var(--color-plasma-lime)]" href="https://github.com" target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a className="hover:text-[var(--color-plasma-lime)]" href="https://x.com" target="_blank" rel="noreferrer">X / Twitter ↗</a>
-            <a className="hover:text-[var(--color-plasma-lime)]" href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a className="hover:text-[var(--color-plasma-lime)]" href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a className="hover:text-[var(--color-plasma-lime)]" href="https://x.com" target="_blank" rel="noopener noreferrer">X / Twitter ↗</a>
+            <a className="hover:text-[var(--color-plasma-lime)]" href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
           </div>
         </div>
       </div>

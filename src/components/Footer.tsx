@@ -11,8 +11,9 @@ export default function Footer() {
         <div className="space-y-3">
           <div className="flex items-center gap-2.5">
             <span className="inline-block h-2 w-2 rotate-45 bg-[var(--color-plasma-lime)]" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em]">
-              ANDRE <span className="text-[var(--color-muted)]">ZIMMERMANN</span>
+            <span className="font-mono text-[11px] uppercase tracking-[0.22em] leading-tight">
+              <span className="block">ZIAN AI CONCEPTS</span>
+              <span className="block text-[var(--color-muted)] text-[10px]">by Andre Zimmermann</span>
             </span>
           </div>
           <p className="max-w-sm text-sm text-[var(--color-muted)]">{t('footer.tagline')}</p>
@@ -26,7 +27,7 @@ export default function Footer() {
               {t('footer.privacy')}
             </Link>
           </div>
-          <p className="text-[var(--color-muted-2)]">© {year} ANDRE ZIMMERMANN · {t('footer.rights')}</p>
+          <p className="text-[var(--color-muted-2)]">© {year} ZIAN AI CONCEPTS · {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

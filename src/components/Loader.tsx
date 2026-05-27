@@ -142,7 +142,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
 
       {/* Top-right: version chip */}
       <div ref={topRightRef} className="absolute right-6 top-6 md:right-10 md:top-10" style={{ opacity: 0 }}>
-        <div className="glass glass-pill tag">v0.2 · 2026</div>
+        <div className="glass glass-pill tag">v0.2 · {new Date().getFullYear()}</div>
       </div>
 
       {/* Center: monogram + progress ring */}

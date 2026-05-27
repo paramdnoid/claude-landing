@@ -13,12 +13,21 @@ import Loader from './components/Loader';
 import { destroySmoothScroll, getLenis, initSmoothScroll } from './lib/smoothScroll';
 import { initAnalytics } from './lib/analytics';
 
-function ScrollRefresh() {
+function ScrollRefresh({ ready }: { ready: boolean }) {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    if (!ready) return;
+    const hash = window.location.hash.slice(1);
+    const target = hash ? document.getElementById(hash) : null;
+    if (target) {
+      const lenis = getLenis();
+      if (lenis) lenis.scrollTo(target, { offset: -64, immediate: true });
+      else target.scrollIntoView({ block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    }
     requestAnimationFrame(() => ScrollTrigger.refresh());
-  }, [pathname]);
+  }, [pathname, ready]);
   return null;
 }
 
@@ -49,7 +58,7 @@ export default function App() {
       <Cursor />
       <Loader onDone={() => setLoaded(true)} />
       <Layout>
-        <ScrollRefresh />
+        <ScrollRefresh ready={loaded} />
         <PageTransition>
           <Routes>
             <Route path="/" element={<Home />} />

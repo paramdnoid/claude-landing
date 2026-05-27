@@ -65,8 +65,16 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
-        <Link to="/" className="group flex items-center gap-2.5">
-          <span className="inline-block h-2 w-2 rotate-45 bg-[var(--color-plasma-lime)] glow-lime transition-transform duration-500 group-hover:rotate-[225deg]" />
+        <Link to="/" className="group flex items-center gap-3" aria-label="ZIAN — Andre Zimmermann">
+          <img
+            src="/logo.svg"
+            alt=""
+            aria-hidden="true"
+            width="28"
+            height="28"
+            className="block h-7 w-7 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
+            style={{ filter: 'drop-shadow(0 0 12px rgba(163, 255, 18, 0.35))' }}
+          />
           <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-fg)]">
             ANDRE <span className="text-[var(--color-muted)]">ZIMMERMANN</span>
           </span>

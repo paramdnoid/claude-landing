@@ -19,10 +19,10 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-3 font-mono text-xs uppercase tracking-[0.18em]">
           <div className="flex flex-wrap gap-6">
-            <Link to={`/${locale}/impressum`} className="text-muted transition-colors hover:text-fg">
+            <Link to={`/${locale}/impressum`} className="py-1 text-muted transition-colors hover:text-fg">
               {t('footer.imprint')}
             </Link>
-            <Link to={`/${locale}/datenschutz`} className="text-muted transition-colors hover:text-fg">
+            <Link to={`/${locale}/datenschutz`} className="py-1 text-muted transition-colors hover:text-fg">
               {t('footer.privacy')}
             </Link>
           </div>

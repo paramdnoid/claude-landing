@@ -6,10 +6,10 @@ import Footer from './Footer';
 export default function Layout({ children }: { children: ReactNode }) {
   const { t } = useTranslation();
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-dvh">
       <a href="#main" className="skip-link">{t('nav.skipToContent')}</a>
       <Header />
-      <main id="main">{children}</main>
+      <main id="main" tabIndex={-1} className="outline-none">{children}</main>
       <Footer />
     </div>
   );

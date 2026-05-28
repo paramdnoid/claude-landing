@@ -9,13 +9,20 @@ export default function PageTransition({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if (!ref.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     if (isFirst.current) {
       isFirst.current = false;
       // Make sure no leftover transform creates a containing block for fixed children.
-      gsap.set(ref.current, { clearProps: 'transform,translate,rotate,scale,willChange,opacity' });
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set(ref.current, { clearProps: 'transform,translate,rotate,scale,willChange,opacity' });
+      }
       return;
     }
+
+    // Move keyboard / SR focus to main content on route change (WCAG 2.4.3).
+    document.getElementById('main')?.focus();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     gsap.fromTo(
       ref.current,
       { opacity: 0, y: 14 },

@@ -181,7 +181,7 @@ export default function SelectedWork() {
                 className="flex flex-col relative h-[72svh] w-[78svw] flex-shrink-0 overflow-hidden rounded-[28px] md:w-[58svw] lg:w-[44svw]"
               >
                 {/* Browser chrome titlebar */}
-                <div className="relative z-10 flex h-10 flex-shrink-0 items-center border-b border-white/[0.08] bg-[#0d0d0f]/85 px-4 backdrop-blur-sm">
+                <div className="relative z-10 flex h-10 flex-shrink-0 items-center border-b border-white/[0.08] bg-bg-elev/85 px-4 backdrop-blur-sm">
                   <div className="flex items-center gap-[6px]" aria-hidden="true">
                     <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
                     <span className="h-3 w-3 rounded-full bg-[#FFBD2E]" />

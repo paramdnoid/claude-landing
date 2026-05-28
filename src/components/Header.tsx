@@ -73,7 +73,7 @@ export default function Header() {
 
   const navLink = (id: NavId, label: string) => {
     const isActive = isHome && active === id;
-    const cls = `relative transition-colors duration-300 ${
+    const cls = `relative py-4 -my-4 transition-colors duration-300 ${
       isActive ? 'text-fg' : 'text-muted hover:text-fg'
     }`;
     const indicator = isActive && (
@@ -125,7 +125,7 @@ export default function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-fg md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-fg md:hidden"
           >
             <span aria-hidden="true" className="relative flex h-3 w-4 flex-col justify-between">
               <span className={`block h-0.5 w-full bg-current transition-transform duration-300 ${menuOpen ? 'translate-y-1.25 rotate-45' : ''}`} />

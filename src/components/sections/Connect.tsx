@@ -295,7 +295,7 @@ export default function Connect() {
 
   // Inline terminal-style input class
   const inlineInputCls =
-    'flex-1 rounded-sm bg-transparent font-mono text-sm text-fg outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)]';
+    'flex-1 rounded-sm bg-transparent py-1.5 font-mono text-sm text-fg outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)]';
 
   return (
     <section id="contact" className="relative px-6 pb-12 pt-16 md:px-10 md:pb-16 md:pt-24">
@@ -560,7 +560,7 @@ export default function Connect() {
                           type="button"
                           onClick={cancelForm}
                           disabled={formStatus === 'pending'}
-                          className="relative font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg disabled:opacity-30 after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
+                          className="relative font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg disabled:cursor-not-allowed disabled:opacity-30 after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
                         >
                           {t('connect.formCancelInline')}
                         </button>
@@ -635,7 +635,7 @@ export default function Connect() {
                       type="button"
                       onClick={() => void send(input)}
                       disabled={!input.trim()}
-                      className="relative font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-fg disabled:opacity-30 after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
+                      className="relative font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-fg disabled:cursor-not-allowed disabled:opacity-30 after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
                     >
                       {t('aiDemo.controls.send')}
                     </button>
@@ -653,7 +653,7 @@ export default function Connect() {
                     type="button"
                     onClick={() => void send(s)}
                     disabled={chatStatus === 'streaming'}
-                    className="rounded-full border border-border px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-fg disabled:opacity-30"
+                    className="rounded-full border border-border px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-fg disabled:cursor-not-allowed disabled:opacity-30"
                   >
                     {s}
                   </button>

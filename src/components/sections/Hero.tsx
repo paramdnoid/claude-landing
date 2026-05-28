@@ -97,7 +97,7 @@ export default function Hero() {
           <div className="flex justify-center">
             <div className="tag inline-flex items-center gap-2 text-muted">
               <span>{t('hero.scroll')}</span>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className="animate-bounce">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className="animate-[scroll-float_2s_ease-in-out_infinite]">
                 <path d="M7 1v12m0 0L1 7m6 6l6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </div>

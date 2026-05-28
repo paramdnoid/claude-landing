@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Cookie, X } from "lucide-react";
@@ -11,6 +11,7 @@ export default function CookieBanner() {
   const { t } = useTranslation();
   const locale = useLocale();
   const [visible, setVisible] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!ANALYTICS_AVAILABLE) return;
@@ -19,13 +20,22 @@ export default function CookieBanner() {
     return () => window.clearTimeout(id);
   }, []);
 
+  // Move focus to dialog when it appears (WCAG 2.4.3).
+  useEffect(() => {
+    if (visible) dialogRef.current?.focus();
+  }, [visible]);
+
   if (!ANALYTICS_AVAILABLE || !visible) return null;
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
+      aria-modal="true"
       aria-label={t("consent.title")}
-      className="fixed inset-x-4 bottom-4 z-[80] mx-auto max-w-2xl rounded-2xl border border-white/10 bg-[var(--color-bg-elev)]/95 p-5 shadow-2xl backdrop-blur md:inset-x-auto md:bottom-6 md:right-6 md:left-auto md:w-[420px]"
+      aria-describedby="consent-body"
+      tabIndex={-1}
+      className="fixed inset-x-4 bottom-4 z-[80] mx-auto max-w-2xl rounded-2xl border border-white/10 bg-[var(--color-bg-elev)]/95 p-5 shadow-2xl backdrop-blur outline-none md:inset-x-auto md:bottom-6 md:right-6 md:left-auto md:w-[420px]"
     >
       <div className="flex items-start gap-3">
         <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-[var(--color-plasma-cyan)]">
@@ -33,7 +43,7 @@ export default function CookieBanner() {
         </span>
         <div className="flex-1">
           <h2 className="font-display text-base text-white">{t("consent.title")}</h2>
-          <p className="mt-1 text-sm text-muted">
+          <p id="consent-body" className="mt-1 text-sm text-muted">
             {t("consent.body")}{" "}
             <Link
               to={`/${locale}/datenschutz`}
@@ -49,7 +59,7 @@ export default function CookieBanner() {
                 setConsent("accepted");
                 setVisible(false);
               }}
-              className="rounded-full bg-white px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-bg transition-transform hover:-translate-y-0.5"
+              className="rounded-full bg-white px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-bg transition-transform hover:-translate-y-0.5"
             >
               {t("consent.accept")}
             </button>
@@ -59,7 +69,7 @@ export default function CookieBanner() {
                 setConsent("rejected");
                 setVisible(false);
               }}
-              className="rounded-full border border-white/10 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted transition-colors hover:text-white"
+              className="rounded-full border border-white/10 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted transition-colors hover:text-white"
             >
               {t("consent.reject")}
             </button>
@@ -72,7 +82,7 @@ export default function CookieBanner() {
             setConsent("rejected");
             setVisible(false);
           }}
-          className="text-muted-2 transition-colors hover:text-white"
+          className="p-2 -m-2 text-muted-2 transition-colors hover:text-white"
         >
           <X size={16} />
         </button>

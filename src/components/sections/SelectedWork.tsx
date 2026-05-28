@@ -105,9 +105,9 @@ export default function SelectedWork() {
                 <div className="relative flex h-full flex-col justify-end p-8 md:p-12">
                   <div>
                     <div className="tag !text-white/70 mb-3">{c.tag}</div>
-                    <h3 className="font-display text-4xl text-white md:text-6xl">{c.title}</h3>
+                    <h3 id={`work-title-${c.index}`} className="font-display text-4xl text-white md:text-6xl">{c.title}</h3>
                     <p className="mt-2 text-sm text-white/70 md:text-base">{c.blurb}</p>
-                    <div className="tag !text-white/40 border border-white/15 mt-3 inline-block rounded-full px-3 py-1">
+                    <div className="tag !text-white/55 border border-white/15 mt-3 inline-block rounded-full px-3 py-1">
                       {t("work.onRequest")}
                     </div>
                   </div>
@@ -118,19 +118,20 @@ export default function SelectedWork() {
             return (
               <article
                 key={c.index}
+                aria-labelledby={`work-title-${c.index}`}
                 className="flex flex-col relative h-[72vh] w-[78vw] flex-shrink-0 overflow-hidden rounded-[28px] md:w-[58vw] lg:w-[44vw]"
               >
                 {/* Browser chrome titlebar */}
-                <div className="relative z-10 flex h-10 flex-shrink-0 items-center border-b border-white/[0.08] bg-[#0d0d0f]/85 px-4 backdrop-blur-sm">
+                <div className="relative z-10 flex h-10 flex-shrink-0 items-center border-b border-white/[0.08] bg-bg-elev/85 px-4 backdrop-blur-sm">
                   <div className="flex items-center gap-[6px]" aria-hidden="true">
                     <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
                     <span className="h-3 w-3 rounded-full bg-[#FFBD2E]" />
                     <span className="h-3 w-3 rounded-full bg-[#28C840]" />
                   </div>
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <span className="tag !text-white/40">{c.title}</span>
+                    <span className="tag !text-white/55">{c.title}</span>
                   </div>
-                  <span className="tag !text-white/30 ml-auto">{c.year}</span>
+                  <span className="tag !text-white/50 ml-auto">{c.year}</span>
                 </div>
 
                 {/* Content area */}

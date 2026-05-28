@@ -36,7 +36,7 @@ export default function LangToggle() {
             type="button"
             onClick={() => switchTo(lng)}
             aria-pressed={active}
-            className={`rounded-full px-2.5 py-1 transition-colors ${
+            className={`rounded-full px-2.5 py-2 transition-colors ${
               active
                 ? 'bg-white text-bg'
                 : 'text-muted hover:text-white'

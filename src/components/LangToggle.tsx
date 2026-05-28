@@ -19,7 +19,7 @@ export default function LangToggle() {
     } else {
       segments.unshift(next);
     }
-    navigate(`/${segments.join('/')}${search}${hash}`, { replace: true });
+    void navigate(`/${segments.join('/')}${search}${hash}`, { replace: true });
   };
 
   return (

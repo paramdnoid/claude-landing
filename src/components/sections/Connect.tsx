@@ -104,8 +104,8 @@ export default function Connect() {
 
   const getMockReply = useCallback(
     (userMsg: string): string => {
-      const suggestions = t('aiDemo.suggestions', { returnObjects: true }) as string[];
-      const replies = t('aiDemo.mock.replies', { returnObjects: true }) as string[];
+      const suggestions = t('aiDemo.suggestions', { returnObjects: true });
+      const replies = t('aiDemo.mock.replies', { returnObjects: true });
       const fallback = t('aiDemo.mock.fallback');
       const idx = suggestions.findIndex((s) => s.toLowerCase() === userMsg.toLowerCase());
       if (idx >= 0 && idx < replies.length) return replies[idx] ?? fallback;
@@ -276,7 +276,7 @@ export default function Connect() {
 
     try {
       const formData = new FormData(form);
-      const res = await fetch(FORM_ENDPOINT as string, {
+      const res = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: formData,
@@ -288,7 +288,7 @@ export default function Connect() {
     }
   };
 
-  const suggestions = t('aiDemo.suggestions', { returnObjects: true }) as string[];
+  const suggestions = t('aiDemo.suggestions', { returnObjects: true });
   const formIsOpen = formStatus === 'open' || formStatus === 'pending' || formStatus === 'error';
 
   // Inline terminal-style input class
@@ -399,7 +399,7 @@ export default function Connect() {
                 {formIsOpen && (
                   <div className="mt-4 border-l-2 border-[var(--color-plasma-lime)] pl-4">
                     <form
-                      onSubmit={handleFormSubmit}
+                      onSubmit={(e) => { void handleFormSubmit(e); }}
                       noValidate
                       className="flex flex-col gap-3"
                     >

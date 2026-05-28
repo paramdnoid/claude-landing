@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useParams } from "react-router-dom";
 import { isLang, resolveLang, type Lang } from "../lib/lang";
 
-const SITE_URL_RAW = (import.meta.env.VITE_SITE_URL ?? "https://zian-ai.dev") as string;
+const SITE_URL_RAW = (import.meta.env.VITE_SITE_URL ?? "https://zian-ai.dev");
 const SITE_URL = SITE_URL_RAW.replace(/\/$/, "");
 const PERSON_NAME = "André Zimmermann";
 

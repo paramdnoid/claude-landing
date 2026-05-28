@@ -9,7 +9,7 @@ export default function Manifesto() {
   const sectionRef = useRef<HTMLElement>(null);
   const lineRefs = useRef<(HTMLParagraphElement | null)[]>([]);
 
-  const lines: string[] = t('manifesto.lines', { returnObjects: true }) as string[];
+  const lines: string[] = t('manifesto.lines', { returnObjects: true });
 
   useGSAP(
     () => {

@@ -50,7 +50,7 @@ export function useActiveSection(
           }
         }
         if (next !== null) {
-          setActive((prev) => (prev === next ? prev : (next as string)));
+          setActive((prev) => (prev === next ? prev : (next)));
         }
       },
       { rootMargin, threshold: 0 },

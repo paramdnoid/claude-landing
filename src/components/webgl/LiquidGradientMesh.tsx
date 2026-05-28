@@ -1,7 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
-import { BlendFunction } from 'postprocessing';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import WebGL from 'three/examples/jsm/capabilities/WebGL.js';
 import { ScrollTrigger } from '../../lib/gsap';
@@ -20,6 +19,8 @@ function GradientPlane({ scrollTriggerId }: Props) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { size } = useThree();
 
+  // Initial size is captured intentionally; the resize effect below keeps
+  // uResolution in sync. We want stable uniforms across renders.
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
@@ -27,6 +28,7 @@ function GradientPlane({ scrollTriggerId }: Props) {
       uMouse: { value: new THREE.Vector2(0, 0) },
       uResolution: { value: new THREE.Vector2(size.width, size.height) },
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -79,10 +81,13 @@ function GradientPlane({ scrollTriggerId }: Props) {
     }
   });
 
-  // explicit disposal of the ShaderMaterial on unmount
+  // Explicit disposal of the ShaderMaterial on unmount. We capture the
+  // current ref value inside the effect so cleanup is robust even if React
+  // clears the ref before running the cleanup callback.
   useEffect(() => {
+    const material = materialRef.current;
     return () => {
-      materialRef.current?.dispose();
+      material?.dispose();
     };
   }, []);
 
@@ -102,17 +107,6 @@ function GradientPlane({ scrollTriggerId }: Props) {
 }
 
 export default function LiquidGradientMesh({ scrollTriggerId }: Props) {
-  const [isMobile, setIsMobile] = useState(
-    () => typeof window !== 'undefined' && window.innerWidth < 768,
-  );
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)');
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
-  }, []);
-
   if (prefersReducedMotion() || !webGL2Available) {
     return <StaticGradientFallback />;
   }
@@ -127,19 +121,7 @@ export default function LiquidGradientMesh({ scrollTriggerId }: Props) {
     >
       <GradientPlane scrollTriggerId={scrollTriggerId} />
       <EffectComposer multisampling={0}>
-        {isMobile ? (
-          <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
-        ) : (
-          <>
-            <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
-            <ChromaticAberration
-              offset={[0.0008, 0.0008] as unknown as [number, number]}
-              blendFunction={BlendFunction.NORMAL}
-              radialModulation={false}
-              modulationOffset={0}
-            />
-          </>
-        )}
+        <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
       </EffectComposer>
     </Canvas>
   );

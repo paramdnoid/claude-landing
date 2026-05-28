@@ -26,6 +26,9 @@ export default function Header() {
     return () => window.removeEventListener('keydown', onKey);
   }, [menuOpen]);
 
+  // Defensive: close the menu on any route change (brand link, mobile menu
+  // anchors to other pages). Anchor clicks already close via onAnchorClick.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   useEffect(() => {
@@ -36,10 +39,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!isHome) {
-      setActive(null);
-      return;
-    }
+    if (!isHome) return;
     const sections = NAV_IDS
       .map((id) => ({ id, el: document.getElementById(id) }))
       .filter((s): s is { id: NavId; el: HTMLElement } => s.el !== null);
@@ -72,7 +72,7 @@ export default function Header() {
   };
 
   const navLink = (id: NavId, label: string) => {
-    const isActive = active === id;
+    const isActive = isHome && active === id;
     const cls = `relative transition-colors duration-300 ${
       isActive ? 'text-[var(--color-fg)]' : 'text-[var(--color-muted)] hover:text-[var(--color-fg)]'
     }`;

@@ -11,8 +11,8 @@
 export type ChatRole = 'user' | 'assistant' | 'system';
 export type ChatMessage = { role: ChatRole; content: string };
 
-const OLLAMA_URL = import.meta.env.VITE_OLLAMA_ENDPOINT as string | undefined;
-export const OLLAMA_MODEL = (import.meta.env.VITE_OLLAMA_MODEL as string | undefined) ?? 'llama3.2:3b';
+const OLLAMA_URL = import.meta.env.VITE_OLLAMA_ENDPOINT;
+export const OLLAMA_MODEL = (import.meta.env.VITE_OLLAMA_MODEL) ?? 'llama3.2:3b';
 
 export const isLiveBackend = (): boolean =>
   typeof OLLAMA_URL === 'string' && OLLAMA_URL.length > 0;

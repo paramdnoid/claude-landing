@@ -19,7 +19,9 @@ export function initSmoothScroll(): Lenis | null {
     touchMultiplier: 1.2,
   });
 
-  lenis.on('scroll', ScrollTrigger.update);
+  // Arrow wrapper avoids eslint's unbound-method warning. ScrollTrigger.update
+  // doesn't read `this`, but the wrapper is essentially free.
+  lenis.on('scroll', () => ScrollTrigger.update());
 
   tickerCb = (time: number) => {
     lenis?.raf(time * 1000);

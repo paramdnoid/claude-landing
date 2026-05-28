@@ -8,8 +8,12 @@ const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 export default function Loader({ onDone }: { onDone: () => void }) {
   const { t } = useTranslation();
+  // Latest-ref pattern: keep `onDoneRef.current` in sync with the prop without
+  // re-running the GSAP timeline effect on every parent render.
   const onDoneRef = useRef(onDone);
-  onDoneRef.current = onDone;
+  useEffect(() => {
+    onDoneRef.current = onDone;
+  }, [onDone]);
   const rootRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
@@ -23,6 +27,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
 
   useEffect(() => {
     if (prefersReducedMotion()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot mount path; no cascade.
       setDone(true);
       onDoneRef.current();
       return;

@@ -28,35 +28,51 @@ export default function Header() {
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 40);
-      if (!isHome) return;
-      const midline = window.innerHeight * 0.35;
-      let current: NavId | null = null;
-      for (const id of NAV_IDS) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        if (el.getBoundingClientRect().top - midline <= 0) current = id;
-      }
-      setActive(current);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!isHome) {
+      setActive(null);
+      return;
+    }
+    const sections = NAV_IDS
+      .map((id) => ({ id, el: document.getElementById(id) }))
+      .filter((s): s is { id: NavId; el: HTMLElement } => s.el !== null);
+    if (sections.length === 0) return;
+
+    const visible = new Map<NavId, number>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target.id as NavId;
+          if (entry.isIntersecting) visible.set(id, entry.intersectionRatio);
+          else visible.delete(id);
+        }
+        let topId: NavId | null = null;
+        for (const { id } of sections) {
+          if (visible.has(id)) { topId = id; break; }
+        }
+        setActive(topId);
+      },
+      { rootMargin: '-35% 0px -55% 0px', threshold: [0, 0.01, 0.5, 1] },
+    );
+    sections.forEach((s) => observer.observe(s.el));
+    return () => observer.disconnect();
   }, [isHome]);
 
   const scrollToId = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
-    const lenis = getLenis();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const lenis = reduced ? null : getLenis();
     if (lenis) {
       lenis.scrollTo(target, { offset: -64, duration: 1.2 });
     } else {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
     }
     history.replaceState(null, '', `#${id}`);
     setMenuOpen(false);
@@ -77,12 +93,13 @@ export default function Header() {
       <a
         href={`#${id}`}
         className={cls}
+        aria-current={isActive ? 'true' : undefined}
         onClick={(e) => { e.preventDefault(); scrollToId(id); }}
       >
         <span className="relative">{label}{indicator}</span>
       </a>
     ) : (
-      <Link to={`${homePath}#${id}`} className={cls}>
+      <Link to={`${homePath}#${id}`} className={cls} aria-current={isActive ? 'true' : undefined}>
         <span className="relative">{label}{indicator}</span>
       </Link>
     );
@@ -92,7 +109,7 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
         scrolled
-          ? 'border-b border-[var(--color-border)] bg-[var(--color-bg)]/65 backdrop-blur-2xl backdrop-saturate-150'
+          ? 'border-b border-[var(--color-border)] bg-[var(--color-bg)]/75 backdrop-blur-xl'
           : 'border-b border-transparent'
       }`}
     >
@@ -139,29 +156,32 @@ export default function Header() {
       </div>
       <nav
         id="mobile-nav"
+        aria-label={t('nav.menu')}
         aria-hidden={!menuOpen}
         inert={!menuOpen || undefined}
-        className={`md:hidden overflow-hidden border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-2xl transition-[max-height,opacity] duration-300 ${menuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+        className={`md:hidden grid border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-xl transition-[grid-template-rows,opacity] duration-300 ${menuOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
-        <ul className="flex flex-col gap-1 px-6 py-4 font-mono text-sm uppercase tracking-[0.18em]">
-          {NAV_IDS.map((id) => (
-            <li key={id}>
-              {isHome ? (
-                <a
-                  href={`#${id}`}
-                  className="block py-2 text-[var(--color-fg)]"
-                  onClick={(e) => { e.preventDefault(); scrollToId(id); }}
-                >
-                  {t(`nav.${id}`)}
-                </a>
-              ) : (
-                <Link to={`${homePath}#${id}`} className="block py-2 text-[var(--color-fg)]">
-                  {t(`nav.${id}`)}
-                </Link>
-              )}
-            </li>
-          ))}
-        </ul>
+        <div className="min-h-0 overflow-hidden">
+          <ul className="flex flex-col gap-1 px-6 py-4 font-mono text-sm uppercase tracking-[0.18em]">
+            {NAV_IDS.map((id) => (
+              <li key={id}>
+                {isHome ? (
+                  <a
+                    href={`#${id}`}
+                    className="block py-2 text-[var(--color-fg)]"
+                    onClick={(e) => { e.preventDefault(); scrollToId(id); }}
+                  >
+                    {t(`nav.${id}`)}
+                  </a>
+                ) : (
+                  <Link to={`${homePath}#${id}`} className="block py-2 text-[var(--color-fg)]">
+                    {t(`nav.${id}`)}
+                  </Link>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
       </nav>
     </header>
   );

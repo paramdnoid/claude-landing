@@ -35,6 +35,11 @@ const THUMBS: Record<string, string> = {
 
 const FALLBACK_PALETTE: [string, string] = ['#6366f1', '#a3ff12'];
 
+// Shared turbulence-noise overlay for case cards — defined once so the same
+// data URL doesn't ship five times in the rendered HTML.
+const NOISE_OVERLAY_URL =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/filter%3E%3C/svg%3E\")";
+
 export default function SelectedWork() {
   const { t, i18n } = useTranslation();
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -149,7 +154,11 @@ export default function SelectedWork() {
                   />
                 ) : null}
                 <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,5,7,0.95)_0%,rgba(5,5,7,0.85)_30%,rgba(5,5,7,0.45)_60%,rgba(5,5,7,0.05)_100%)]" />
-                <div className="absolute inset-0 mix-blend-overlay opacity-20 bg-[url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Cfilter%20id%3D%22n%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%220.85%22%20numOctaves%3D%222%22%2F%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20filter%3D%22url(%23n)%22%2F%3E%3C%2Fsvg%3E')]" />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 mix-blend-overlay opacity-20"
+                  style={{ backgroundImage: NOISE_OVERLAY_URL }}
+                />
                 <div className="relative flex h-full flex-col justify-end p-8 md:p-12">
                   <div>
                     <div className="tag !text-white/80 mb-3">{c.tag}</div>

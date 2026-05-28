@@ -15,7 +15,11 @@ export default function Impressum() {
         <ArrowLeft size={14} /> {t('nav.home')}
       </Link>
       <h1 className="font-display text-4xl text-white md:text-5xl">{t('imprint.title')}</h1>
-      <p className="mt-6 text-muted">{t('imprint.body')}</p>
+      <div className="mt-6 flex flex-col gap-4 text-muted">
+        {t('imprint.body').split(/\n\n+/).map((para, i) => (
+          <p key={i}>{para}</p>
+        ))}
+      </div>
     </section>
   );
 }

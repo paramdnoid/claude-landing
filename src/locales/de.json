@@ -82,12 +82,15 @@
     "eyebrow": "Leistungen · 03",
     "title": "Was ich mache.",
     "intro": "Engineering und Design als eine Praxis — ich gehe ohne Übergaben von der Recherche bis zur Produktion.",
+    "miniIndexLabel": "Leistungsbereiche",
     "items": [
-      { "index": "01", "title": "AI Engineering", "body": "Agenten, RAG-Systeme, Evals und produktionsreife LLM-Pipelines mit Claude, GPT und Open-Source-Modellen." },
-      { "index": "02", "title": "Creative Coding", "body": "WebGL, Shader, generative Grafik und Motion-Systeme — performant, ausdrucksstark, eigenständig." },
-      { "index": "03", "title": "Konzept & Strategie", "body": "Von der ersten Idee zum funktionierenden Prototyp — Naming, Narrativ, Systemdenken, Produkt-Framing." },
-      { "index": "04", "title": "Interaction Design", "body": "Interfaces, die antworten, atmen, sich intentional anfühlen. Detailbesessene Mikrointeraktionen und Motion." }
-    ]
+      { "slug": "ai-engineering", "index": "01", "title": "AI Engineering", "body": "Agenten, RAG-Systeme, Evals und produktionsreife LLM-Pipelines mit Claude, GPT und Open-Source-Modellen.", "tags": ["RAG", "Agents", "Evals", "Claude", "GPT", "Open-Source"] },
+      { "slug": "creative-coding", "index": "02", "title": "Creative Coding", "body": "WebGL, Shader, generative Grafik und Motion-Systeme — performant, ausdrucksstark, eigenständig.", "tags": ["WebGL", "GLSL", "Three.js", "GSAP", "Motion"] },
+      { "slug": "concept-strategy", "index": "03", "title": "Konzept & Strategie", "body": "Von der ersten Idee zum funktionierenden Prototyp — Naming, Narrativ, Systemdenken, Produkt-Framing.", "tags": ["Naming", "Narrativ", "Systemdenken", "Produkt-Framing"] },
+      { "slug": "interaction-design", "index": "04", "title": "Interaction Design", "body": "Interfaces, die antworten, atmen, sich intentional anfühlen. Detailbesessene Mikrointeraktionen und Motion.", "tags": ["Micro-Interactions", "Motion Design", "Prototyping", "Detail-Craft"] }
+    ],
+    "itemCta": { "label": "Anfragen" },
+    "cta": { "label": "Klingt nach deinem Projekt? Reden wir." }
   },
   "process": {
     "eyebrow": "Prozess · 05",

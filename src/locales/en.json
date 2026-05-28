@@ -173,7 +173,8 @@
         "body": "Production-grade craft from day one. Then maintain, measure, evolve. Software is a relationship, not a delivery."
       }
     ],
-    "intro": "Four phases, no waterfall — iterative, direct, shippable from week one."
+    "intro": "Four phases, no waterfall — iterative, direct, shippable from week one.",
+    "miniIndexLabel": "Process steps"
   },
   "connect": {
     "eyebrow": "Connect · 06",

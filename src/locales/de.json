@@ -173,7 +173,8 @@
         "body": "Production-grade Handwerk ab Tag 1. Danach: pflegen, messen, weiterentwickeln. Software ist Beziehung, nicht Übergabe."
       }
     ],
-    "intro": "Vier Phasen, kein Wasserfall — iterativ, direkt, lieferbar von Woche eins an."
+    "intro": "Vier Phasen, kein Wasserfall — iterativ, direkt, lieferbar von Woche eins an.",
+    "miniIndexLabel": "Prozessschritte"
   },
   "connect": {
     "eyebrow": "Verbinden · 06",

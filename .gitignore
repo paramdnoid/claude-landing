@@ -9,6 +9,7 @@ lerna-debug.log*
 .playwright-mcp
 playwright-report
 test-results
+coverage
 
 node_modules
 dist

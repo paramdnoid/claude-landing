@@ -21,7 +21,9 @@
     "sub": "I build interfaces, agents and creative tools at the intersection of AI and motion — a one-person studio shipping work that thinks, reacts, and feels alive.",
     "metaRole": "Engineer · Designer · Researcher",
     "metaLocation": "Available 2026 · Worldwide",
-    "scroll": "Scroll"
+    "scroll": "Scroll",
+    "ctaWork": "See selected work",
+    "ctaContact": "Get in touch"
   },
   "manifesto": {
     "eyebrow": "Manifesto · 01",
@@ -99,6 +101,20 @@
       { "index": "04", "title": "Ship", "body": "Production-grade craft from day one. Then maintain, measure, evolve. Software is a relationship, not a delivery." }
     ]
   },
+  "connect": {
+    "eyebrow": "Connect · 06",
+    "intro": "Talk to the AI — or leave a trace. Both reach me.",
+    "leaveTracePill": "Leave a trace →",
+    "inlineFormPrompt": "Drop your email and the gist — I'll get back to you within 24 hours.",
+    "directHeading": "Or write directly",
+    "skipChat": "Skip the chat",
+    "chromeTitle": "andre@zian — chat",
+    "formNamePlaceholderInline": "your name (optional)",
+    "formEmailPlaceholderInline": "you@example.com",
+    "formMessagePlaceholderInline": "what's on your mind?",
+    "formSendInline": "send transmission",
+    "formCancelInline": "cancel"
+  },
   "aiDemo": {
     "eyebrow": "AI Demo · 04",
     "title": "Experience intelligence.",
@@ -147,6 +163,7 @@
     "github": "GitHub",
     "twitter": "X / Twitter",
     "linkedin": "LinkedIn",
+    "opensInNewTab": "opens in new tab",
     "form": {
       "name": "Name",
       "namePlaceholder": "Your name",

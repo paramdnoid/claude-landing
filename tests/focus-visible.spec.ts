@@ -33,17 +33,19 @@ test('LangToggle button has a visible focus indicator', async ({ page }) => {
   expect(await hasVisibleFocusIndicator(page, 'button[aria-pressed]')).toBe(true);
 });
 
-test('Contact form inputs have a visible focus indicator', async ({ page }) => {
+test('Connect form inputs have a visible focus indicator', async ({ page }) => {
   await page.goto('/de');
   await page.locator('nav a[href="#contact"]').first().click();
+  // Open the inline form via the persistent pill before asserting focus.
+  await page.getByRole('button', { name: /Spuren hinterlassen/i }).click();
   await page.locator('#contact form').waitFor({ state: 'visible' });
 
-  expect(await hasVisibleFocusIndicator(page, '#contact-name')).toBe(true);
-  expect(await hasVisibleFocusIndicator(page, '#contact-email')).toBe(true);
-  expect(await hasVisibleFocusIndicator(page, '#contact-message')).toBe(true);
+  expect(await hasVisibleFocusIndicator(page, '#connect-name')).toBe(true);
+  expect(await hasVisibleFocusIndicator(page, '#connect-email')).toBe(true);
+  expect(await hasVisibleFocusIndicator(page, '#connect-message')).toBe(true);
 });
 
-test('AiDemo chat input has a visible focus indicator', async ({ page }) => {
+test('Connect chat input has a visible focus indicator', async ({ page }) => {
   await page.goto('/de');
   await page.waitForURL(/\/de$/);
   await page.waitForFunction(
@@ -51,7 +53,7 @@ test('AiDemo chat input has a visible focus indicator', async ({ page }) => {
     { timeout: 15_000 },
   );
 
-  const input = page.locator('#ai-demo input[type="text"]').first();
+  const input = page.locator('#contact input[type="text"]').first();
   await input.scrollIntoViewIfNeeded();
   await page.keyboard.press('Tab');
   expect(

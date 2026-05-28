@@ -21,7 +21,9 @@
     "sub": "Ich baue Interfaces, Agenten und kreative Werkzeuge an der Schnittstelle von KI und Bewegung — ein Ein-Personen-Studio, das Software entwickelt, die mitdenkt, reagiert und lebendig wirkt.",
     "metaRole": "Engineer · Designer · Researcher",
     "metaLocation": "Verfügbar 2026 · Weltweit",
-    "scroll": "Scrollen"
+    "scroll": "Scrollen",
+    "ctaWork": "Ausgewählte Arbeiten",
+    "ctaContact": "Kontakt aufnehmen"
   },
   "manifesto": {
     "eyebrow": "Manifest · 01",
@@ -99,6 +101,20 @@
       { "index": "04", "title": "Liefern", "body": "Production-grade Handwerk ab Tag 1. Danach: pflegen, messen, weiterentwickeln. Software ist Beziehung, nicht Übergabe." }
     ]
   },
+  "connect": {
+    "eyebrow": "Verbinden · 06",
+    "intro": "Sprich mit der KI — oder hinterlasse Spuren. Beides erreicht mich.",
+    "leaveTracePill": "Spuren hinterlassen →",
+    "inlineFormPrompt": "Lass mir deine E-Mail und das Wesentliche da — ich melde mich innerhalb von 24 Stunden.",
+    "directHeading": "Oder direkt schreiben",
+    "skipChat": "Chat überspringen",
+    "chromeTitle": "andre@zian — chat",
+    "formNamePlaceholderInline": "dein Name (optional)",
+    "formEmailPlaceholderInline": "du@example.com",
+    "formMessagePlaceholderInline": "was beschäftigt dich?",
+    "formSendInline": "Übertragung senden",
+    "formCancelInline": "abbrechen"
+  },
   "aiDemo": {
     "eyebrow": "KI-Demo · 04",
     "title": "Intelligenz erleben.",
@@ -147,6 +163,7 @@
     "github": "GitHub",
     "twitter": "X / Twitter",
     "linkedin": "LinkedIn",
+    "opensInNewTab": "öffnet in neuem Tab",
     "form": {
       "name": "Name",
       "namePlaceholder": "Dein Name",

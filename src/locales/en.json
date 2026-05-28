@@ -84,12 +84,15 @@
     "eyebrow": "Capabilities · 03",
     "title": "What I do.",
     "intro": "Engineering and design rolled into one practice — I move from research to production without handoffs.",
+    "miniIndexLabel": "Capability areas",
     "items": [
-      { "index": "01", "title": "AI engineering", "body": "Agents, RAG systems, evals, and production LLM pipelines built with Claude, GPT and open models." },
-      { "index": "02", "title": "Creative coding", "body": "WebGL, shaders, generative graphics and motion systems — performant, expressive, original." },
-      { "index": "03", "title": "Concept & strategy", "body": "From first idea to working prototype — naming, narrative, system thinking and product framing." },
-      { "index": "04", "title": "Interaction design", "body": "Interfaces that respond, breathe, and feel intentional. Detail-obsessed micro-interactions and motion craft." }
-    ]
+      { "slug": "ai-engineering", "index": "01", "title": "AI engineering", "body": "Agents, RAG systems, evals, and production LLM pipelines built with Claude, GPT and open models.", "tags": ["RAG", "Agents", "Evals", "Claude", "GPT", "Open-Source"] },
+      { "slug": "creative-coding", "index": "02", "title": "Creative coding", "body": "WebGL, shaders, generative graphics and motion systems — performant, expressive, original.", "tags": ["WebGL", "GLSL", "Three.js", "GSAP", "Motion"] },
+      { "slug": "concept-strategy", "index": "03", "title": "Concept & strategy", "body": "From first idea to working prototype — naming, narrative, system thinking and product framing.", "tags": ["Naming", "Narrative", "System Thinking", "Product Framing"] },
+      { "slug": "interaction-design", "index": "04", "title": "Interaction design", "body": "Interfaces that respond, breathe, and feel intentional. Detail-obsessed micro-interactions and motion craft.", "tags": ["Micro-Interactions", "Motion Design", "Prototyping", "Detail-Craft"] }
+    ],
+    "itemCta": { "label": "Get in touch" },
+    "cta": { "label": "Sounds like your project? Let's talk." }
   },
   "process": {
     "eyebrow": "Process · 05",

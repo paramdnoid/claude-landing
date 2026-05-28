@@ -114,7 +114,11 @@ export default function Loader({ onDone }: { onDone: () => void }) {
   return (
     <div
       ref={rootRef}
-      className="fixed inset-0 z-[100] overflow-hidden bg-[var(--color-bg)]"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label={t('loader.label')}
+      className="fixed inset-0 z-[110] overflow-hidden bg-[var(--color-bg)]"
     >
       {/* Breathing plasma glow */}
       <div

@@ -14,6 +14,7 @@ import i18n from './lib/i18n';
 import { destroySmoothScroll, getLenis, initSmoothScroll } from './lib/smoothScroll';
 import { initAnalytics } from './lib/analytics';
 import { isLang, resolveLang } from './lib/lang';
+import { HEADER_OFFSET_PX } from './lib/scrollToSection';
 
 function ScrollRefresh({ ready }: { ready: boolean }) {
   const { pathname } = useLocation();
@@ -28,7 +29,7 @@ function ScrollRefresh({ ready }: { ready: boolean }) {
     const raf = requestAnimationFrame(() => {
       if (target) {
         const lenis = getLenis();
-        if (lenis) lenis.scrollTo(target, { offset: -64, immediate: true });
+        if (lenis) lenis.scrollTo(target, { offset: HEADER_OFFSET_PX, immediate: true });
         else target.scrollIntoView({ block: 'start' });
       } else {
         window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });

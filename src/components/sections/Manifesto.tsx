@@ -1,45 +1,49 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import { gsap } from '../../lib/gsap';
 import { prefersReducedMotion } from '../../lib/animations';
 
 export default function Manifesto() {
   const { t } = useTranslation();
+  const sectionRef = useRef<HTMLElement>(null);
   const lineRefs = useRef<(HTMLParagraphElement | null)[]>([]);
-
-  useEffect(() => {
-    if (prefersReducedMotion()) {
-      lineRefs.current.forEach((el) => el && gsap.set(el, { opacity: 1, y: 0 }));
-      return;
-    }
-    const triggers: ScrollTrigger[] = [];
-    lineRefs.current.forEach((el) => {
-      if (!el) return;
-      const tween = gsap.fromTo(
-        el,
-        { y: 40, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          ease: 'power3.out',
-          duration: 0.9,
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 85%',
-            once: true,
-          },
-        },
-      );
-      if (tween.scrollTrigger) triggers.push(tween.scrollTrigger);
-    });
-    return () => triggers.forEach((tr) => tr.kill());
-  }, []);
 
   const lines: string[] = t('manifesto.lines', { returnObjects: true }) as string[];
 
+  useGSAP(
+    () => {
+      const els = lineRefs.current.filter((el): el is HTMLParagraphElement => el !== null);
+      if (els.length === 0) return;
+
+      if (prefersReducedMotion()) {
+        gsap.set(els, { opacity: 1, y: 0 });
+        return;
+      }
+
+      els.forEach((el) => {
+        gsap.fromTo(
+          el,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            ease: 'power3.out',
+            duration: 0.9,
+            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+          },
+        );
+      });
+    },
+    { scope: sectionRef, dependencies: [lines.length] },
+  );
+
   return (
-    <section id="manifesto" className="relative px-6 py-16 md:px-10 md:py-24">
+    <section
+      ref={sectionRef}
+      id="manifesto"
+      className="relative px-6 py-16 md:px-10 md:py-24"
+    >
       <div className="mx-auto max-w-[1400px]">
         <div className="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-12">
 

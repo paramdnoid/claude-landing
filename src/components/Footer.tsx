@@ -1,11 +1,11 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { isLang } from '../lib/lang';
+import { useLocale } from '../lib/useLocale';
+import BrandMark from './BrandMark';
 
 export default function Footer() {
   const { t } = useTranslation();
-  const { lang } = useParams<{ lang: string }>();
-  const locale = isLang(lang) ? lang : 'de';
+  const locale = useLocale();
   const year = new Date().getFullYear();
 
   return (
@@ -13,11 +13,7 @@ export default function Footer() {
       <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-12 md:flex-row md:items-end md:justify-between md:px-10">
         <div className="space-y-3">
           <div className="flex items-center gap-2.5">
-            <span className="inline-block h-2 w-2 rotate-45 bg-[var(--color-plasma-lime)]" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] leading-tight">
-              <span className="block">ZIAN AI CONCEPTS</span>
-              <span className="block text-[var(--color-muted)] text-[10px]">by Andre Zimmermann</span>
-            </span>
+            <BrandMark variant="footer" />
           </div>
           <p className="max-w-sm text-sm text-[var(--color-muted)]">{t('footer.tagline')}</p>
         </div>

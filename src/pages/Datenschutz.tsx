@@ -1,12 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { isLang } from '../lib/lang';
+import { useLocale } from '../lib/useLocale';
 
 export default function Datenschutz() {
   const { t } = useTranslation();
-  const { lang } = useParams<{ lang: string }>();
-  const locale = isLang(lang) ? lang : 'de';
+  const locale = useLocale();
   return (
     <section className="mx-auto max-w-3xl px-6 py-32 lg:px-10">
       <Link

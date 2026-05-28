@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
-import { gsap } from '../../lib/gsap';
-import { prefersReducedMotion } from '../../lib/animations';
-import { getLenis } from '../../lib/smoothScroll';
+import { revealChildrenOnScroll } from '../../lib/animations';
+import { scrollToSection } from '../../lib/scrollToSection';
+import { useActiveSection } from '../../lib/useActiveSection';
 
 type Step = { index: string; title: string; body: string };
-
-const HEADER_OFFSET = -64;
 
 export default function Process() {
   const { t } = useTranslation();
@@ -18,89 +16,26 @@ export default function Process() {
   const steps = t('process.steps', { returnObjects: true }) as Step[];
   const miniIndexLabel = t('process.miniIndexLabel', { defaultValue: 'Prozessschritte' });
 
-  const [activeIndex, setActiveIndex] = useState<string>(steps[0]?.index ?? '');
+  const activeIndex = useActiveSection(articleRefs, {
+    dataKey: 'stepIndex',
+    initial: steps[0]?.index ?? '',
+  });
 
   useGSAP(
     () => {
-      if (!headerRef.current) return;
-      const headerKids = Array.from(headerRef.current.children) as HTMLElement[];
-      const articleKids = articleRefs.current
-        .filter((el): el is HTMLElement => el !== null)
-        .map((art) => ({ art, kids: Array.from(art.children) as HTMLElement[] }));
-
-      if (prefersReducedMotion()) {
-        gsap.set(headerKids, { opacity: 1, y: 0 });
-        articleKids.forEach(({ kids }) => gsap.set(kids, { opacity: 1, y: 0 }));
-        return;
+      if (headerRef.current) {
+        revealChildrenOnScroll(headerRef.current, { y: 24, stagger: 0.07 });
       }
-
-      gsap.fromTo(
-        headerKids,
-        { y: 24, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          stagger: 0.07,
-          scrollTrigger: { trigger: headerRef.current, start: 'top 85%', once: true },
-        },
-      );
-
-      articleKids.forEach(({ art, kids }) => {
-        gsap.fromTo(
-          kids,
-          { y: 28, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.06,
-            scrollTrigger: { trigger: art, start: 'top 80%', once: true },
-          },
-        );
+      articleRefs.current.forEach((art) => {
+        if (art) revealChildrenOnScroll(art, { y: 28, stagger: 0.06, start: 'top 80%' });
       });
     },
     { scope: sectionRef, dependencies: [steps.length] },
   );
 
-  useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return;
-    const targets = articleRefs.current.filter((el): el is HTMLElement => el !== null);
-    if (targets.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries.filter((e) => e.isIntersecting);
-        if (intersecting.length === 0) return;
-        const sorted = intersecting.slice().sort((a, b) => {
-          const pos = (a.target as HTMLElement).compareDocumentPosition(b.target);
-          return pos & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
-        });
-        const first = sorted[0];
-        if (!first) return;
-        const idx = (first.target as HTMLElement).dataset.stepIndex;
-        if (idx) setActiveIndex(idx);
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
-    );
-
-    targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [steps.length]);
-
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
     e.preventDefault();
-    const lenis = getLenis();
-    if (lenis) {
-      lenis.scrollTo(target, { offset: HEADER_OFFSET, duration: 1.0 });
-    } else {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    history.replaceState(null, '', `#${id}`);
+    scrollToSection(id, { duration: 1.0 });
   };
 
   return (

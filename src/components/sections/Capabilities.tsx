@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, type MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
-import { gsap } from '../../lib/gsap';
-import { prefersReducedMotion } from '../../lib/animations';
+import { revealChildrenOnScroll } from '../../lib/animations';
 import { scrollToSection } from '../../lib/scrollToSection';
+import { useActiveSection } from '../../lib/useActiveSection';
 
 type Capability = {
   slug: string;
@@ -12,6 +12,9 @@ type Capability = {
   body: string;
   tags: string[];
 };
+
+const CTA_CLASS =
+  'group inline-flex w-fit items-center gap-3 glass glass-pill text-sm transition-shadow duration-300 hover:shadow-[var(--shadow-glow-lime)]';
 
 export default function Capabilities() {
   const { t } = useTranslation();
@@ -24,82 +27,47 @@ export default function Capabilities() {
   const itemCtaLabel = t('capabilities.itemCta.label');
   const ctaLabel = t('capabilities.cta.label');
 
-  const [activeSlug, setActiveSlug] = useState<string>(items[0]?.slug ?? '');
+  const activeSlug = useActiveSection(articleRefs, {
+    dataKey: 'slug',
+    initial: items[0]?.slug ?? '',
+  });
 
   useGSAP(
     () => {
-      if (!headerRef.current) return;
-      const headerKids = Array.from(headerRef.current.children) as HTMLElement[];
-      const articleKidsBySection = articleRefs.current
-        .filter((el): el is HTMLElement => el !== null)
-        .map((art) => ({ art, kids: Array.from(art.children) as HTMLElement[] }));
-
-      if (prefersReducedMotion()) {
-        gsap.set(headerKids, { opacity: 1, y: 0 });
-        articleKidsBySection.forEach(({ kids }) => gsap.set(kids, { opacity: 1, y: 0 }));
-        return;
+      if (headerRef.current) {
+        revealChildrenOnScroll(headerRef.current, { y: 24, stagger: 0.07 });
       }
-
-      gsap.fromTo(
-        headerKids,
-        { y: 24, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: 'power3.out',
-          stagger: 0.07,
-          scrollTrigger: { trigger: headerRef.current, start: 'top 85%', once: true },
-        },
-      );
-
-      articleKidsBySection.forEach(({ art, kids }) => {
-        gsap.fromTo(
-          kids,
-          { y: 28, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.06,
-            scrollTrigger: { trigger: art, start: 'top 80%', once: true },
-          },
-        );
+      articleRefs.current.forEach((art) => {
+        if (art) revealChildrenOnScroll(art, { y: 28, stagger: 0.06, start: 'top 80%' });
       });
     },
     { scope: sectionRef, dependencies: [items.length] },
   );
 
-  useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return;
-    const targets = articleRefs.current.filter((el): el is HTMLElement => el !== null);
-    if (targets.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries.filter((e) => e.isIntersecting);
-        if (intersecting.length === 0) return;
-        const sorted = intersecting.slice().sort((a, b) => {
-          const pos = (a.target as HTMLElement).compareDocumentPosition(b.target);
-          return pos & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
-        });
-        const first = sorted[0];
-        if (!first) return;
-        const slug = (first.target as HTMLElement).dataset.slug;
-        if (slug) setActiveSlug(slug);
-      },
-      { rootMargin: '-45% 0px -45% 0px', threshold: 0 },
-    );
-
-    targets.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [items.length]);
-
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const handleAnchorClick = (e: MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     scrollToSection(id, { duration: 1.0 });
   };
+
+  // Helper for the section-wide CTA. Rendered twice (desktop sticky column +
+  // mobile bottom row); a render helper keeps both copies in lock-step without
+  // shipping two stale duplicates.
+  const renderCta = (extraClass: string) => (
+    <a
+      href="#contact"
+      onClick={(e) => handleAnchorClick(e, 'contact')}
+      aria-label={`${ctaLabel} — ${t('nav.contact')}`}
+      className={`${CTA_CLASS} ${extraClass}`}
+    >
+      <span>{ctaLabel}</span>
+      <span
+        aria-hidden
+        className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-1"
+      >
+        →
+      </span>
+    </a>
+  );
 
   return (
     <section
@@ -150,20 +118,8 @@ export default function Capabilities() {
             </ol>
           </nav>
 
-          <a
-            href="#contact"
-            onClick={(e) => handleAnchorClick(e, 'contact')}
-            aria-label={`${ctaLabel} — ${t('nav.contact')}`}
-            className="group mt-10 hidden w-fit items-center gap-3 glass glass-pill text-sm transition-shadow duration-300 hover:shadow-[var(--shadow-glow-lime)] md:inline-flex"
-          >
-            <span>{ctaLabel}</span>
-            <span
-              aria-hidden
-              className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-1"
-            >
-              →
-            </span>
-          </a>
+          {/* Desktop CTA — inside the sticky left column, hidden below md */}
+          <div className="mt-10 hidden md:block">{renderCta('')}</div>
         </div>
 
         <div className="md:col-span-7 flex flex-col">
@@ -221,20 +177,8 @@ export default function Capabilities() {
           })}
         </div>
 
-        <a
-          href="#contact"
-          onClick={(e) => handleAnchorClick(e, 'contact')}
-          aria-label={`${ctaLabel} — ${t('nav.contact')}`}
-          className="group inline-flex w-fit items-center gap-3 glass glass-pill text-sm transition-shadow duration-300 hover:shadow-[var(--shadow-glow-lime)] md:hidden"
-        >
-          <span>{ctaLabel}</span>
-          <span
-            aria-hidden
-            className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-1"
-          >
-            →
-          </span>
-        </a>
+        {/* Mobile CTA — grid-level sibling so it lands below all articles */}
+        <div className="md:hidden">{renderCta('')}</div>
       </div>
     </section>
   );

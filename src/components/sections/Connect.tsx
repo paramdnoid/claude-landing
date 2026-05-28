@@ -7,7 +7,7 @@ import {
   type KeyboardEvent,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { sendChat, isLiveBackend, type ChatMessage } from '../../lib/chatBackend';
+import { sendChat, isLiveBackend, OLLAMA_MODEL, type ChatMessage } from '../../lib/chatBackend';
 import { prefersReducedMotion, revealWordsOnScroll } from "../../lib/animations";
 import { resolveLang } from "../../lib/lang";
 import { useMagnet } from '../../lib/useMagnet';
@@ -15,19 +15,24 @@ import { useMagnet } from '../../lib/useMagnet';
 type ChatStatus = 'idle' | 'streaming' | 'error' | 'stopped';
 type FormStatus = 'closed' | 'open' | 'pending' | 'success' | 'error';
 
-const OLLAMA_MODEL = (import.meta.env.VITE_OLLAMA_MODEL as string | undefined) ?? 'llama3.2:3b';
 const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT;
 const liveMode = isLiveBackend();
 const isDemoForm = !FORM_ENDPOINT;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const INTENT_RE = /(contact|email|reach|hire|work\s+together|projekt|kontakt|erreich|schreib|anfrage|zusammenarbeit)/i;
 
-// TODO: Replace these with real social profile URLs before launch
-const SOCIALS = {
-  github: 'https://github.com/andrezimmermann',
-  twitter: 'https://x.com/andrezimmermann',
-  linkedin: 'https://www.linkedin.com/in/andrezimmermann',
-} as const;
+type SocialKey = 'github' | 'twitter' | 'linkedin';
+type SocialLink = { key: SocialKey; url: string };
+
+// Social profile URLs are env-driven so the production build can't ship the
+// placeholder handles. Missing values silently drop the link from the rail.
+const SOCIAL_CONFIG: ReadonlyArray<SocialLink> = (
+  [
+    { key: 'github', url: import.meta.env.VITE_SOCIAL_GITHUB ?? '' },
+    { key: 'twitter', url: import.meta.env.VITE_SOCIAL_TWITTER ?? '' },
+    { key: 'linkedin', url: import.meta.env.VITE_SOCIAL_LINKEDIN ?? '' },
+  ] as ReadonlyArray<SocialLink>
+).filter((s) => s.url.length > 0);
 
 export default function Connect() {
   const { t, i18n } = useTranslation();
@@ -216,34 +221,43 @@ export default function Connect() {
     setFormStatus('open');
   }, [t]);
 
-  const cancelForm = useCallback(() => {
-    setFormStatus('closed');
-    setEmailError('');
-    setMessageError('');
-  }, []);
+  type ValidationResult =
+    | { valid: true }
+    | { valid: false; focus: 'email' | 'message' };
 
-  const validateForm = (): boolean => {
-    let valid = true;
-    if (!emailVal.trim() || !EMAIL_RE.test(emailVal)) {
-      setEmailError(t('contact.form.invalidEmail'));
-      valid = false;
-    } else {
-      setEmailError('');
-    }
-    if (!messageVal.trim()) {
-      setMessageError(t('contact.form.required'));
-      valid = false;
-    } else {
-      setMessageError('');
-    }
-    return valid;
+  const validateForm = (): ValidationResult => {
+    const emailOk = emailVal.trim().length > 0 && EMAIL_RE.test(emailVal);
+    const messageOk = messageVal.trim().length > 0;
+    setEmailError(emailOk ? '' : t('contact.form.invalidEmail'));
+    setMessageError(messageOk ? '' : t('contact.form.required'));
+    if (!emailOk) return { valid: false, focus: 'email' };
+    if (!messageOk) return { valid: false, focus: 'message' };
+    return { valid: true };
   };
+
+  const resetForm = useCallback(
+    (opts: { clearFields: boolean } = { clearFields: false }) => {
+      setFormStatus('closed');
+      setEmailError('');
+      setMessageError('');
+      if (opts.clearFields) {
+        setNameVal('');
+        setEmailVal('');
+        setMessageVal('');
+      }
+    },
+    [],
+  );
+
+  const cancelForm = useCallback(() => resetForm({ clearFields: false }), [resetForm]);
+  const sendAnotherMessage = useCallback(() => resetForm({ clearFields: true }), [resetForm]);
 
   const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!validateForm()) {
-      if (!emailVal.trim() || !EMAIL_RE.test(emailVal)) emailInputRef.current?.focus();
-      else if (!messageVal.trim()) messageInputRef.current?.focus();
+    const result = validateForm();
+    if (!result.valid) {
+      if (result.focus === 'email') emailInputRef.current?.focus();
+      else messageInputRef.current?.focus();
       return;
     }
     const form = e.currentTarget;
@@ -251,7 +265,6 @@ export default function Connect() {
 
     if (isDemoForm) {
       await new Promise((r) => setTimeout(r, 700));
-
       console.info('[demo] Connect form submitted:', {
         name: nameVal,
         email: emailVal,
@@ -273,15 +286,6 @@ export default function Connect() {
     } catch {
       setFormStatus('error');
     }
-  };
-
-  const resetForm = () => {
-    setFormStatus('closed');
-    setNameVal('');
-    setEmailVal('');
-    setMessageVal('');
-    setEmailError('');
-    setMessageError('');
   };
 
   const suggestions = t('aiDemo.suggestions', { returnObjects: true }) as string[];
@@ -585,7 +589,7 @@ export default function Connect() {
                     )}
                     <button
                       type="button"
-                      onClick={resetForm}
+                      onClick={sendAnotherMessage}
                       className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-muted)] transition-colors hover:text-[var(--color-plasma-lime)]"
                     >
                       {t('contact.form.sendAnother')}
@@ -695,36 +699,23 @@ export default function Connect() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-2">
-              <div className="tag mb-2">{t('contact.socials')}</div>
-              <a
-                className="hover:text-[var(--color-plasma-lime)]"
-                href={SOCIALS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${t('contact.github')} (${t('contact.opensInNewTab')})`}
-              >
-                {t('contact.github')} <span aria-hidden="true">↗</span>
-              </a>
-              <a
-                className="hover:text-[var(--color-plasma-lime)]"
-                href={SOCIALS.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${t('contact.twitter')} (${t('contact.opensInNewTab')})`}
-              >
-                {t('contact.twitter')} <span aria-hidden="true">↗</span>
-              </a>
-              <a
-                className="hover:text-[var(--color-plasma-lime)]"
-                href={SOCIALS.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${t('contact.linkedin')} (${t('contact.opensInNewTab')})`}
-              >
-                {t('contact.linkedin')} <span aria-hidden="true">↗</span>
-              </a>
-            </div>
+            {SOCIAL_CONFIG.length > 0 && (
+              <div className="flex flex-col gap-2">
+                <div className="tag mb-2">{t('contact.socials')}</div>
+                {SOCIAL_CONFIG.map(({ key, url }) => (
+                  <a
+                    key={key}
+                    className="hover:text-[var(--color-plasma-lime)]"
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${t(`contact.${key}`)} (${t('contact.opensInNewTab')})`}
+                  >
+                    {t(`contact.${key}`)} <span aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            )}
           </aside>
         </div>
       </div>

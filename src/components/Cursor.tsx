@@ -65,14 +65,16 @@ export default function Cursor() {
 
     window.addEventListener('pointermove', onMove, { passive: true });
     document.addEventListener('pointerover', onOver, true);
-    document.addEventListener('pointerleave', onLeave);
-    document.addEventListener('pointerenter', onEnter);
+    // `pointerenter` / `pointerleave` don't bubble — bind on documentElement
+    // so they fire when the cursor crosses the viewport edge.
+    document.documentElement.addEventListener('pointerleave', onLeave);
+    document.documentElement.addEventListener('pointerenter', onEnter);
 
     return () => {
       window.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerover', onOver, true);
-      document.removeEventListener('pointerleave', onLeave);
-      document.removeEventListener('pointerenter', onEnter);
+      document.documentElement.removeEventListener('pointerleave', onLeave);
+      document.documentElement.removeEventListener('pointerenter', onEnter);
       document.documentElement.classList.remove('has-custom-cursor');
     };
   }, []);

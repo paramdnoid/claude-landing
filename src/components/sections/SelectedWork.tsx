@@ -35,20 +35,24 @@ const THUMBS: Record<string, string> = {
 const FALLBACK_PALETTE: [string, string] = ['#6366f1', '#a3ff12'];
 
 export default function SelectedWork() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  const rawCases = t('work.cases', { returnObjects: true }) as RawCase[];
-
+  // Stabilise on `i18n.language` rather than the re-allocated `rawCases`
+  // reference so the horizontalScroll trigger isn't killed and recreated on
+  // every parent render — only when the user actually switches locale.
   const cases = useMemo<Case[]>(
-    () =>
-      rawCases.map((c) => ({
+    () => {
+      const raw = t('work.cases', { returnObjects: true }) as RawCase[];
+      return raw.map((c) => ({
         ...c,
         palette: PALETTES[c.index] ?? FALLBACK_PALETTE,
         thumb: THUMBS[c.index],
-      })),
-    [rawCases],
+      }));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [i18n.language],
   );
 
   useLayoutEffect(() => {

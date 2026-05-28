@@ -223,6 +223,57 @@ export function marquee(
       if (raf) cancelAnimationFrame(raf);
       document.removeEventListener('visibilitychange', onVisibility);
       st.kill();
+      // Reset transform so a remount starts clean rather than flashing the
+      // last computed position for one frame.
+      track.style.transform = '';
     },
   };
+}
+
+type RevealOpts = {
+  /** Stagger between children, in seconds. */
+  stagger?: number;
+  /** Y offset (px) the children animate up from. */
+  y?: number;
+  /** `scrollTrigger.start` value. */
+  start?: string;
+  /** Whether to fire once and disable. */
+  once?: boolean;
+  /** Animation duration. */
+  duration?: number;
+};
+
+/**
+ * Stagger-reveal direct children on scroll-into-view. Returns the created
+ * `gsap.Tween` for callers that want to `.kill()` it explicitly — but the
+ * companion `scrollTrigger` is auto-cleaned via the parent `gsap.context`
+ * when called inside `useGSAP`.
+ *
+ * Respects `prefers-reduced-motion` by snapping to the final state.
+ */
+export function revealChildrenOnScroll(
+  parent: HTMLElement,
+  opts: RevealOpts = {},
+): gsap.core.Tween {
+  const kids = Array.from(parent.children) as HTMLElement[];
+  if (prefersReducedMotion()) {
+    gsap.set(kids, { opacity: 1, y: 0 });
+    return gsap.to(kids, { duration: 0 });
+  }
+  return gsap.fromTo(
+    kids,
+    { y: opts.y ?? 24, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: opts.duration ?? 0.8,
+      ease: 'power3.out',
+      stagger: opts.stagger ?? 0.07,
+      scrollTrigger: {
+        trigger: parent,
+        start: opts.start ?? 'top 85%',
+        once: opts.once ?? true,
+      },
+    },
+  );
 }

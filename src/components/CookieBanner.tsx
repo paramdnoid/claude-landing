@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Cookie, X } from "lucide-react";
 import { getConsent, setConsent } from "../lib/consent";
+import { useLocale } from "../lib/useLocale";
 
 const ANALYTICS_AVAILABLE = !!import.meta.env.VITE_ANALYTICS_SCRIPT_URL;
 
 export default function CookieBanner() {
   const { t } = useTranslation();
-  const { lang } = useParams<{ lang: string }>();
-  const locale = lang ?? "de";
+  const locale = useLocale();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {

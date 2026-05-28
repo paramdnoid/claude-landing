@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LangToggle from './LangToggle';
+import BrandMark from './BrandMark';
 import { scrollToSection } from '../lib/scrollToSection';
+import { useLocale } from '../lib/useLocale';
 
 const NAV_IDS = ['manifesto', 'work', 'capabilities', 'process', 'contact'] as const;
 type NavId = (typeof NAV_IDS)[number];
@@ -10,8 +12,7 @@ type NavId = (typeof NAV_IDS)[number];
 export default function Header() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
-  const { lang } = useParams<{ lang: string }>();
-  const locale = lang ?? 'de';
+  const locale = useLocale();
   const homePath = `/${locale}`;
   const isHome = pathname === homePath || pathname === `${homePath}/`;
   const [scrolled, setScrolled] = useState(false);
@@ -56,7 +57,7 @@ export default function Header() {
         for (const { id } of sections) {
           if (visible.has(id)) { topId = id; break; }
         }
-        setActive(topId);
+        setActive((prev) => (prev === topId ? prev : topId));
       },
       { rootMargin: '-35% 0px -55% 0px', threshold: [0, 0.01, 0.5, 1] },
     );
@@ -107,19 +108,7 @@ export default function Header() {
     >
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
         <Link to={homePath} className="group flex items-center gap-3" aria-label={t('nav.brandLabel')}>
-          <img
-            src="/logo.svg"
-            alt=""
-            aria-hidden="true"
-            width="28"
-            height="28"
-            className="block h-7 w-7 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
-            style={{ filter: 'drop-shadow(0 0 12px rgba(163, 255, 18, 0.35))' }}
-          />
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-fg)] leading-tight">
-            <span className="block">ZIAN AI CONCEPTS</span>
-            <span className="block text-[var(--color-muted)] text-[10px]">by Andre Zimmermann</span>
-          </span>
+          <BrandMark variant="header" />
         </Link>
         <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] md:flex">
           {navLink('manifesto', t('nav.manifesto'))}

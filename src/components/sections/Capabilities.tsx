@@ -116,7 +116,7 @@ export default function Capabilities() {
       ref={sectionRef}
       id="capabilities"
       aria-labelledby="capabilities-heading"
-      className="relative px-6 py-32 md:px-10 md:py-48"
+      className="relative px-6 py-16 md:px-10 md:py-24"
     >
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
         <div className="md:col-span-5 md:sticky md:top-[clamp(6rem,12vh,9rem)] md:self-start">

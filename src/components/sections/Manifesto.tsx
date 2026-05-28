@@ -39,20 +39,35 @@ export default function Manifesto() {
   const lines: string[] = t('manifesto.lines', { returnObjects: true }) as string[];
 
   return (
-    <section id="manifesto" className="relative px-6 py-32 md:px-10 md:py-48">
+    <section id="manifesto" className="relative px-6 py-16 md:px-10 md:py-24">
       <div className="mx-auto max-w-[1400px]">
-        <div className="tag mb-12">{t('manifesto.eyebrow')}</div>
-        <div className="space-y-4 md:space-y-6">
-          {lines.map((line, i) => (
-            <p
-              key={i}
-              ref={(el) => { lineRefs.current[i] = el; }}
-              className={`font-display text-display-md ${i % 2 === 1 ? 'text-plasma' : 'text-[var(--color-fg)]'}`}
-              style={{ opacity: 0 }}
-            >
-              {line}
-            </p>
-          ))}
+        <div className="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-12">
+
+          {/* Left: label sidebar */}
+          <div className="md:col-span-3 md:border-r md:border-[var(--color-border)] md:pr-10">
+            <div className="tag">{t('manifesto.eyebrow')}</div>
+          </div>
+
+          {/* Right: manifesto lines */}
+          <div className="md:col-span-9">
+            <div className="space-y-3 md:space-y-4">
+              {lines.map((line, i) => (
+                <p
+                  key={i}
+                  ref={(el) => { lineRefs.current[i] = el; }}
+                  className={`font-display text-display-md ${
+                    i === lines.length - 1
+                      ? 'text-plasma pt-2 md:pt-3'
+                      : 'text-[var(--color-fg)]'
+                  }`}
+                  style={{ opacity: 0 }}
+                >
+                  {line}
+                </p>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

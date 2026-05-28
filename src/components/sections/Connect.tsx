@@ -292,7 +292,7 @@ export default function Connect() {
     'flex-1 rounded-sm bg-transparent font-mono text-sm text-[var(--color-fg)] outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)]';
 
   return (
-    <section id="contact" className="relative px-6 pb-16 pt-32 md:px-10 md:pb-24 md:pt-44">
+    <section id="contact" className="relative px-6 pb-12 pt-16 md:px-10 md:pb-16 md:pt-24">
       {/* Backwards-compat anchor for legacy #ai-demo links */}
       <span id="ai-demo" aria-hidden="true" className="block -translate-y-24" />
 
@@ -301,7 +301,7 @@ export default function Connect() {
         <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="tag mb-6">{t('connect.eyebrow')}</div>
-            <h2 ref={headlineRef} className="font-display text-display-xl">
+            <h2 ref={headlineRef} className="font-display text-display-lg">
               {t('contact.title')}
             </h2>
             <p className="lead mt-4 max-w-xl text-[var(--color-fg)]/75">{t('connect.intro')}</p>

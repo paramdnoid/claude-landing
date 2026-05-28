@@ -46,9 +46,9 @@ export default function Process() {
   }, [steps.length]);
 
   return (
-    <section ref={sectionRef} id="process" className="relative px-6 py-32 md:px-10 md:py-48">
+    <section ref={sectionRef} id="process" className="relative px-6 py-16 md:px-10 md:py-24">
       <div className="mx-auto max-w-[1600px]">
-        <div className="mb-20 md:mb-28">
+        <div className="mb-10 md:mb-14">
           <div className="tag mb-4">{t('process.eyebrow')}</div>
           <h2 className="font-display text-display-lg max-w-3xl">{t('process.title')}</h2>
         </div>
@@ -58,7 +58,7 @@ export default function Process() {
             <div
               key={s.index}
               ref={(el) => { stepRefs.current[i] = el; }}
-              className="grid grid-cols-12 items-start gap-x-6 gap-y-4 py-16 md:py-20"
+              className="grid grid-cols-12 items-start gap-x-6 gap-y-4 py-10 md:py-14"
             >
               <div className="col-span-2 md:col-span-1 pt-1">
                 <span className="font-mono text-xs tracking-widest text-[var(--color-plasma-lime)]">

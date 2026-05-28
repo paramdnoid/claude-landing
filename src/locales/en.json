@@ -6,6 +6,7 @@
     "process": "Process",
     "contact": "Contact",
     "language": "Language",
+    "primary": "Primary",
     "menu": "Menu",
     "skipToContent": "Skip to content",
     "home": "Home",
@@ -42,6 +43,8 @@
     "endTag": "More",
     "endLine": "Full case studies on request — drop me a line.",
     "onRequest": "Case study on request",
+    "casePreviewAlt": "Preview of {{title}}",
+    "carouselKeyboardHint": "Use the arrow keys to browse cases.",
     "cases": [
       {
         "index": "01",
@@ -208,6 +211,8 @@
     "liveDisclaimer": "Prompts are sent directly to the Ollama endpoint, never to third parties.",
     "poweredBy": "Powered by Ollama",
     "demoMode": "Demo mode",
+    "logLabel": "Conversation",
+    "formHeading": "Contact form",
     "mock": {
       "replies": [
         "ZIAN AI CONCEPTS is a one-person studio for AI engineering, creative coding and interaction design. I build interfaces, agents and generative systems — from concept to production.",

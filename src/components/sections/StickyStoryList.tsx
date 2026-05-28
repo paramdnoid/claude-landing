@@ -102,7 +102,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
                     <a
                       href={`#${it.anchorId}`}
                       data-active={isActive}
-                      aria-current={isActive ? 'location' : undefined}
+                      aria-current={isActive ? 'true' : undefined}
                       onClick={(e) => handleAnchorClick(e, it.anchorId)}
                       className="group flex items-center gap-4 py-2 text-muted transition-colors duration-200 hover:text-fg data-[active=true]:text-fg"
                     >

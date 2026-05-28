@@ -19,6 +19,11 @@
   --color-plasma-indigo: #6366f1;
   --color-plasma-deep: #1e1b4b;
 
+  /* Semantic feedback tokens */
+  --color-error: #f87171;
+  --color-error-bg: rgba(248, 113, 113, 0.6);
+  --color-success: #4ade80;
+
   --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
 
@@ -74,6 +79,8 @@
     outline: 2px solid var(--color-plasma-lime);
     outline-offset: 3px;
     border-radius: 4px;
+    /* Inner dark hairline keeps the lime ring legible on lime / white surfaces. */
+    box-shadow: 0 0 0 1px var(--color-bg);
   }
 
   a { color: inherit; text-decoration: none; }
@@ -115,12 +122,12 @@
   /* Editorial display sizing */
   .text-display-xl {
     font-size: clamp(3rem, 9vw, 9rem);
-    line-height: 0.88;
+    line-height: 0.94;
     letter-spacing: -0.055em;
   }
   .text-display-lg {
     font-size: clamp(2rem, 5vw, 5rem);
-    line-height: 0.92;
+    line-height: 0.96;
     letter-spacing: -0.05em;
   }
   .text-display-md {

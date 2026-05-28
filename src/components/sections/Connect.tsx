@@ -60,6 +60,7 @@ export default function Connect() {
   const emailInputRef = useRef<HTMLInputElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const successRef = useRef<HTMLParagraphElement>(null);
+  const submitErrorRef = useRef<HTMLParagraphElement>(null);
   const mailRef = useMagnet<HTMLAnchorElement>(0.25);
 
   const reduceMotion = prefersReducedMotion();
@@ -93,9 +94,10 @@ export default function Connect() {
     }
   }, [formStatus]);
 
-  // Focus success heading on success
+  // Focus success heading on success, or error alert on submit failure
   useEffect(() => {
     if (formStatus === 'success') successRef.current?.focus();
+    else if (formStatus === 'error') submitErrorRef.current?.focus();
   }, [formStatus]);
 
   const openForm = useCallback(() => {
@@ -308,7 +310,7 @@ export default function Connect() {
             <h2 ref={headlineRef} className="font-display text-display-lg">
               {t('contact.title')}
             </h2>
-            <p className="lead mt-4 max-w-xl text-fg/75">{t('connect.intro')}</p>
+            <p className="lead mt-4 max-w-xl">{t('connect.intro')}</p>
           </div>
           {/* Mode badge */}
           <div className="flex items-center gap-3">
@@ -336,7 +338,7 @@ export default function Connect() {
             <div className="glass overflow-hidden rounded-2xl border border-border-strong">
               {/* Chrome */}
               <div className="flex items-center justify-between border-b border-border px-5 py-3">
-                <div className="flex gap-1.5">
+                <div aria-hidden="true" className="flex gap-1.5">
                   <span className="h-3 w-3 rounded-full bg-red-500/60" />
                   <span className="h-3 w-3 rounded-full bg-yellow-500/60" />
                   <span className="h-3 w-3 rounded-full bg-green-500/60" />
@@ -347,61 +349,61 @@ export default function Connect() {
                 <button
                   type="button"
                   onClick={reset}
-                  aria-label={t('aiDemo.controls.reset')}
-                  className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg"
+                  className="relative font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
                 >
                   {t('aiDemo.controls.reset')}
                 </button>
               </div>
 
-              {/* Log */}
-              <div
-                ref={logRef}
-                role="log"
-                aria-live="polite"
-                aria-busy={chatStatus === 'streaming'}
-                aria-label={t('contact.title')}
-                className="h-80 overflow-y-auto p-5 font-mono text-sm"
-              >
-                {messages.length === 0 && !streamBuffer && formStatus === 'closed' && (
-                  <p className="text-muted">
-                    <span className="text-plasma-lime">→</span>{' '}
-                    {t('aiDemo.status.idle')}
-                  </p>
-                )}
-                {messages.map((msg, i) => (
-                  <div
-                    key={i}
-                    className={`mb-3 ${msg.role === 'user' ? 'text-fg' : 'text-fg/80'}`}
-                  >
-                    <span
-                      className={`mr-2 select-none ${msg.role === 'user' ? 'text-plasma-lime' : 'text-muted'}`}
+              {/* Scroll container: holds chat log + form + success — form sits outside the
+                  aria-live region so keystrokes don't re-announce on every state tick. */}
+              <div ref={logRef} className="h-80 overflow-y-auto p-5 font-mono text-sm">
+                <div
+                  role="log"
+                  aria-live="polite"
+                  aria-busy={chatStatus === 'streaming'}
+                  aria-label={t('aiDemo.logLabel')}
+                >
+                  {messages.length === 0 && !streamBuffer && formStatus === 'closed' && (
+                    <p className="text-muted">
+                      <span aria-hidden="true" className="text-plasma-lime">→</span>{' '}
+                      {t('aiDemo.status.idle')}
+                    </p>
+                  )}
+                  {messages.map((msg, i) => (
+                    <div
+                      key={i}
+                      className={`mb-3 ${msg.role === 'user' ? 'text-fg' : 'text-fg/80'}`}
                     >
-                      {msg.role === 'user' ? '>' : '//'}
-                    </span>
-                    {msg.content}
-                  </div>
-                ))}
-                {streamBuffer && (
-                  <div aria-hidden="true" className="mb-3 text-fg/80">
-                    <span className="mr-2 select-none text-muted">//</span>
-                    {streamBuffer}
-                    {!reduceMotion && (
                       <span
                         aria-hidden="true"
-                        className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-plasma-lime"
-                      />
-                    )}
-                  </div>
-                )}
+                        className={`mr-2 select-none ${msg.role === 'user' ? 'text-plasma-lime' : 'text-muted'}`}
+                      >
+                        {msg.role === 'user' ? '>' : '//'}
+                      </span>
+                      {msg.content}
+                    </div>
+                  ))}
+                  {streamBuffer && (
+                    <div aria-hidden="true" className="mb-3 text-fg/80">
+                      <span className="mr-2 select-none text-muted">//</span>
+                      {streamBuffer}
+                      {!reduceMotion && (
+                        <span className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-plasma-lime" />
+                      )}
+                    </div>
+                  )}
+                </div>
 
-                {/* Inline form block — rendered inside the log so it feels part of the conversation */}
+                {/* Inline form — outside role="log" so keystrokes don't re-trigger announcements. */}
                 {formIsOpen && (
                   <div className="mt-4 border-l-2 border-[var(--color-plasma-lime)] pl-4">
+                    <h3 id="connect-form-heading" className="sr-only">{t('aiDemo.formHeading')}</h3>
                     <form
                       onSubmit={(e) => { void handleFormSubmit(e); }}
                       noValidate
-                      className="flex flex-col gap-3"
+                      aria-labelledby="connect-form-heading"
+                      className="flex flex-col gap-4"
                     >
                       {/* Honeypot */}
                       <input
@@ -412,14 +414,12 @@ export default function Connect() {
                         className="hidden"
                       />
 
-                      <div className="flex items-center gap-3">
-                        <span
-                          aria-hidden="true"
-                          className="select-none font-mono text-plasma-lime"
+                      <div className="flex flex-col gap-1">
+                        <label
+                          htmlFor="connect-name"
+                          className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted"
                         >
-                          {'>'}
-                        </span>
-                        <label htmlFor="connect-name" className="sr-only">
+                          <span aria-hidden="true" className="text-plasma-lime">{'>'}</span>
                           {t('contact.form.name')}
                         </label>
                         <input
@@ -430,41 +430,41 @@ export default function Connect() {
                           placeholder={t('connect.formNamePlaceholderInline')}
                           value={nameVal}
                           onChange={(e) => setNameVal(e.target.value)}
-                          className={inlineInputCls}
+                          className={`pl-6 ${inlineInputCls}`}
                         />
                       </div>
 
                       <div className="flex flex-col gap-1">
-                        <div className="flex items-center gap-3">
-                          <span
-                            aria-hidden="true"
-                            className="select-none font-mono text-plasma-lime"
-                          >
-                            {'>'}
+                        <label
+                          htmlFor="connect-email"
+                          className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted"
+                        >
+                          <span aria-hidden="true" className="text-plasma-lime">{'>'}</span>
+                          <span>
+                            {t('contact.form.email')}{' '}
+                            <span aria-hidden="true" className="text-error">*</span>
                           </span>
-                          <label htmlFor="connect-email" className="sr-only">
-                            {t('contact.form.email')}
-                          </label>
-                          <input
-                            ref={emailInputRef}
-                            id="connect-email"
-                            name="email"
-                            type="email"
-                            autoComplete="email"
-                            required
-                            placeholder={t('connect.formEmailPlaceholderInline')}
-                            value={emailVal}
-                            onChange={(e) => setEmailVal(e.target.value)}
-                            aria-invalid={!!emailError}
-                            aria-describedby={emailError ? 'connect-email-error' : undefined}
-                            className={inlineInputCls}
-                          />
-                        </div>
+                        </label>
+                        <input
+                          ref={emailInputRef}
+                          id="connect-email"
+                          name="email"
+                          type="email"
+                          autoComplete="email"
+                          inputMode="email"
+                          required
+                          placeholder={t('connect.formEmailPlaceholderInline')}
+                          value={emailVal}
+                          onChange={(e) => setEmailVal(e.target.value)}
+                          aria-invalid={!!emailError}
+                          aria-describedby={emailError ? 'connect-email-error' : undefined}
+                          className={`pl-6 ${inlineInputCls}`}
+                        />
                         {emailError && (
                           <p
                             id="connect-email-error"
                             role="alert"
-                            className="pl-6 text-xs text-red-400"
+                            className="pl-6 text-xs text-error"
                           >
                             {emailError}
                           </p>
@@ -472,35 +472,34 @@ export default function Connect() {
                       </div>
 
                       <div className="flex flex-col gap-1">
-                        <div className="flex items-start gap-3">
-                          <span
-                            aria-hidden="true"
-                            className="mt-1 select-none font-mono text-plasma-lime"
-                          >
-                            {'>'}
+                        <label
+                          htmlFor="connect-message"
+                          className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted"
+                        >
+                          <span aria-hidden="true" className="text-plasma-lime">{'>'}</span>
+                          <span>
+                            {t('contact.form.message')}{' '}
+                            <span aria-hidden="true" className="text-error">*</span>
                           </span>
-                          <label htmlFor="connect-message" className="sr-only">
-                            {t('contact.form.message')}
-                          </label>
-                          <textarea
-                            ref={messageInputRef}
-                            id="connect-message"
-                            name="message"
-                            required
-                            rows={3}
-                            placeholder={t('connect.formMessagePlaceholderInline')}
-                            value={messageVal}
-                            onChange={(e) => setMessageVal(e.target.value)}
-                            aria-invalid={!!messageError}
-                            aria-describedby={messageError ? 'connect-message-error' : undefined}
-                            className={`${inlineInputCls} resize-none`}
-                          />
-                        </div>
+                        </label>
+                        <textarea
+                          ref={messageInputRef}
+                          id="connect-message"
+                          name="message"
+                          required
+                          rows={3}
+                          placeholder={t('connect.formMessagePlaceholderInline')}
+                          value={messageVal}
+                          onChange={(e) => setMessageVal(e.target.value)}
+                          aria-invalid={!!messageError}
+                          aria-describedby={messageError ? 'connect-message-error' : undefined}
+                          className={`pl-6 ${inlineInputCls} resize-none`}
+                        />
                         {messageError && (
                           <p
                             id="connect-message-error"
                             role="alert"
-                            className="pl-6 text-xs text-red-400"
+                            className="pl-6 text-xs text-error"
                           >
                             {messageError}
                           </p>
@@ -508,7 +507,12 @@ export default function Connect() {
                       </div>
 
                       {formStatus === 'error' && (
-                        <p role="alert" className="pl-6 text-xs text-red-400">
+                        <p
+                          ref={submitErrorRef}
+                          tabIndex={-1}
+                          role="alert"
+                          className="pl-6 text-xs text-error outline-none"
+                        >
                           <strong>{t('contact.form.errorTitle')}</strong>{' '}
                           {t('contact.form.errorBody')}
                         </p>
@@ -556,7 +560,7 @@ export default function Connect() {
                           type="button"
                           onClick={cancelForm}
                           disabled={formStatus === 'pending'}
-                          className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg disabled:opacity-30"
+                          className="relative font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg disabled:opacity-30 after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
                         >
                           {t('connect.formCancelInline')}
                         </button>
@@ -565,7 +569,7 @@ export default function Connect() {
                   </div>
                 )}
 
-                {/* Success state inside log */}
+                {/* Success state — separate role="status" live region. */}
                 {formStatus === 'success' && (
                   <div
                     className="mt-4 border-l-2 border-[var(--color-plasma-lime)] pl-4"
@@ -583,14 +587,14 @@ export default function Connect() {
                       {t('contact.form.successBody')}
                     </p>
                     {isDemoForm && (
-                      <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-2">
+                      <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
                         {t('contact.form.demoNote')}
                       </p>
                     )}
                     <button
                       type="button"
                       onClick={sendAnotherMessage}
-                      className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-plasma-lime"
+                      className="relative mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-plasma-lime after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
                     >
                       {t('contact.form.sendAnother')}
                     </button>
@@ -622,8 +626,7 @@ export default function Connect() {
                     <button
                       type="button"
                       onClick={stop}
-                      aria-label={t('aiDemo.controls.stop')}
-                      className="font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-red-400"
+                      className="relative font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-error after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
                     >
                       {t('aiDemo.controls.stop')}
                     </button>
@@ -632,8 +635,7 @@ export default function Connect() {
                       type="button"
                       onClick={() => void send(input)}
                       disabled={!input.trim()}
-                      aria-label={t('aiDemo.controls.send')}
-                      className="font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-fg disabled:opacity-30"
+                      className="relative font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-fg disabled:opacity-30 after:absolute after:inset-x-0 after:-inset-y-3 after:content-['']"
                     >
                       {t('aiDemo.controls.send')}
                     </button>
@@ -667,7 +669,7 @@ export default function Connect() {
             </div>
 
             {/* Disclaimer */}
-            <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-2">
+            <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
               {liveMode ? t('aiDemo.liveDisclaimer') : t('aiDemo.disclaimer')}
               {isDemoForm && <> · {t('contact.form.demoNote')}</>}
             </p>
@@ -694,7 +696,7 @@ export default function Connect() {
                   </svg>
                 </span>
               </a>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-2">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
                 {t('connect.skipChat')}
               </p>
             </div>

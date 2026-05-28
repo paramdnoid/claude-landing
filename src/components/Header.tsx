@@ -110,7 +110,7 @@ export default function Header() {
         <Link to={homePath} className="group flex items-center gap-3" aria-label={t('nav.brandLabel')}>
           <BrandMark variant="header" />
         </Link>
-        <nav className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] md:flex">
+        <nav aria-label={t('nav.primary')} className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] md:flex">
           {navLink('manifesto', t('nav.manifesto'))}
           {navLink('work', t('nav.work'))}
           {navLink('capabilities', t('nav.capabilities'))}
@@ -149,13 +149,13 @@ export default function Header() {
                 {isHome ? (
                   <a
                     href={`#${id}`}
-                    className="block py-2 text-fg"
+                    className="flex min-h-11 items-center py-3 text-fg"
                     onClick={(e) => onAnchorClick(e, id)}
                   >
                     {t(`nav.${id}`)}
                   </a>
                 ) : (
-                  <Link to={`${homePath}#${id}`} className="block py-2 text-fg">
+                  <Link to={`${homePath}#${id}`} className="flex min-h-11 items-center py-3 text-fg">
                     {t(`nav.${id}`)}
                   </Link>
                 )}

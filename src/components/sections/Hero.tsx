@@ -65,7 +65,7 @@ export default function Hero() {
           >
             {t('hero.headline')}
           </h1>
-          <p ref={subRef} className="lead mt-6 max-w-2xl text-fg/85 md:mt-8">
+          <p ref={subRef} className="lead mt-6 max-w-2xl md:mt-8">
             {t('hero.sub')}
           </p>
           <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3 md:mt-10 md:gap-4">

@@ -44,11 +44,11 @@ export default function Manifesto() {
       id="manifesto"
       className="relative px-6 py-16 md:px-10 md:py-24"
     >
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-350">
         <div className="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-12">
 
           {/* Left: label sidebar */}
-          <div className="md:col-span-3 md:border-r md:border-[var(--color-border)] md:pr-10">
+          <div className="md:col-span-3 md:border-r md:border-border md:pr-10">
             <div className="tag">{t('manifesto.eyebrow')}</div>
           </div>
 
@@ -62,7 +62,7 @@ export default function Manifesto() {
                   className={`font-display text-display-md ${
                     i === lines.length - 1
                       ? 'text-plasma pt-2 md:pt-3'
-                      : 'text-[var(--color-fg)]'
+                      : 'text-fg'
                   }`}
                   style={{ opacity: 0 }}
                 >

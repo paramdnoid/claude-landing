@@ -57,7 +57,7 @@ export default function Process() {
       articlesRef={articleRefs}
       sectionRef={sectionRef}
       headerRef={headerRef}
-      className="relative border-t border-[var(--color-border)] px-6 pt-16 pb-16 md:pt-0 md:px-10 md:pb-24"
+      className="relative border-t border-border px-6 pt-16 pb-16 md:pt-0 md:px-10 md:pb-24"
       headerClassName="flex flex-col gap-6 md:pt-24"
       renderHeader={() => (
         <>
@@ -70,7 +70,7 @@ export default function Process() {
       )}
       renderArticleBody={(it) => (
         <>
-          <span className="font-mono text-xs uppercase tracking-widest text-[var(--color-plasma-lime)]">
+          <span className="font-mono text-xs uppercase tracking-widest text-plasma-lime">
             {it.index}
           </span>
           <h3 id={`${it.anchorId}-title`} className="font-display text-display-md">

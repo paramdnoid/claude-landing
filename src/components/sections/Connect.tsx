@@ -293,14 +293,14 @@ export default function Connect() {
 
   // Inline terminal-style input class
   const inlineInputCls =
-    'flex-1 rounded-sm bg-transparent font-mono text-sm text-[var(--color-fg)] outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)]';
+    'flex-1 rounded-sm bg-transparent font-mono text-sm text-fg outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)]';
 
   return (
     <section id="contact" className="relative px-6 pb-12 pt-16 md:px-10 md:pb-16 md:pt-24">
       {/* Backwards-compat anchor for legacy #ai-demo links */}
       <span id="ai-demo" aria-hidden="true" className="block -translate-y-24" />
 
-      <div className="mx-auto max-w-[1600px]">
+      <div className="mx-auto max-w-400">
         {/* Header */}
         <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
@@ -308,21 +308,21 @@ export default function Connect() {
             <h2 ref={headlineRef} className="font-display text-display-lg">
               {t('contact.title')}
             </h2>
-            <p className="lead mt-4 max-w-xl text-[var(--color-fg)]/75">{t('connect.intro')}</p>
+            <p className="lead mt-4 max-w-xl text-fg/75">{t('connect.intro')}</p>
           </div>
           {/* Mode badge */}
           <div className="flex items-center gap-3">
             {liveMode ? (
               <>
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-plasma-lime)] glow-lime" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-muted)]">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-plasma-lime glow-lime" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
                   {t('aiDemo.poweredBy')} · {OLLAMA_MODEL}
                 </span>
               </>
             ) : (
               <>
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-muted)]" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-muted)]">
+                <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
                   {t('aiDemo.demoMode')}
                 </span>
               </>
@@ -333,22 +333,22 @@ export default function Connect() {
         <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-3 lg:gap-12">
           {/* Terminal column — spans 2 */}
           <div className="lg:col-span-2">
-            <div className="glass overflow-hidden rounded-2xl border border-[var(--color-border-strong)]">
+            <div className="glass overflow-hidden rounded-2xl border border-border-strong">
               {/* Chrome */}
-              <div className="flex items-center justify-between border-b border-[var(--color-border)] px-5 py-3">
+              <div className="flex items-center justify-between border-b border-border px-5 py-3">
                 <div className="flex gap-1.5">
                   <span className="h-3 w-3 rounded-full bg-red-500/60" />
                   <span className="h-3 w-3 rounded-full bg-yellow-500/60" />
                   <span className="h-3 w-3 rounded-full bg-green-500/60" />
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
                   {t(`aiDemo.status.${chatStatus}`)}
                 </span>
                 <button
                   type="button"
                   onClick={reset}
                   aria-label={t('aiDemo.controls.reset')}
-                  className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)]"
+                  className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg"
                 >
                   {t('aiDemo.controls.reset')}
                 </button>
@@ -364,18 +364,18 @@ export default function Connect() {
                 className="h-80 overflow-y-auto p-5 font-mono text-sm"
               >
                 {messages.length === 0 && !streamBuffer && formStatus === 'closed' && (
-                  <p className="text-[var(--color-muted)]">
-                    <span className="text-[var(--color-plasma-lime)]">→</span>{' '}
+                  <p className="text-muted">
+                    <span className="text-plasma-lime">→</span>{' '}
                     {t('aiDemo.status.idle')}
                   </p>
                 )}
                 {messages.map((msg, i) => (
                   <div
                     key={i}
-                    className={`mb-3 ${msg.role === 'user' ? 'text-[var(--color-fg)]' : 'text-[var(--color-fg)]/80'}`}
+                    className={`mb-3 ${msg.role === 'user' ? 'text-fg' : 'text-fg/80'}`}
                   >
                     <span
-                      className={`mr-2 select-none ${msg.role === 'user' ? 'text-[var(--color-plasma-lime)]' : 'text-[var(--color-muted)]'}`}
+                      className={`mr-2 select-none ${msg.role === 'user' ? 'text-plasma-lime' : 'text-muted'}`}
                     >
                       {msg.role === 'user' ? '>' : '//'}
                     </span>
@@ -383,13 +383,13 @@ export default function Connect() {
                   </div>
                 ))}
                 {streamBuffer && (
-                  <div aria-hidden="true" className="mb-3 text-[var(--color-fg)]/80">
-                    <span className="mr-2 select-none text-[var(--color-muted)]">//</span>
+                  <div aria-hidden="true" className="mb-3 text-fg/80">
+                    <span className="mr-2 select-none text-muted">//</span>
                     {streamBuffer}
                     {!reduceMotion && (
                       <span
                         aria-hidden="true"
-                        className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-[var(--color-plasma-lime)]"
+                        className="ml-0.5 inline-block h-3.5 w-0.5 animate-pulse bg-plasma-lime"
                       />
                     )}
                   </div>
@@ -415,7 +415,7 @@ export default function Connect() {
                       <div className="flex items-center gap-3">
                         <span
                           aria-hidden="true"
-                          className="select-none font-mono text-[var(--color-plasma-lime)]"
+                          className="select-none font-mono text-plasma-lime"
                         >
                           {'>'}
                         </span>
@@ -438,7 +438,7 @@ export default function Connect() {
                         <div className="flex items-center gap-3">
                           <span
                             aria-hidden="true"
-                            className="select-none font-mono text-[var(--color-plasma-lime)]"
+                            className="select-none font-mono text-plasma-lime"
                           >
                             {'>'}
                           </span>
@@ -475,7 +475,7 @@ export default function Connect() {
                         <div className="flex items-start gap-3">
                           <span
                             aria-hidden="true"
-                            className="mt-1 select-none font-mono text-[var(--color-plasma-lime)]"
+                            className="mt-1 select-none font-mono text-plasma-lime"
                           >
                             {'>'}
                           </span>
@@ -519,7 +519,7 @@ export default function Connect() {
                           type="submit"
                           disabled={formStatus === 'pending'}
                           aria-busy={formStatus === 'pending'}
-                          className="inline-flex items-center gap-2 rounded-full border border-[var(--color-plasma-lime)] px-5 py-2 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-plasma-lime)] transition-colors hover:bg-[var(--color-plasma-lime)] hover:text-[var(--color-bg)] disabled:cursor-not-allowed disabled:opacity-50"
+                          className="inline-flex items-center gap-2 rounded-full border border-[var(--color-plasma-lime)] px-5 py-2 font-mono text-xs uppercase tracking-[0.15em] text-plasma-lime transition-colors hover:bg-plasma-lime hover:text-bg disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           {formStatus === 'pending' && (
                             <svg
@@ -556,7 +556,7 @@ export default function Connect() {
                           type="button"
                           onClick={cancelForm}
                           disabled={formStatus === 'pending'}
-                          className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)] disabled:opacity-30"
+                          className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-fg disabled:opacity-30"
                         >
                           {t('connect.formCancelInline')}
                         </button>
@@ -579,18 +579,18 @@ export default function Connect() {
                     >
                       {t('contact.form.successTitle', { name: nameVal || 'friend' })}
                     </p>
-                    <p className="mt-2 text-sm text-[var(--color-muted)]">
+                    <p className="mt-2 text-sm text-muted">
                       {t('contact.form.successBody')}
                     </p>
                     {isDemoForm && (
-                      <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-muted-2)]">
+                      <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-2">
                         {t('contact.form.demoNote')}
                       </p>
                     )}
                     <button
                       type="button"
                       onClick={sendAnotherMessage}
-                      className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-muted)] transition-colors hover:text-[var(--color-plasma-lime)]"
+                      className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-plasma-lime"
                     >
                       {t('contact.form.sendAnother')}
                     </button>
@@ -599,11 +599,11 @@ export default function Connect() {
               </div>
 
               {/* Prompt input */}
-              <div className="border-t border-[var(--color-border)] px-5 py-4">
+              <div className="border-t border-border px-5 py-4">
                 <div className="flex items-center gap-3">
                   <span
                     aria-hidden="true"
-                    className="select-none font-mono text-[var(--color-plasma-lime)]"
+                    className="select-none font-mono text-plasma-lime"
                   >
                     {'>'}
                   </span>
@@ -616,14 +616,14 @@ export default function Connect() {
                     placeholder={t('aiDemo.placeholder')}
                     aria-label={t('aiDemo.placeholder')}
                     disabled={chatStatus === 'streaming'}
-                    className="flex-1 rounded-sm bg-transparent font-mono text-sm text-[var(--color-fg)] outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)] disabled:opacity-50"
+                    className="flex-1 rounded-sm bg-transparent font-mono text-sm text-fg outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)] disabled:opacity-50"
                   />
                   {chatStatus === 'streaming' ? (
                     <button
                       type="button"
                       onClick={stop}
                       aria-label={t('aiDemo.controls.stop')}
-                      className="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-muted)] transition-colors hover:text-red-400"
+                      className="font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-red-400"
                     >
                       {t('aiDemo.controls.stop')}
                     </button>
@@ -633,7 +633,7 @@ export default function Connect() {
                       onClick={() => void send(input)}
                       disabled={!input.trim()}
                       aria-label={t('aiDemo.controls.send')}
-                      className="font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-muted)] transition-colors hover:text-[var(--color-fg)] disabled:opacity-30"
+                      className="font-mono text-xs uppercase tracking-[0.15em] text-muted transition-colors hover:text-fg disabled:opacity-30"
                     >
                       {t('aiDemo.controls.send')}
                     </button>
@@ -651,7 +651,7 @@ export default function Connect() {
                     type="button"
                     onClick={() => void send(s)}
                     disabled={chatStatus === 'streaming'}
-                    className="rounded-full border border-[var(--color-border)] px-4 py-2 font-mono text-xs text-[var(--color-muted)] transition-colors hover:border-[var(--color-border-strong)] hover:text-[var(--color-fg)] disabled:opacity-30"
+                    className="rounded-full border border-border px-4 py-2 font-mono text-xs text-muted transition-colors hover:border-border-strong hover:text-fg disabled:opacity-30"
                   >
                     {s}
                   </button>
@@ -660,14 +660,14 @@ export default function Connect() {
                 type="button"
                 onClick={handleLeaveTrace}
                 disabled={formIsOpen || formStatus === 'success'}
-                className="rounded-full border border-[var(--color-plasma-lime)] px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] text-[var(--color-plasma-lime)] transition-colors hover:bg-[var(--color-plasma-lime)] hover:text-[var(--color-bg)] disabled:cursor-not-allowed disabled:opacity-30"
+                className="rounded-full border border-[var(--color-plasma-lime)] px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] text-plasma-lime transition-colors hover:bg-plasma-lime hover:text-bg disabled:cursor-not-allowed disabled:opacity-30"
               >
                 {t('connect.leaveTracePill')}
               </button>
             </div>
 
             {/* Disclaimer */}
-            <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--color-muted-2)]">
+            <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.15em] text-muted-2">
               {liveMode ? t('aiDemo.liveDisclaimer') : t('aiDemo.disclaimer')}
               {isDemoForm && <> · {t('contact.form.demoNote')}</>}
             </p>
@@ -680,10 +680,10 @@ export default function Connect() {
               <a
                 ref={mailRef}
                 href={`mailto:${t('contact.email')}`}
-                className="group relative inline-flex items-center gap-3 rounded-full border border-[var(--color-border-strong)] px-6 py-4 text-base transition-colors duration-300 hover:border-[var(--color-plasma-lime)] hover:text-[var(--color-plasma-lime)] md:text-lg"
+                className="group relative inline-flex items-center gap-3 rounded-full border border-border-strong px-6 py-4 text-base transition-colors duration-300 hover:border-[var(--color-plasma-lime)] hover:text-plasma-lime md:text-lg"
               >
                 <span className="font-mono">{t('contact.email')}</span>
-                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[var(--color-plasma-lime)] text-[var(--color-bg)] transition-transform duration-500 group-hover:rotate-45">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-plasma-lime text-bg transition-transform duration-500 group-hover:rotate-45">
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                     <path
                       d="M1 13L13 1M13 1H3M13 1v10"
@@ -694,7 +694,7 @@ export default function Connect() {
                   </svg>
                 </span>
               </a>
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-muted-2)]">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-2">
                 {t('connect.skipChat')}
               </p>
             </div>
@@ -705,7 +705,7 @@ export default function Connect() {
                 {SOCIAL_CONFIG.map(({ key, url }) => (
                   <a
                     key={key}
-                    className="hover:text-[var(--color-plasma-lime)]"
+                    className="hover:text-plasma-lime"
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"

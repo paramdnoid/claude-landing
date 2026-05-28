@@ -84,7 +84,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
       aria-labelledby={headingId}
       className={className}
     >
-      <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
+      <div className="mx-auto grid max-w-400 grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
         <div className="md:col-span-5 md:sticky md:top-[clamp(6rem,12vh,9rem)] md:self-start">
           <div ref={headerRef} className={headerClassName}>
             {renderHeader()}
@@ -92,7 +92,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
 
           <nav
             aria-label={miniIndexLabel}
-            className="mt-12 hidden border-t border-[var(--color-border)] pt-8 md:block"
+            className="mt-12 hidden border-t border-border pt-8 md:block"
           >
             <ol className="flex flex-col gap-1">
               {items.map((it) => {
@@ -104,13 +104,13 @@ export default function StickyStoryList<T extends StickyStoryItem>({
                       data-active={isActive}
                       aria-current={isActive ? 'location' : undefined}
                       onClick={(e) => handleAnchorClick(e, it.anchorId)}
-                      className="group flex items-center gap-4 py-2 text-[var(--color-muted)] transition-colors duration-200 hover:text-[var(--color-fg)] data-[active=true]:text-[var(--color-fg)]"
+                      className="group flex items-center gap-4 py-2 text-muted transition-colors duration-200 hover:text-fg data-[active=true]:text-fg"
                     >
                       <span
                         aria-hidden
-                        className="block h-1.5 w-1.5 rounded-full bg-[var(--color-muted)]/30 transition-all duration-200 group-hover:bg-[var(--color-muted)] group-data-[active=true]:bg-[var(--color-plasma-lime)] group-data-[active=true]:shadow-[var(--shadow-glow-lime)]"
+                        className="block h-1.5 w-1.5 rounded-full bg-[var(--color-muted)]/30 transition-all duration-200 group-hover:bg-[var(--color-muted)] group-data-[active=true]:bg-plasma-lime group-data-[active=true]:shadow-[var(--shadow-glow-lime)]"
                       />
-                      <span className="font-mono text-xs tracking-widest text-[var(--color-plasma-lime)]/70 transition-colors duration-200 group-data-[active=true]:text-[var(--color-plasma-lime)]">
+                      <span className="font-mono text-xs tracking-widest text-plasma-lime/70 transition-colors duration-200 group-data-[active=true]:text-plasma-lime">
                         {it.index}
                       </span>
                       <span className="font-display text-base md:text-lg">{it.title}</span>
@@ -140,7 +140,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
                 }}
                 aria-labelledby={`${it.anchorId}-title`}
                 className={`flex scroll-mt-[clamp(6rem,12vh,9rem)] flex-col justify-start gap-6 py-12 md:gap-7 md:py-24 ${
-                  i > 0 ? 'border-t border-[var(--color-border)]' : ''
+                  i > 0 ? 'border-t border-border' : ''
                 }`}
                 {...dataAttrs}
               >

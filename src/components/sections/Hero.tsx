@@ -39,11 +39,11 @@ export default function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative min-h-[100svh] w-full overflow-hidden"
+      className="relative min-h-svh w-full overflow-hidden"
     >
       <div className="absolute inset-0">
         <WebGLErrorBoundary fallback={<StaticGradientFallback />}>
-          <Suspense fallback={<div className="absolute inset-0 bg-[var(--color-bg)]" />}>
+          <Suspense fallback={<div className="absolute inset-0 bg-bg" />}>
             <LiquidGradientMesh scrollTriggerId="hero" />
           </Suspense>
         </WebGLErrorBoundary>
@@ -51,28 +51,28 @@ export default function Hero() {
 
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_60%,rgba(5,5,7,0.25)_0%,rgba(5,5,7,0.65)_70%,rgba(5,5,7,0.92)_100%)]" />
 
-      <div className="relative z-10 flex min-h-[100svh] flex-col justify-between gap-10 px-6 pb-10 pt-24 md:gap-12 md:px-10 md:pb-16 md:pt-32">
+      <div className="relative z-10 flex min-h-svh flex-col justify-between gap-10 px-6 pb-10 pt-24 md:gap-12 md:px-10 md:pb-16 md:pt-32">
         <div ref={eyebrowRef} className="glass glass-pill tag inline-flex w-fit items-center gap-3">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-plasma-lime)] glow-lime" />
+          <span className="inline-block h-1.5 w-1.5 rounded-full bg-plasma-lime glow-lime" />
           <span>{t('hero.eyebrow')}</span>
         </div>
 
-        <div className="max-w-[1600px]">
+        <div className="max-w-400">
           <h1
             ref={headlineRef}
             lang={i18n.language}
-            className="font-display text-display-lg md:text-display-xl text-[var(--color-fg)] [hyphens:auto]"
+            className="font-display text-display-lg md:text-display-xl text-fg [hyphens:auto]"
           >
             {t('hero.headline')}
           </h1>
-          <p ref={subRef} className="lead mt-6 max-w-2xl text-[var(--color-fg)]/85 md:mt-8">
+          <p ref={subRef} className="lead mt-6 max-w-2xl text-fg/85 md:mt-8">
             {t('hero.sub')}
           </p>
           <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3 md:mt-10 md:gap-4">
             <a
               href="#work"
               onClick={onCta('work')}
-              className="inline-flex items-center gap-3 rounded-full bg-[var(--color-plasma-lime)] px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-bg)] transition-transform duration-300 hover:scale-[1.03] md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
+              className="inline-flex items-center gap-3 rounded-full bg-plasma-lime px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-bg transition-transform duration-300 hover:scale-[1.03] md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
             >
               <span>{t('hero.ctaWork')}</span>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -82,7 +82,7 @@ export default function Hero() {
             <a
               href="#contact"
               onClick={onCta('contact')}
-              className="inline-flex items-center gap-3 rounded-full border border-[var(--color-border-strong)] px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg)] transition-colors duration-300 hover:border-[var(--color-plasma-lime)] hover:text-[var(--color-plasma-lime)] md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
+              className="inline-flex items-center gap-3 rounded-full border border-border-strong px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-fg transition-colors duration-300 hover:border-plasma-lime hover:text-plasma-lime md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
             >
               {t('hero.ctaContact')}
             </a>
@@ -95,7 +95,7 @@ export default function Hero() {
             <div className="glass glass-pill tag">{t('hero.metaLocation')}</div>
           </div>
           <div className="flex justify-center">
-            <div className="tag inline-flex items-center gap-2 text-[var(--color-muted)]">
+            <div className="tag inline-flex items-center gap-2 text-muted">
               <span>{t('hero.scroll')}</span>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className="animate-bounce">
                 <path d="M7 1v12m0 0L1 7m6 6l6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

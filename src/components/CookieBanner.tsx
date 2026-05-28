@@ -49,7 +49,7 @@ export default function CookieBanner() {
                 setConsent("accepted");
                 setVisible(false);
               }}
-              className="rounded-full bg-white px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-bg)] transition-transform hover:-translate-y-0.5"
+              className="rounded-full bg-white px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-bg transition-transform hover:-translate-y-0.5"
             >
               {t("consent.accept")}
             </button>

@@ -123,7 +123,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
       aria-live="polite"
       aria-busy="true"
       aria-label={t('loader.label')}
-      className="fixed inset-0 z-[110] overflow-hidden bg-[var(--color-bg)]"
+      className="fixed inset-0 z-110 overflow-hidden bg-bg"
     >
       {/* Breathing plasma glow */}
       <div
@@ -142,8 +142,8 @@ export default function Loader({ onDone }: { onDone: () => void }) {
       {/* Top-left: status chip */}
       <div ref={topLeftRef} className="absolute left-6 top-6 md:left-10 md:top-10" style={{ opacity: 0 }}>
         <div className="glass glass-pill tag inline-flex items-center gap-3">
-          <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-plasma-lime)] glow-lime">
-            <span className="absolute inset-0 animate-ping rounded-full bg-[var(--color-plasma-lime)] opacity-60" />
+          <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-plasma-lime glow-lime">
+            <span className="absolute inset-0 animate-ping rounded-full bg-plasma-lime opacity-60" />
           </span>
           <span>{t('loader.label')}</span>
         </div>
@@ -211,9 +211,9 @@ export default function Loader({ onDone }: { onDone: () => void }) {
           </div>
 
           {/* Counter */}
-          <div className="absolute left-1/2 top-full mt-8 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.3em] text-[var(--color-muted)]">
+          <div className="absolute left-1/2 top-full mt-8 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.3em] text-muted">
             <span ref={counterRef}>000</span>
-            <span className="text-[var(--color-muted-2)]">/100</span>
+            <span className="text-muted-2">/100</span>
           </div>
         </div>
       </div>
@@ -224,7 +224,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         className="absolute bottom-6 left-1/2 -translate-x-1/2 md:bottom-10"
         style={{ opacity: 0 }}
       >
-        <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-[var(--color-muted-2)]">
+        <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-2">
           {t('loader.composing')} · WEBGL · GSAP · LENIS
         </div>
       </div>

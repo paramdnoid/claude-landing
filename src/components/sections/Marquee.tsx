@@ -32,16 +32,16 @@ export default function Marquee() {
   const items = [...TOOLS, ...TOOLS];
 
   return (
-    <section id="stack" className="relative overflow-hidden border-y border-[var(--color-border)] py-10 md:py-16">
-      <div className="mx-auto mb-6 max-w-[1600px] px-6 md:px-10">
+    <section id="stack" className="relative overflow-hidden border-y border-border py-10 md:py-16">
+      <div className="mx-auto mb-6 max-w-400 px-6 md:px-10">
         <div className="tag">{t('marquee.eyebrow')}</div>
       </div>
       <div className="relative w-full overflow-hidden">
         <div ref={trackRef} className="flex w-max items-center gap-12 whitespace-nowrap will-change-transform md:gap-20">
           {items.map((label, i) => (
             <div key={i} className="flex items-center gap-12 md:gap-20">
-              <span className="font-display text-5xl text-[var(--color-fg)]/70 md:text-7xl">{label}</span>
-              <span className="inline-block h-2 w-2 rotate-45 bg-[var(--color-plasma-lime)]" />
+              <span className="font-display text-5xl text-fg/70 md:text-7xl">{label}</span>
+              <span className="inline-block h-2 w-2 rotate-45 bg-plasma-lime" />
             </div>
           ))}
         </div>

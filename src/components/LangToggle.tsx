@@ -38,7 +38,7 @@ export default function LangToggle() {
             aria-pressed={active}
             className={`rounded-full px-2.5 py-1 transition-colors ${
               active
-                ? 'bg-white text-[var(--color-bg)]'
+                ? 'bg-white text-bg'
                 : 'text-muted hover:text-white'
             }`}
           >

@@ -74,12 +74,12 @@ export default function Header() {
   const navLink = (id: NavId, label: string) => {
     const isActive = isHome && active === id;
     const cls = `relative transition-colors duration-300 ${
-      isActive ? 'text-[var(--color-fg)]' : 'text-[var(--color-muted)] hover:text-[var(--color-fg)]'
+      isActive ? 'text-fg' : 'text-muted hover:text-fg'
     }`;
     const indicator = isActive && (
       <span
         aria-hidden="true"
-        className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[var(--color-plasma-lime)] glow-lime"
+        className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-plasma-lime glow-lime"
       />
     );
     return isHome ? (
@@ -102,11 +102,11 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
         scrolled
-          ? 'border-b border-[var(--color-border)] bg-[var(--color-bg)]/75 backdrop-blur-xl'
+          ? 'border-b border-border bg-bg/75 backdrop-blur-xl'
           : 'border-b border-transparent'
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 md:px-10">
+      <div className="mx-auto flex h-16 max-w-400 items-center justify-between px-6 md:px-10">
         <Link to={homePath} className="group flex items-center gap-3" aria-label={t('nav.brandLabel')}>
           <BrandMark variant="header" />
         </Link>
@@ -125,12 +125,12 @@ export default function Header() {
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[var(--color-fg)] md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-fg md:hidden"
           >
             <span aria-hidden="true" className="relative flex h-3 w-4 flex-col justify-between">
-              <span className={`block h-0.5 w-full bg-current transition-transform duration-300 ${menuOpen ? 'translate-y-[5px] rotate-45' : ''}`} />
+              <span className={`block h-0.5 w-full bg-current transition-transform duration-300 ${menuOpen ? 'translate-y-1.25 rotate-45' : ''}`} />
               <span className={`block h-0.5 w-full bg-current transition-opacity duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`block h-0.5 w-full bg-current transition-transform duration-300 ${menuOpen ? '-translate-y-[5px] -rotate-45' : ''}`} />
+              <span className={`block h-0.5 w-full bg-current transition-transform duration-300 ${menuOpen ? '-translate-y-1.25 -rotate-45' : ''}`} />
             </span>
           </button>
         </div>
@@ -140,7 +140,7 @@ export default function Header() {
         aria-label={t('nav.menu')}
         aria-hidden={!menuOpen}
         inert={!menuOpen || undefined}
-        className={`md:hidden grid border-b border-[var(--color-border)] bg-[var(--color-bg)]/90 backdrop-blur-xl transition-[grid-template-rows,opacity] duration-300 ${menuOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+        className={`md:hidden grid border-b border-border bg-bg/90 backdrop-blur-xl transition-[grid-template-rows,opacity] duration-300 ${menuOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="min-h-0 overflow-hidden">
           <ul className="flex flex-col gap-1 px-6 py-4 font-mono text-sm uppercase tracking-[0.18em]">
@@ -149,13 +149,13 @@ export default function Header() {
                 {isHome ? (
                   <a
                     href={`#${id}`}
-                    className="block py-2 text-[var(--color-fg)]"
+                    className="block py-2 text-fg"
                     onClick={(e) => onAnchorClick(e, id)}
                   >
                     {t(`nav.${id}`)}
                   </a>
                 ) : (
-                  <Link to={`${homePath}#${id}`} className="block py-2 text-[var(--color-fg)]">
+                  <Link to={`${homePath}#${id}`} className="block py-2 text-fg">
                     {t(`nav.${id}`)}
                   </Link>
                 )}

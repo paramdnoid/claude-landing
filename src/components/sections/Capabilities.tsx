@@ -103,7 +103,7 @@ export default function Capabilities() {
       )}
       renderArticleBody={(it) => (
         <>
-          <span className="font-mono text-xs uppercase tracking-widest text-[var(--color-plasma-lime)]">
+          <span className="font-mono text-xs uppercase tracking-widest text-plasma-lime">
             {it.index}
           </span>
           <h3 id={`${it.anchorId}-title`} className="font-display text-display-md">
@@ -112,12 +112,12 @@ export default function Capabilities() {
           <p className="lead max-w-[60ch]">{it.body}</p>
           <ul
             role="list"
-            className="flex flex-wrap items-center gap-x-2 gap-y-2 font-mono text-xs uppercase tracking-widest text-[var(--color-muted)]"
+            className="flex flex-wrap items-center gap-x-2 gap-y-2 font-mono text-xs uppercase tracking-widest text-muted"
           >
             {it.tags.map((tag) => (
               <li
                 key={tag}
-                className="before:mr-2 before:text-[var(--color-muted)]/40 before:content-['·'] first:before:hidden"
+                className="before:mr-2 before:text-muted/40 before:content-['·'] first:before:hidden"
               >
                 {tag}
               </li>
@@ -127,7 +127,7 @@ export default function Capabilities() {
             href="#contact"
             onClick={(e) => handleAnchorClick(e, 'contact')}
             aria-label={`${itemCtaLabel} — ${it.title}`}
-            className="group mt-2 inline-flex w-fit items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--color-plasma-lime)] transition-opacity duration-200 hover:opacity-80"
+            className="group mt-2 inline-flex w-fit items-center gap-2 font-mono text-xs uppercase tracking-widest text-plasma-lime transition-opacity duration-200 hover:opacity-80"
           >
             <span>{itemCtaLabel}</span>
             <span

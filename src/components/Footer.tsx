@@ -1,10 +1,11 @@
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { isLang } from '../lib/lang';
 
 export default function Footer() {
   const { t } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
-  const locale = lang ?? 'de';
+  const locale = isLang(lang) ? lang : 'de';
   const year = new Date().getFullYear();
 
   return (

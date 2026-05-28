@@ -1,28 +1,25 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-
-const LANGS = ['de', 'en'] as const;
-type Lang = (typeof LANGS)[number];
+import { SUPPORTED_LANGS, isLang, resolveLang, type Lang } from '../lib/lang';
 
 export default function LangToggle() {
   const { i18n, t } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const navigate = useNavigate();
   const { pathname, search, hash } = useLocation();
-  const current: Lang = i18n.language.startsWith('en') ? 'en' : 'de';
+  const current: Lang = resolveLang(i18n.language);
 
   const switchTo = (next: Lang) => {
     if (next === current && lang === next) return;
     void i18n.changeLanguage(next);
 
     const segments = pathname.split('/').filter(Boolean);
-    if (segments.length > 0 && (segments[0] === 'de' || segments[0] === 'en')) {
+    if (isLang(segments[0])) {
       segments[0] = next;
     } else {
       segments.unshift(next);
     }
-    const newPath = `/${segments.join('/')}`;
-    navigate(`${newPath}${search}${hash}`, { replace: true });
+    navigate(`/${segments.join('/')}${search}${hash}`, { replace: true });
   };
 
   return (
@@ -31,7 +28,7 @@ export default function LangToggle() {
       aria-label={t('nav.language')}
       className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-1 py-1 font-mono text-xs uppercase tracking-widest backdrop-blur"
     >
-      {LANGS.map((lng) => {
+      {SUPPORTED_LANGS.map((lng) => {
         const active = current === lng;
         return (
           <button

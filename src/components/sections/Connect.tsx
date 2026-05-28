@@ -8,7 +8,8 @@ import {
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { sendChat, isLiveBackend, type ChatMessage } from '../../lib/chatBackend';
-import { prefersReducedMotion, revealWordsOnScroll } from '../../lib/animations';
+import { prefersReducedMotion, revealWordsOnScroll } from "../../lib/animations";
+import { resolveLang } from "../../lib/lang";
 import { useMagnet } from '../../lib/useMagnet';
 
 type ChatStatus = 'idle' | 'streaming' | 'error' | 'stopped';
@@ -30,7 +31,7 @@ const SOCIALS = {
 
 export default function Connect() {
   const { t, i18n } = useTranslation();
-  const lang: 'de' | 'en' = i18n.language.startsWith('en') ? 'en' : 'de';
+  const lang = resolveLang(i18n.language);
 
   // Chat state
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -51,7 +52,6 @@ export default function Connect() {
   const logRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const successRef = useRef<HTMLParagraphElement>(null);
@@ -395,7 +395,6 @@ export default function Connect() {
                 {formIsOpen && (
                   <div className="mt-4 border-l-2 border-[var(--color-plasma-lime)] pl-4">
                     <form
-                      ref={formRef}
                       onSubmit={handleFormSubmit}
                       noValidate
                       className="flex flex-col gap-3"

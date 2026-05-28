@@ -13,7 +13,6 @@ type RawCase = {
 
 type Case = RawCase & {
   palette: [string, string];
-  href?: string;
   thumb?: string;
 };
 
@@ -48,7 +47,6 @@ export default function SelectedWork() {
         ...c,
         palette: PALETTES[c.index] ?? FALLBACK_PALETTE,
         thumb: THUMBS[c.index],
-        href: undefined,
       })),
     [rawCases],
   );
@@ -105,11 +103,9 @@ export default function SelectedWork() {
                     <div className="tag !text-white/70 mb-3">{c.tag}</div>
                     <h3 className="font-display text-4xl text-white md:text-6xl">{c.title}</h3>
                     <p className="mt-2 text-sm text-white/70 md:text-base">{c.blurb}</p>
-                    {c.href === undefined ? (
-                      <div className="tag !text-white/40 border border-white/15 mt-3 inline-block rounded-full px-3 py-1">
-                        {t('work.onRequest')}
-                      </div>
-                    ) : null}
+                    <div className="tag !text-white/40 border border-white/15 mt-3 inline-block rounded-full px-3 py-1">
+                      {t("work.onRequest")}
+                    </div>
                   </div>
                 </div>
               </>
@@ -135,18 +131,7 @@ export default function SelectedWork() {
 
                 {/* Content area */}
                 <div className="relative flex-1 overflow-hidden" style={cardStyle}>
-                  {c.href ? (
-                    <a
-                      href={c.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block h-full"
-                    >
-                      {contentInner}
-                    </a>
-                  ) : (
-                    contentInner
-                  )}
+                  {contentInner}
                 </div>
               </article>
             );

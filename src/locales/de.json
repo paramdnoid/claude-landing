@@ -86,23 +86,91 @@
     "intro": "Engineering und Design als eine Praxis — ich gehe ohne Übergaben von der Recherche bis zur Produktion.",
     "miniIndexLabel": "Leistungsbereiche",
     "items": [
-      { "slug": "ai-engineering", "index": "01", "title": "AI Engineering", "body": "Agenten, RAG-Systeme, Evals und produktionsreife LLM-Pipelines mit Claude, GPT und Open-Source-Modellen.", "tags": ["RAG", "Agents", "Evals", "Claude", "GPT", "Open-Source"] },
-      { "slug": "creative-coding", "index": "02", "title": "Creative Coding", "body": "WebGL, Shader, generative Grafik und Motion-Systeme — performant, ausdrucksstark, eigenständig.", "tags": ["WebGL", "GLSL", "Three.js", "GSAP", "Motion"] },
-      { "slug": "concept-strategy", "index": "03", "title": "Konzept & Strategie", "body": "Von der ersten Idee zum funktionierenden Prototyp — Naming, Narrativ, Systemdenken, Produkt-Framing.", "tags": ["Naming", "Narrativ", "Systemdenken", "Produkt-Framing"] },
-      { "slug": "interaction-design", "index": "04", "title": "Interaction Design", "body": "Interfaces, die antworten, atmen, sich intentional anfühlen. Detailbesessene Mikrointeraktionen und Motion.", "tags": ["Micro-Interactions", "Motion Design", "Prototyping", "Detail-Craft"] }
+      {
+        "slug": "ai-engineering",
+        "index": "01",
+        "title": "AI Engineering",
+        "body": "Agenten, RAG-Systeme, Evals und produktionsreife LLM-Pipelines mit Claude, GPT und Open-Source-Modellen.",
+        "tags": [
+          "RAG",
+          "Agents",
+          "Evals",
+          "Claude",
+          "GPT",
+          "Open-Source"
+        ]
+      },
+      {
+        "slug": "creative-coding",
+        "index": "02",
+        "title": "Creative Coding",
+        "body": "WebGL, Shader, generative Grafik und Motion-Systeme — performant, ausdrucksstark, eigenständig.",
+        "tags": [
+          "WebGL",
+          "GLSL",
+          "Three.js",
+          "GSAP",
+          "Motion"
+        ]
+      },
+      {
+        "slug": "concept-strategy",
+        "index": "03",
+        "title": "Konzept & Strategie",
+        "body": "Von der ersten Idee zum funktionierenden Prototyp — Naming, Narrativ, Systemdenken, Produkt-Framing.",
+        "tags": [
+          "Naming",
+          "Narrativ",
+          "Systemdenken",
+          "Produkt-Framing"
+        ]
+      },
+      {
+        "slug": "interaction-design",
+        "index": "04",
+        "title": "Interaction Design",
+        "body": "Interfaces, die antworten, atmen, sich intentional anfühlen. Detailbesessene Mikrointeraktionen und Motion.",
+        "tags": [
+          "Micro-Interactions",
+          "Motion Design",
+          "Prototyping",
+          "Detail-Craft"
+        ]
+      }
     ],
-    "itemCta": { "label": "Anfragen" },
-    "cta": { "label": "Klingt nach deinem Projekt? Reden wir." }
+    "itemCta": {
+      "label": "Anfragen"
+    },
+    "cta": {
+      "label": "Klingt nach deinem Projekt? Reden wir."
+    }
   },
   "process": {
     "eyebrow": "Prozess · 05",
     "title": "Wie ich arbeite.",
     "steps": [
-      { "index": "01", "title": "Verstehen", "body": "Wir starten bei der echten Frage — nicht beim Deliverable. Ich gehe in Problem, Kontext und beteiligte Menschen rein." },
-      { "index": "02", "title": "Skizzieren", "body": "Funktionierende Prototypen in Tagen, nicht Wochen. Ich baue im Browser, im Code, mit echten Daten — nie in Slides." },
-      { "index": "03", "title": "Schärfen", "body": "Iteration gegen die Realität. Echte Nutzer, echte Performance-Budgets, echte Tradeoffs. Streichen, was nichts verdient." },
-      { "index": "04", "title": "Liefern", "body": "Production-grade Handwerk ab Tag 1. Danach: pflegen, messen, weiterentwickeln. Software ist Beziehung, nicht Übergabe." }
-    ]
+      {
+        "index": "01",
+        "title": "Verstehen",
+        "body": "Wir starten bei der echten Frage — nicht beim Deliverable. Ich gehe in Problem, Kontext und beteiligte Menschen rein."
+      },
+      {
+        "index": "02",
+        "title": "Skizzieren",
+        "body": "Funktionierende Prototypen in Tagen, nicht Wochen. Ich baue im Browser, im Code, mit echten Daten — nie in Slides."
+      },
+      {
+        "index": "03",
+        "title": "Schärfen",
+        "body": "Iteration gegen die Realität. Echte Nutzer, echte Performance-Budgets, echte Tradeoffs. Streichen, was nichts verdient."
+      },
+      {
+        "index": "04",
+        "title": "Liefern",
+        "body": "Production-grade Handwerk ab Tag 1. Danach: pflegen, messen, weiterentwickeln. Software ist Beziehung, nicht Übergabe."
+      }
+    ],
+    "intro": "Vier Phasen, kein Wasserfall — iterativ, direkt, lieferbar von Woche eins an."
   },
   "connect": {
     "eyebrow": "Verbinden · 06",
@@ -111,7 +179,6 @@
     "inlineFormPrompt": "Lass mir deine E-Mail und das Wesentliche da — ich melde mich innerhalb von 24 Stunden.",
     "directHeading": "Oder direkt schreiben",
     "skipChat": "Chat überspringen",
-    "chromeTitle": "andre@zian — chat",
     "formNamePlaceholderInline": "dein Name (optional)",
     "formEmailPlaceholderInline": "du@example.com",
     "formMessagePlaceholderInline": "was beschäftigt dich?",
@@ -119,9 +186,6 @@
     "formCancelInline": "abbrechen"
   },
   "aiDemo": {
-    "eyebrow": "KI-Demo · 04",
-    "title": "Intelligenz erleben.",
-    "intro": "Stell mir eine Frage. Ich beantworte sie direkt — kein Formular, kein Warteraum.",
     "placeholder": "Stell mir eine Frage…",
     "suggestions": [
       "Was macht ZIAN AI CONCEPTS?",
@@ -142,7 +206,6 @@
     },
     "disclaimer": "Fragen werden lokal verarbeitet und nicht gespeichert.",
     "liveDisclaimer": "Prompts werden direkt an den Ollama-Endpunkt gesendet, niemals an Dritte.",
-    "modelLabel": "Modell",
     "poweredBy": "Betrieben von Ollama",
     "demoMode": "Demo-Modus",
     "mock": {
@@ -159,7 +222,6 @@
     "eyebrow": "Werkzeuge in Bewegung"
   },
   "contact": {
-    "eyebrow": "Kontakt · 06",
     "title": "Lass uns etwas bauen, das mitdenkt.",
     "email": "hello@andrezimmermann.dev",
     "socials": "Folge mir",
@@ -169,12 +231,8 @@
     "opensInNewTab": "öffnet in neuem Tab",
     "form": {
       "name": "Name",
-      "namePlaceholder": "Dein Name",
       "email": "E-Mail",
-      "emailPlaceholder": "deine@email.com",
       "message": "Nachricht",
-      "messagePlaceholder": "Womit kann ich dir helfen?",
-      "send": "Nachricht senden",
       "sending": "Wird gesendet…",
       "successTitle": "Danke, {{name}}!",
       "successBody": "Ich melde mich in der Regel innerhalb von 24 Stunden.",

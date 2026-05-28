@@ -13,13 +13,7 @@ import Loader from './components/Loader';
 import i18n from './lib/i18n';
 import { destroySmoothScroll, getLenis, initSmoothScroll } from './lib/smoothScroll';
 import { initAnalytics } from './lib/analytics';
-
-const SUPPORTED_LANGS = ['de', 'en'] as const;
-type Lang = (typeof SUPPORTED_LANGS)[number];
-
-function isLang(value: string | undefined): value is Lang {
-  return value === 'de' || value === 'en';
-}
+import { isLang, resolveLang } from './lib/lang';
 
 function ScrollRefresh({ ready }: { ready: boolean }) {
   const { pathname } = useLocation();
@@ -51,9 +45,9 @@ function ScrollRefresh({ ready }: { ready: boolean }) {
 
 function RootRedirect() {
   const stored = typeof window !== 'undefined' ? window.localStorage.getItem('zian.lang') : null;
-  const browserLang: Lang =
-    typeof navigator !== 'undefined' && navigator.language.toLowerCase().startsWith('en') ? 'en' : 'de';
-  const lang: Lang = isLang(stored ?? undefined) ? (stored as Lang) : browserLang;
+  const lang = isLang(stored)
+    ? stored
+    : resolveLang(typeof navigator !== 'undefined' ? navigator.language : null);
   return <Navigate to={`/${lang}`} replace />;
 }
 

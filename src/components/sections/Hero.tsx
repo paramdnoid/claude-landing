@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '../../lib/gsap';
 import { splitText, prefersReducedMotion } from '../../lib/animations';
+import { scrollToSection } from '../../lib/scrollToSection';
 import WebGLErrorBoundary from '../webgl/WebGLErrorBoundary';
 import StaticGradientFallback from '../webgl/StaticGradientFallback';
 
@@ -31,11 +32,7 @@ export default function Hero() {
 
   const onCta = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const target = document.getElementById(id);
-    if (!target) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-    history.replaceState(null, '', `#${id}`);
+    scrollToSection(id);
   };
 
   return (

@@ -2,7 +2,7 @@
  * Chat backend abstraction.
  *
  * Currently runs in mock mode (returns canned answers).
- * When VITE_OLLAMA_URL is set, it will POST to the Ollama /api/chat endpoint
+ * When VITE_OLLAMA_ENDPOINT is set, it will POST to the Ollama /api/chat endpoint
  * and stream a real response.
  *
  * Frontend stays the same — only the implementation switches.

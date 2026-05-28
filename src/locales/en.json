@@ -86,23 +86,91 @@
     "intro": "Engineering and design rolled into one practice — I move from research to production without handoffs.",
     "miniIndexLabel": "Capability areas",
     "items": [
-      { "slug": "ai-engineering", "index": "01", "title": "AI engineering", "body": "Agents, RAG systems, evals, and production LLM pipelines built with Claude, GPT and open models.", "tags": ["RAG", "Agents", "Evals", "Claude", "GPT", "Open-Source"] },
-      { "slug": "creative-coding", "index": "02", "title": "Creative coding", "body": "WebGL, shaders, generative graphics and motion systems — performant, expressive, original.", "tags": ["WebGL", "GLSL", "Three.js", "GSAP", "Motion"] },
-      { "slug": "concept-strategy", "index": "03", "title": "Concept & strategy", "body": "From first idea to working prototype — naming, narrative, system thinking and product framing.", "tags": ["Naming", "Narrative", "System Thinking", "Product Framing"] },
-      { "slug": "interaction-design", "index": "04", "title": "Interaction design", "body": "Interfaces that respond, breathe, and feel intentional. Detail-obsessed micro-interactions and motion craft.", "tags": ["Micro-Interactions", "Motion Design", "Prototyping", "Detail-Craft"] }
+      {
+        "slug": "ai-engineering",
+        "index": "01",
+        "title": "AI engineering",
+        "body": "Agents, RAG systems, evals, and production LLM pipelines built with Claude, GPT and open models.",
+        "tags": [
+          "RAG",
+          "Agents",
+          "Evals",
+          "Claude",
+          "GPT",
+          "Open-Source"
+        ]
+      },
+      {
+        "slug": "creative-coding",
+        "index": "02",
+        "title": "Creative coding",
+        "body": "WebGL, shaders, generative graphics and motion systems — performant, expressive, original.",
+        "tags": [
+          "WebGL",
+          "GLSL",
+          "Three.js",
+          "GSAP",
+          "Motion"
+        ]
+      },
+      {
+        "slug": "concept-strategy",
+        "index": "03",
+        "title": "Concept & strategy",
+        "body": "From first idea to working prototype — naming, narrative, system thinking and product framing.",
+        "tags": [
+          "Naming",
+          "Narrative",
+          "System Thinking",
+          "Product Framing"
+        ]
+      },
+      {
+        "slug": "interaction-design",
+        "index": "04",
+        "title": "Interaction design",
+        "body": "Interfaces that respond, breathe, and feel intentional. Detail-obsessed micro-interactions and motion craft.",
+        "tags": [
+          "Micro-Interactions",
+          "Motion Design",
+          "Prototyping",
+          "Detail-Craft"
+        ]
+      }
     ],
-    "itemCta": { "label": "Get in touch" },
-    "cta": { "label": "Sounds like your project? Let's talk." }
+    "itemCta": {
+      "label": "Get in touch"
+    },
+    "cta": {
+      "label": "Sounds like your project? Let's talk."
+    }
   },
   "process": {
     "eyebrow": "Process · 05",
     "title": "How I work.",
     "steps": [
-      { "index": "01", "title": "Frame", "body": "We start with the real question — not the deliverable. I dig into the problem, the constraints and the people involved." },
-      { "index": "02", "title": "Sketch", "body": "Working prototypes within days, not weeks. I build in the browser, in code, with real data — never in slides." },
-      { "index": "03", "title": "Sharpen", "body": "Iterate against reality. Real users, real performance budgets, real tradeoffs. Cut everything that doesn't earn its place." },
-      { "index": "04", "title": "Ship", "body": "Production-grade craft from day one. Then maintain, measure, evolve. Software is a relationship, not a delivery." }
-    ]
+      {
+        "index": "01",
+        "title": "Frame",
+        "body": "We start with the real question — not the deliverable. I dig into the problem, the constraints and the people involved."
+      },
+      {
+        "index": "02",
+        "title": "Sketch",
+        "body": "Working prototypes within days, not weeks. I build in the browser, in code, with real data — never in slides."
+      },
+      {
+        "index": "03",
+        "title": "Sharpen",
+        "body": "Iterate against reality. Real users, real performance budgets, real tradeoffs. Cut everything that doesn't earn its place."
+      },
+      {
+        "index": "04",
+        "title": "Ship",
+        "body": "Production-grade craft from day one. Then maintain, measure, evolve. Software is a relationship, not a delivery."
+      }
+    ],
+    "intro": "Four phases, no waterfall — iterative, direct, shippable from week one."
   },
   "connect": {
     "eyebrow": "Connect · 06",
@@ -111,7 +179,6 @@
     "inlineFormPrompt": "Drop your email and the gist — I'll get back to you within 24 hours.",
     "directHeading": "Or write directly",
     "skipChat": "Skip the chat",
-    "chromeTitle": "andre@zian — chat",
     "formNamePlaceholderInline": "your name (optional)",
     "formEmailPlaceholderInline": "you@example.com",
     "formMessagePlaceholderInline": "what's on your mind?",
@@ -119,9 +186,6 @@
     "formCancelInline": "cancel"
   },
   "aiDemo": {
-    "eyebrow": "AI Demo · 04",
-    "title": "Experience intelligence.",
-    "intro": "Ask me anything. I answer directly — no form, no waiting room.",
     "placeholder": "Ask me anything…",
     "suggestions": [
       "What does ZIAN AI CONCEPTS do?",
@@ -142,7 +206,6 @@
     },
     "disclaimer": "Questions are processed locally and never stored.",
     "liveDisclaimer": "Prompts are sent directly to the Ollama endpoint, never to third parties.",
-    "modelLabel": "Model",
     "poweredBy": "Powered by Ollama",
     "demoMode": "Demo mode",
     "mock": {
@@ -159,7 +222,6 @@
     "eyebrow": "Tools in motion"
   },
   "contact": {
-    "eyebrow": "Get in touch · 06",
     "title": "Let's make something that thinks.",
     "email": "hello@andrezimmermann.dev",
     "socials": "Find me",
@@ -169,12 +231,8 @@
     "opensInNewTab": "opens in new tab",
     "form": {
       "name": "Name",
-      "namePlaceholder": "Your name",
       "email": "Email",
-      "emailPlaceholder": "you@example.com",
       "message": "Message",
-      "messagePlaceholder": "How can I help you?",
-      "send": "Send message",
       "sending": "Sending…",
       "successTitle": "Thanks, {{name}}!",
       "successBody": "I typically respond within 24 hours.",

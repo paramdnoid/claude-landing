@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LangToggle from './LangToggle';
-import { getLenis } from '../lib/smoothScroll';
+import { scrollToSection } from '../lib/scrollToSection';
 
 const NAV_IDS = ['manifesto', 'work', 'capabilities', 'process', 'contact'] as const;
 type NavId = (typeof NAV_IDS)[number];
@@ -64,17 +64,9 @@ export default function Header() {
     return () => observer.disconnect();
   }, [isHome]);
 
-  const scrollToId = (id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const lenis = reduced ? null : getLenis();
-    if (lenis) {
-      lenis.scrollTo(target, { offset: -64, duration: 1.2 });
-    } else {
-      target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-    }
-    history.replaceState(null, '', `#${id}`);
+  const onAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, id: NavId) => {
+    e.preventDefault();
+    scrollToSection(id);
     setMenuOpen(false);
   };
 
@@ -94,7 +86,7 @@ export default function Header() {
         href={`#${id}`}
         className={cls}
         aria-current={isActive ? 'true' : undefined}
-        onClick={(e) => { e.preventDefault(); scrollToId(id); }}
+        onClick={(e) => onAnchorClick(e, id)}
       >
         <span className="relative">{label}{indicator}</span>
       </a>
@@ -169,7 +161,7 @@ export default function Header() {
                   <a
                     href={`#${id}`}
                     className="block py-2 text-[var(--color-fg)]"
-                    onClick={(e) => { e.preventDefault(); scrollToId(id); }}
+                    onClick={(e) => onAnchorClick(e, id)}
                   >
                     {t(`nav.${id}`)}
                   </a>

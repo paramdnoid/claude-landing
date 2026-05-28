@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '../../lib/gsap';
 import { prefersReducedMotion } from '../../lib/animations';
-import { getLenis } from '../../lib/smoothScroll';
+import { scrollToSection } from '../../lib/scrollToSection';
 
 type Capability = {
   slug: string;
@@ -12,8 +12,6 @@ type Capability = {
   body: string;
   tags: string[];
 };
-
-const HEADER_OFFSET = -64;
 
 export default function Capabilities() {
   const { t } = useTranslation();
@@ -99,16 +97,8 @@ export default function Capabilities() {
   }, [items.length]);
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
     e.preventDefault();
-    const lenis = getLenis();
-    if (lenis) {
-      lenis.scrollTo(target, { offset: HEADER_OFFSET, duration: 1.0 });
-    } else {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    history.replaceState(null, '', `#${id}`);
+    scrollToSection(id, { duration: 1.0 });
   };
 
   return (
@@ -116,7 +106,7 @@ export default function Capabilities() {
       ref={sectionRef}
       id="capabilities"
       aria-labelledby="capabilities-heading"
-      className="relative px-6 py-16 md:px-10 md:py-24"
+      className="relative px-6 pt-16 md:px-10 md:pt-24"
     >
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
         <div className="md:col-span-5 md:sticky md:top-[clamp(6rem,12vh,9rem)] md:self-start">

@@ -17,7 +17,7 @@ export default function Datenschutz() {
       <h1 id="privacy-heading" className="font-display text-4xl text-white md:text-5xl">{t('privacy.title')}</h1>
       <div className="mt-6 flex flex-col gap-4 text-muted">
         {t('privacy.body').split(/\n\n+/).map((para, i) => (
-          <p key={i}>{para}</p>
+          <p key={i} className="whitespace-pre-line">{para}</p>
         ))}
       </div>
     </section>

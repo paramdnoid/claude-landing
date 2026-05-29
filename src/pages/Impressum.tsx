@@ -17,7 +17,7 @@ export default function Impressum() {
       <h1 id="imprint-heading" className="font-display text-4xl text-white md:text-5xl">{t('imprint.title')}</h1>
       <div className="mt-6 flex flex-col gap-4 text-muted">
         {t('imprint.body').split(/\n\n+/).map((para, i) => (
-          <p key={i}>{para}</p>
+          <p key={i} className="whitespace-pre-line">{para}</p>
         ))}
       </div>
     </section>

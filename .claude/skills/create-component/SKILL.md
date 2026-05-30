@@ -3,7 +3,7 @@ name: create-component
 description: "Create or upgrade a Vite/React component with TypeScript, Tailwind, accessibility, i18n, and tests."
 argument-hint: "[ComponentName] [purpose]"
 disable-model-invocation: true
-allowed-tools: "Read Glob Grep Edit Write Agent Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
+allowed-tools: "Read Glob Grep Edit Write Agent Bash(npm run typecheck) Bash(npm run lint) Bash(npm run test) Bash(npm run test -- *) Bash(npm run build)"
 model: sonnet
 effort: high
 ---

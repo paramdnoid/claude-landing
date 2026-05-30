@@ -3,7 +3,7 @@ name: validate-quality
 description: "Run full project quality gates: typecheck, lint, tests, build and E2E where available, then summarize failures and fixes."
 argument-hint: "[optional scope]"
 disable-model-invocation: true
-allowed-tools: "Read Glob Grep Bash(git status *) Bash(git diff *) Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *) Agent"
+allowed-tools: "Read Glob Grep Bash(git status *) Bash(git diff *) Bash(npm run typecheck) Bash(npm run lint) Bash(npm run test) Bash(npm run test -- *) Bash(npm run build) Bash(npm run test:e2e) Bash(npm run test:e2e -- *) Agent"
 model: sonnet
 effort: high
 ---

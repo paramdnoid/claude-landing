@@ -3,7 +3,7 @@ name: i18n-audit
 description: "Audit i18next/react-i18next localization for this Vite/React app: keys, fallbacks, routing, and type safety."
 argument-hint: "[scope]"
 disable-model-invocation: true
-allowed-tools: "Read Glob Grep Agent Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
+allowed-tools: "Read Glob Grep Agent Bash(npm run typecheck) Bash(npm run lint) Bash(npm run test) Bash(npm run test -- *) Bash(npm run build)"
 model: sonnet
 effort: high
 ---

@@ -3,7 +3,7 @@ name: performance-a11y-audit
 description: "Audit frontend performance, accessibility, Core Web Vitals risks, runtime behavior, bundle size, and interaction quality."
 argument-hint: "[scope]"
 disable-model-invocation: true
-allowed-tools: "Read Glob Grep Agent Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
+allowed-tools: "Read Glob Grep Agent Bash(npm run typecheck) Bash(npm run lint) Bash(npm run test) Bash(npm run test -- *) Bash(npm run build)"
 model: sonnet
 effort: high
 ---

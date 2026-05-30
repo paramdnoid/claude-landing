@@ -3,7 +3,7 @@ name: code-review
 description: "Run a senior Vite/React code review over a path, diff, branch, or feature."
 argument-hint: "[scope: path, diff, branch, feature]"
 disable-model-invocation: true
-allowed-tools: "Read Glob Grep Agent Bash(git status *) Bash(git diff *) Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
+allowed-tools: "Read Glob Grep Agent Bash(git status *) Bash(git diff *) Bash(npm run typecheck) Bash(npm run lint) Bash(npm run test) Bash(npm run test -- *) Bash(npm run build)"
 model: sonnet
 effort: high
 ---

@@ -8,10 +8,7 @@ from pathlib import Path
 from typing import Any
 
 SENSITIVE_PATTERNS = [
-    r"(^|/)\.env$",
-    r"(^|/)\.env\.local$",
-    r"(^|/)\.env\..*\.local$",
-    r"(^|/)\.env\.(development|production|test|staging)$",
+    r"(^|/)\.env($|\.)",
     r"(^|/)secrets?(/|$)",
     r"(^|/)credentials?(\.|/|$)",
     r"(^|/)\.aws(/|$)",

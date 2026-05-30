@@ -3,7 +3,7 @@ name: three-audit
 description: "Audit Three.js/WebGL code for lifecycle, disposal, RAF cleanup, resize handling, performance, and Vite/React browser integration."
 argument-hint: "[scope]"
 disable-model-invocation: true
-allowed-tools: "Read Glob Grep Agent Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *)"
+allowed-tools: "Read Glob Grep Agent Bash(npm run typecheck) Bash(npm run lint) Bash(npm run test) Bash(npm run test -- *) Bash(npm run build)"
 model: sonnet
 effort: high
 ---

@@ -9,9 +9,44 @@ from typing import Any
 
 SOURCE_EXTENSIONS = {
     ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs",
-    ".css", ".scss", ".json", ".mdx",
+    ".css", ".scss", ".json", ".mdx", ".html", ".svg",
 }
-SOURCE_NAMES = {"package.json", "next.config.js", "next.config.ts", "tailwind.config.js", "tailwind.config.ts", "tsconfig.json"}
+SOURCE_NAMES = {
+    "package.json",
+    "index.html",
+    "eslint.config.js",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "playwright.config.ts",
+    "next.config.js",
+    "next.config.ts",
+    "tailwind.config.js",
+    "tailwind.config.ts",
+    "tsconfig.json",
+    "tsconfig.app.json",
+    "tsconfig.node.json",
+}
+PUBLIC_ASSET_EXTENSIONS = {
+    ".svg", ".png", ".jpg", ".jpeg", ".webp", ".avif", ".ico",
+    ".woff", ".woff2", ".ttf",
+}
+
+
+def project_relative_path(file_path: str, cwd: Path) -> Path:
+    path = Path(file_path)
+    if not path.is_absolute():
+        return path
+    try:
+        return path.resolve().relative_to(cwd)
+    except ValueError:
+        return path
+
+
+def should_mark_validation(path: Path) -> bool:
+    suffix = path.suffix.lower()
+    if path.name in SOURCE_NAMES or suffix in SOURCE_EXTENSIONS:
+        return True
+    return len(path.parts) > 1 and path.parts[0] == "public" and suffix in PUBLIC_ASSET_EXTENSIONS
 
 
 def main() -> None:
@@ -28,11 +63,11 @@ def main() -> None:
     if not file_path:
         sys.exit(0)
 
-    path = Path(file_path)
-    if path.name not in SOURCE_NAMES and path.suffix.lower() not in SOURCE_EXTENSIONS:
+    cwd = Path(data.get("cwd") or os.environ.get("CLAUDE_PROJECT_DIR") or ".").resolve()
+    path = project_relative_path(file_path, cwd)
+    if not should_mark_validation(path):
         sys.exit(0)
 
-    cwd = Path(data.get("cwd") or os.environ.get("CLAUDE_PROJECT_DIR") or ".").resolve()
     state_dir = cwd / ".claude" / ".state"
     state_dir.mkdir(parents=True, exist_ok=True)
     state_file = state_dir / "validation-needed.json"

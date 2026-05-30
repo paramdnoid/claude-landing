@@ -43,7 +43,7 @@ Bei jeder Abschlussantwort:
 - Props als `type` oder `interface`, exportierte Komponenten mit expliziten Props.
 - `className` Merge mit Projektstandard (`cn`, `clsx`, `tailwind-merge`) nur wenn vorhanden oder sauber eingeführt.
 - Tailwind: Design Tokens bevorzugen; arbitrary values nur begründet.
-- Dateinamen: kebab-case für Komponenten-Dateien, PascalCase für React-Komponenten.
+- Dateinamen: bestehende Projektkonvention beibehalten; React-Komponenten-Dateien aktuell PascalCase, React-Komponenten selbst PascalCase.
 - Tests nahe am Feature oder gemäß bestehender Projektstruktur.
 - Keine globalen Side Effects beim Import, außer ausdrücklich in Framework Entry Points.
 

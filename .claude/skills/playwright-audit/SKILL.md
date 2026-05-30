@@ -3,7 +3,7 @@ name: playwright-audit
 description: "Run a Playwright-focused browser QA audit for E2E, responsive, visual, accessibility, i18n and motion behavior."
 argument-hint: "[scope or user flow]"
 disable-model-invocation: true
-allowed-tools: "Read Glob Grep Agent Bash(git status *) Bash(git diff *) Bash(npm run *) Bash(pnpm *) Bash(yarn *) Bash(bun run *) Bash(npx playwright *) Bash(pnpm exec playwright *) Bash(yarn playwright *)"
+allowed-tools: "Read Glob Grep Agent Bash(git status *) Bash(git diff *) Bash(npm run test:e2e) Bash(npm run test:e2e -- *) Bash(npx playwright test *) Bash(npx playwright show-report*) Bash(npx playwright show-trace*)"
 model: sonnet
 effort: high
 ---

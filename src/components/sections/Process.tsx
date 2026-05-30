@@ -58,7 +58,7 @@ export default function Process() {
       sectionRef={sectionRef}
       headerRef={headerRef}
       className="relative border-t border-border px-6 pt-16 pb-16 md:pt-0 md:px-10 md:pb-24"
-      headerClassName="flex flex-col gap-6 md:pt-24"
+      headerClassName="flex flex-col gap-6"
       renderHeader={() => (
         <>
           <div className="tag">{t('process.eyebrow')}</div>

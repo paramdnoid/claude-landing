@@ -3,6 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { horizontalScroll } from '../../lib/animations';
 import { ScrollTrigger } from '../../lib/gsap';
 import { getLenis } from '../../lib/smoothScroll';
+// vite-imagetools generates AVIF + WebP + JPEG variants at 400/800/1200 wide
+// for each source asset. `?as=picture` returns { sources, img } so we can wire
+// up a `<picture>` element with progressive format negotiation.
+import personalengelPic from '../../assets/work/personalengel.jpg?as=picture&w=400;800;1200&format=avif;webp;jpg';
+import supriumPic from '../../assets/work/suprium.png?as=picture&w=400;800;1200&format=avif;webp;png';
+import fieconPic from '../../assets/work/fiecon.png?as=picture&w=400;800;1200&format=avif;webp;png';
+import lastizunPic from '../../assets/work/lastizun.jpg?as=picture&w=400;800;1200&format=avif;webp;jpg';
+import nanasPic from '../../assets/work/nanas.png?as=picture&w=400;800;1200&format=avif;webp;png';
+
+type Picture = {
+  sources: Record<string, string>;
+  img: { src: string; w: number; h: number };
+};
 
 type RawCase = {
   index: string;
@@ -14,7 +27,7 @@ type RawCase = {
 
 type Case = RawCase & {
   palette: [string, string];
-  thumb?: string;
+  thumb?: Picture;
 };
 
 const PALETTES: Record<string, [string, string]> = {
@@ -25,13 +38,17 @@ const PALETTES: Record<string, [string, string]> = {
   '05': ['#2d1b69', '#8b5cf6'],
 };
 
-const THUMBS: Record<string, string> = {
-  '01': '/work/personalengel.jpg',
-  '02': '/work/suprium.png',
-  '03': '/work/fiecon.png',
-  '04': '/work/lastizun.jpg',
-  '05': '/work/nanas.png',
+const THUMBS: Record<string, Picture> = {
+  '01': personalengelPic,
+  '02': supriumPic,
+  '03': fieconPic,
+  '04': lastizunPic,
+  '05': nanasPic,
 };
+
+// Cards render at 78svw (mobile), 58svw (tablet), 44svw (desktop). The sizes
+// attribute mirrors that so the browser picks the smallest variant that fits.
+const THUMB_SIZES = '(min-width: 1024px) 44vw, (min-width: 768px) 58vw, 78vw';
 
 const FALLBACK_PALETTE: [string, string] = ['#6366f1', '#a3ff12'];
 
@@ -145,13 +162,23 @@ export default function SelectedWork() {
             const contentInner = (
               <>
                 {c.thumb ? (
-                  <img
-                    src={c.thumb}
-                    alt={t('work.casePreviewAlt', { title: c.title })}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover object-top"
-                  />
+                  <picture>
+                    {c.thumb.sources.avif && (
+                      <source type="image/avif" srcSet={c.thumb.sources.avif} sizes={THUMB_SIZES} />
+                    )}
+                    {c.thumb.sources.webp && (
+                      <source type="image/webp" srcSet={c.thumb.sources.webp} sizes={THUMB_SIZES} />
+                    )}
+                    <img
+                      src={c.thumb.img.src}
+                      width={c.thumb.img.w}
+                      height={c.thumb.img.h}
+                      alt={t('work.casePreviewAlt', { title: c.title })}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover object-top"
+                    />
+                  </picture>
                 ) : null}
                 <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,5,7,0.95)_0%,rgba(5,5,7,0.85)_30%,rgba(5,5,7,0.45)_60%,rgba(5,5,7,0.05)_100%)]" />
                 <div

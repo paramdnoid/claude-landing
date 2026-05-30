@@ -9,7 +9,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-SCRIPT_PRIORITY = ["typecheck", "lint", "test:ci", "test", "build", "test:e2e"]
+SCRIPT_PRIORITY = ["typecheck", "lint", "test:ci", "test", "build"]
 PACKAGE_MANAGERS = [
     ("pnpm-lock.yaml", ["pnpm"]),
     ("yarn.lock", ["yarn"]),
@@ -121,13 +121,15 @@ def main() -> None:
             + "\n\nRecent output:\n"
             + combined[-6000:]
         )
-        if repeats <= 4:
-            block(reason)
-        # Avoid infinite blocking loops; still surface the failure.
-        print(json.dumps({
-            "additionalContext": "Quality gate is still failing after repeated attempts. Do not claim success; report the remaining failure honestly."
-        }))
-        sys.exit(0)
+        if repeats > 1:
+            reason = (
+                f"Quality gate is still failing with the same output pattern (repeat {repeats}). "
+                "Fix the failing check before finalizing.\n\n"
+                + "\n".join(failures)
+                + "\n\nRecent output:\n"
+                + combined[-4000:]
+            )
+        block(reason)
 
     needed_file.unlink(missing_ok=True)
     fail_file.unlink(missing_ok=True)

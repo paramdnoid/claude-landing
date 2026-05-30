@@ -4,12 +4,10 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_QUALITY_GATE": "1",
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
-    "CLAUDE_QUALITY_GATE_MAX_SECONDS": "600",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "inherit",
+    "CLAUDE_QUALITY_GATE_MAX_SECONDS": "300",
     "CLAUDE_AGENT_TEAM_PROFILE": "senior-vite-react-tailwind-ts-i18n-three-gsap"
   },
   "teammateMode": "in-process",
-  "skillListingBudgetFraction": 0.02,
   "permissions": {
     "defaultMode": "plan",
     "disableBypassPermissionsMode": "disable",
@@ -18,6 +16,7 @@
       "Glob",
       "Grep",
       "Agent",
+      "WebSearch",
       "WebFetch(domain:react.dev)",
       "WebFetch(domain:nextjs.org)",
       "WebFetch(domain:tailwindcss.com)",
@@ -56,8 +55,6 @@
       "WebFetch(domain:github.com)"
     ],
     "ask": [
-      "WebSearch",
-      "WebFetch",
       "Bash(npm install *)",
       "Bash(npm i *)",
       "Bash(npm uninstall *)",
@@ -203,7 +200,7 @@
             "args": [
               "${CLAUDE_PROJECT_DIR}/.claude/hooks/quality_gate_stop.py"
             ],
-            "timeout": 320
+            "timeout": 360
           }
         ]
       }

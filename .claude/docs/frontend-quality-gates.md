@@ -11,6 +11,14 @@
 7. i18n review for visible copy.
 8. Cleanup review for GSAP/Three.js side effects.
 
+The automatic Stop hook enforces the fast gates above: `typecheck`, `lint`,
+`test:ci` or `test`, and `build`. It intentionally does not run `test:e2e` on
+every completion.
+
+Run `test:e2e` through `/validate-quality`, Playwright/browser QA, or release
+validation whenever work affects routing, forms, locale switching, focus
+behavior, motion, WebGL fallbacks, or other browser-visible flows.
+
 ## Failure Policy
 
 - Do not mark work complete with known failing gates.

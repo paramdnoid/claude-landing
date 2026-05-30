@@ -6,14 +6,14 @@
 2. Confirm or adjust the plan.
 3. `/implement-feature <task>`
 4. `/code-review <scope>`
-5. `/validate-quality`
+5. `/validate-quality` for full validation, including Playwright E2E when available.
 
 ## Bug Fix
 
 1. Use `debugger`/relevant specialist to reproduce.
 2. Add failing test if practical.
 3. Fix narrowly.
-4. Run targeted test, then full available gates.
+4. Run targeted test, then fast gates. Use `/validate-quality` before release or when browser-visible behavior changed.
 5. Review regression risk.
 
 ## Refactor

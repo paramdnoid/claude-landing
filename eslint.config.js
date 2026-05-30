@@ -6,7 +6,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default tseslint.config(
   {
-    ignores: ['dist', 'node_modules', '.playwright-mcp', 'test-results', 'playwright-report'],
+    ignores: ['dist', 'node_modules', 'coverage', '.playwright-mcp', 'test-results', 'playwright-report'],
   },
   // App source — full type-checked rules
   {

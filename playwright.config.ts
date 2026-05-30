@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 // Default to 5173; override with PLAYWRIGHT_PORT when the default port is occupied
 // (e.g. a long-running `npm run dev` session in another terminal).
-const PORT = Number(process.env.PLAYWRIGHT_PORT ?? 5173);
+const PORT = Number(process.env.PLAYWRIGHT_PORT ?? 5170);
 const HOST = '127.0.0.1';
 const BASE_URL = `http://${HOST}:${PORT}`;
 

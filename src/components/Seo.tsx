@@ -88,13 +88,15 @@ export default function Seo() {
     setMeta("og:description", desc, "property");
     setMeta("og:url", canonical, "property");
     setMeta("og:locale", lang === "de" ? "de_DE" : "en_US", "property");
-    setMeta("og:image", `${SITE_URL}/og-image.svg`, "property");
-    setMeta("og:image:type", "image/svg+xml", "property");
+    setMeta("og:image", `${SITE_URL}/og-image.png`, "property");
+    setMeta("og:image:type", "image/png", "property");
+    setMeta("og:image:width", "1200", "property");
+    setMeta("og:image:height", "630", "property");
     setMeta("og:type", "website", "property");
     setMeta("twitter:card", "summary_large_image");
     setMeta("twitter:title", title);
     setMeta("twitter:description", desc);
-    setMeta("twitter:image", `${SITE_URL}/og-image.svg`);
+    setMeta("twitter:image", `${SITE_URL}/og-image.png`);
 
     setLink("canonical", canonical);
     setLink("alternate", altDe, "de");
@@ -115,7 +117,7 @@ export default function Seo() {
       "@type": "ProfessionalService",
       name: "ZIAN AI CONCEPTS",
       url: SITE_URL,
-      image: `${SITE_URL}/og-image.svg`,
+      image: `${SITE_URL}/og-image.png`,
       description: desc,
       founder: { "@type": "Person", name: PERSON_NAME },
       areaServed: lang === "de" ? "DE" : "Worldwide",

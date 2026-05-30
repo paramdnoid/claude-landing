@@ -1,5 +1,23 @@
 /// <reference types="vite/client" />
 
+// vite-imagetools 10.x does not ship client-side module declarations, so we
+// declare the `?as=picture` shape locally. Only the variants we actually use
+// are typed; add more as needed.
+declare module '*?as=picture&w=400;800;1200&format=avif;webp;jpg' {
+  const value: {
+    sources: Record<string, string>;
+    img: { src: string; w: number; h: number };
+  };
+  export default value;
+}
+declare module '*?as=picture&w=400;800;1200&format=avif;webp;png' {
+  const value: {
+    sources: Record<string, string>;
+    img: { src: string; w: number; h: number };
+  };
+  export default value;
+}
+
 interface ImportMetaEnv {
   readonly VITE_FORM_ENDPOINT?: string;
   readonly VITE_SITE_URL?: string;

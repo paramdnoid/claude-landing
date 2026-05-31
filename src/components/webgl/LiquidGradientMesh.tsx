@@ -19,6 +19,11 @@ function GradientPlane({ scrollTriggerId }: Props) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { size } = useThree();
 
+  // Impulse state — mutable ref, no re-render needed.
+  // x,y hold the last NDC pointer position; strength starts at 0.
+  const impulseRef = useRef({ x: 0, y: 0, strength: 0 });
+  const reducedMotion = prefersReducedMotion();
+
   // Initial size is captured intentionally; the resize effect below keeps
   // uResolution in sync. We want stable uniforms across renders.
   const uniforms = useMemo(
@@ -27,6 +32,7 @@ function GradientPlane({ scrollTriggerId }: Props) {
       uScroll: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uResolution: { value: new THREE.Vector2(size.width, size.height) },
+      uImpulse: { value: new THREE.Vector3(0, 0, 0) },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -36,7 +42,7 @@ function GradientPlane({ scrollTriggerId }: Props) {
     uniforms.uResolution.value.set(size.width, size.height);
   }, [size, uniforms]);
 
-  // mouse
+  // mouse parallax
   useEffect(() => {
     const target = new THREE.Vector2();
     const onMove = (e: PointerEvent) => {
@@ -54,6 +60,20 @@ function GradientPlane({ scrollTriggerId }: Props) {
       cancelAnimationFrame(raf);
     };
   }, [uniforms]);
+
+  // pointer impulse — disabled when reducedMotion
+  useEffect(() => {
+    if (reducedMotion) return;
+    const onDown = (e: PointerEvent) => {
+      const ndcX = (e.clientX / window.innerWidth) * 2 - 1;
+      const ndcY = -((e.clientY / window.innerHeight) * 2 - 1);
+      impulseRef.current = { x: ndcX, y: ndcY, strength: 1.0 };
+    };
+    window.addEventListener('pointerdown', onDown);
+    return () => {
+      window.removeEventListener('pointerdown', onDown);
+    };
+  }, [reducedMotion]);
 
   // scroll-driven uScroll
   useEffect(() => {
@@ -76,8 +96,22 @@ function GradientPlane({ scrollTriggerId }: Props) {
   }, [scrollTriggerId]);
 
   useFrame((_, dt) => {
-    if (materialRef.current) {
-      (materialRef.current.uniforms.uTime as { value: number }).value += dt;
+    if (!materialRef.current) return;
+
+    (materialRef.current.uniforms.uTime as { value: number }).value += dt;
+
+    // Decay the impulse strength each frame (~0.7s half-life at 60fps)
+    const imp = impulseRef.current;
+    if (imp.strength > 0.001) {
+      imp.strength *= Math.pow(0.05, dt); // exponential decay: ~0 in ~0.7s
+      (materialRef.current.uniforms.uImpulse as { value: THREE.Vector3 }).value.set(
+        imp.x,
+        imp.y,
+        imp.strength,
+      );
+    } else if (imp.strength > 0) {
+      imp.strength = 0;
+      (materialRef.current.uniforms.uImpulse as { value: THREE.Vector3 }).value.set(0, 0, 0);
     }
   });
 

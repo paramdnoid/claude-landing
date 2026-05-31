@@ -45,6 +45,12 @@ type Props<T extends StickyStoryItem> = {
   className?: string;
   /** Override the header-column className (e.g. when the section needs extra top padding). */
   headerClassName?: string;
+  /**
+   * Mirror the desktop layout: articles on the left, sticky sidebar on the
+   * right. DOM/reading order is unchanged (heading-first) — only the grid
+   * column placement flips, so the two sister sections read distinctly.
+   */
+  mirror?: boolean;
 };
 
 const DEFAULT_HEADER_CLS = 'flex flex-col gap-6';
@@ -71,7 +77,13 @@ export default function StickyStoryList<T extends StickyStoryItem>({
   mobileCta,
   className,
   headerClassName = DEFAULT_HEADER_CLS,
+  mirror = false,
 }: Props<T>) {
+  // When mirrored, pin the sticky column to the right 5 cols and the articles
+  // to the left 7 — explicit col-start keeps both in the same grid row despite
+  // the unchanged (heading-first) DOM order.
+  const sidebarColCls = mirror ? 'md:col-span-5 md:col-start-8 md:row-start-1' : 'md:col-span-5';
+  const articlesColCls = mirror ? 'md:col-span-7 md:col-start-1 md:row-start-1' : 'md:col-span-7';
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
     scrollToSection(id, { duration: 1.0 });
@@ -85,7 +97,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
       className={className}
     >
       <div className="mx-auto grid max-w-400 grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
-        <div className="md:col-span-5 md:sticky md:top-[clamp(6rem,12vh,9rem)] md:self-start">
+        <div className={`${sidebarColCls} md:sticky md:top-[clamp(6rem,12vh,9rem)] md:self-start`}>
           <div ref={headerRef} className={headerClassName}>
             {renderHeader()}
           </div>
@@ -124,7 +136,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
           {desktopCta && <div className="mt-10 hidden md:block">{desktopCta}</div>}
         </div>
 
-        <div className="md:col-span-7 flex flex-col">
+        <div className={`${articlesColCls} flex flex-col`}>
           {items.map((it, i) => {
             const dataValue = articleDataValue(it);
             const dataAttrs =

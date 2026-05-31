@@ -57,6 +57,7 @@ export default function Process() {
       articlesRef={articleRefs}
       sectionRef={sectionRef}
       headerRef={headerRef}
+      mirror
       className="relative border-t border-border px-6 pt-16 pb-16 md:pt-0 md:px-10 md:pb-24"
       headerClassName="flex flex-col gap-6"
       renderHeader={() => (

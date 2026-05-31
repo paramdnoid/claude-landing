@@ -43,14 +43,6 @@ export default function Footer() {
         className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent_0%,var(--color-plasma-lime)_25%,var(--color-plasma-cyan)_50%,var(--color-plasma-indigo)_75%,transparent_100%)] opacity-60"
       />
 
-      {/* Oversized signet watermark bleeding off the right edge. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 opacity-[0.05] lg:block"
-      >
-        <Signet className="w-[clamp(280px,26vw,440px)]" />
-      </div>
-
       <div className="relative mx-auto max-w-400 px-6 py-16 md:px-10 md:py-20">
         <div className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-12 md:gap-8">
           {/* Brand block */}

@@ -675,8 +675,10 @@ export default function Connect() {
             </p>
           </div>
 
-          {/* Direct-contact rail */}
-          <aside className="flex flex-col gap-10">
+          {/* Direct-contact rail — vertically centered against the tall terminal
+              so the short rail (socials are env-gated and often absent) doesn't
+              leave a large void in the lower-right on desktop. */}
+          <aside className="flex flex-col gap-10 lg:justify-center">
             <div className="flex flex-col gap-4">
               <div className="tag">{t('connect.directHeading')}</div>
               <a

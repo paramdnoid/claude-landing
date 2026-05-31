@@ -21,8 +21,6 @@ export default function Hero() {
   const metaRef = useRef<HTMLDivElement>(null);
   // Content block for scroll-parallax — translated upward slightly as user scrolls
   const contentRef = useRef<HTMLDivElement>(null);
-  // Brand signet anchor — parallaxes the opposite way for depth
-  const signetRef = useRef<HTMLDivElement>(null);
   // Magnetic primary CTAs (fine-pointer + motion-safe; the hook no-ops otherwise)
   const workCtaRef = useMagnet<HTMLAnchorElement>(0.4);
   const contactCtaRef = useMagnet<HTMLAnchorElement>(0.4);
@@ -30,25 +28,16 @@ export default function Hero() {
   useGSAP(() => {
     if (!headlineRef.current) return;
     const rm = prefersReducedMotion();
-    // The signet joins the intro (fade + scale-in). The scroll parallax below
-    // also writes the signet's opacity, so it must stay hands-off until this
-    // entrance has finished — otherwise it snaps the signet to full opacity on
-    // the first ScrollTrigger tick and kills the fade.
-    let signetIntroDone = false;
 
     // --- intro timeline ---
     if (!rm) {
       const chars = splitText(headlineRef.current);
-      const tl = gsap.timeline({ onComplete: () => { signetIntroDone = true; } });
+      const tl = gsap.timeline();
       tl.from(eyebrowRef.current, { y: 20, opacity: 0, duration: 0.7, ease: 'power3.out' })
         .from(chars, { y: 28, opacity: 0, duration: 0.8, ease: 'expo.out', stagger: 0.018 }, '-=0.45')
         .from(subRef.current, { y: 24, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.55')
         .from(ctaRef.current?.children ?? [], { y: 16, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.08 }, '-=0.4')
         .from(metaRef.current?.children ?? [], { y: 14, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.07 }, '-=0.4');
-      // Signet fades + scales in alongside the headline (absolute t≈0.3s).
-      if (signetRef.current) {
-        tl.from(signetRef.current, { opacity: 0, scale: 0.92, duration: 1.1, ease: 'power3.out' }, 0.3);
-      }
     }
 
     // --- scroll-linked parallax on the content block ---
@@ -64,16 +53,6 @@ export default function Hero() {
           if (contentRef.current) {
             gsap.set(contentRef.current, {
               y: self.progress * -60,
-              force3D: true,
-            });
-          }
-          // Signet drifts down + fades as the hero leaves — opposite direction
-          // to the content for a layered, parallaxed feel. Held back until the
-          // intro entrance has played so the two don't fight over opacity.
-          if (signetRef.current && signetIntroDone) {
-            gsap.set(signetRef.current, {
-              y: self.progress * 90,
-              opacity: 1 - self.progress * 0.6,
               force3D: true,
             });
           }
@@ -108,20 +87,15 @@ export default function Hero() {
           4.5:1 contrast floor on small screens. Desktop keeps the vibrant look. */}
       <div className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
 
-      {/* Brand signet — a large statement on the right, vertically centered and
-          bleeding off the edge, sitting above the scrims but below the content
-          (z-10) so the left-aligned headline always reads over its dark facets.
-          Decorative: the header wordmark already names the brand.
-          Outer wrapper owns positioning (flex centering + edge bleed, no
-          transform); the inner wrapper is the GSAP target, so the parallax /
-          entrance transforms never fight the positioning. */}
+      {/* Logo woven into the backdrop: the large signet sits over the animated
+          gradient with an overlay blend + low opacity, so the moving mesh
+          shimmers through it instead of reading as a solid mark. Sits below the
+          content (z-10); decorative; desktop only. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-[-6%] z-[1] hidden items-center pt-16 lg:flex"
+        className="pointer-events-none absolute inset-y-0 right-[-6%] z-[1] hidden items-center pt-16 opacity-[0.28] mix-blend-overlay lg:flex"
       >
-        <div ref={signetRef} className="w-[clamp(360px,42vw,720px)] will-change-transform">
-          <Signet animated className="h-full w-full" />
-        </div>
+        <Signet animated className="w-[clamp(360px,44vw,760px)]" />
       </div>
 
       <div

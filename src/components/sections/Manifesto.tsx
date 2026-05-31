@@ -28,12 +28,16 @@ export default function Manifesto() {
       id="manifesto"
       className="relative overflow-hidden px-6 py-20 md:px-10 md:py-32"
     >
-      {/* Plasma wash — a richer, more colourful backdrop than the flat-black
-          neighbours, marking the manifesto as the page's tonal peak. */}
+      {/* Plasma panel — a saturated, pervasive gradient fill (not corner glows)
+          that turns the manifesto into a luminous colour chapter. Top + bottom
+          strips fade back to the page black so it reads as an intentional panel
+          between the dark neighbours, not a hard cut. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 top-[-16%] h-[680px] w-[680px] rounded-full bg-plasma-indigo/[0.28] blur-[150px]" />
-        <div className="absolute bottom-[-16%] right-[-12%] h-[560px] w-[560px] rounded-full bg-plasma-cyan/[0.13] blur-[150px]" />
-        <div className="absolute left-[26%] top-[24%] h-[460px] w-[460px] rounded-full bg-plasma-lime/[0.09] blur-[150px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(125%_140%_at_22%_12%,rgba(99,102,241,0.34)_0%,rgba(30,27,75,0.26)_40%,transparent_80%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(90%_100%_at_88%_92%,rgba(6,182,212,0.20)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(70%_70%_at_58%_46%,rgba(163,255,18,0.08)_0%,transparent_55%)]" />
+        <div className="absolute inset-x-0 top-0 h-44 bg-[linear-gradient(to_bottom,var(--color-bg),transparent)]" />
+        <div className="absolute inset-x-0 bottom-0 h-44 bg-[linear-gradient(to_top,var(--color-bg),transparent)]" />
       </div>
 
       <div className="relative mx-auto max-w-350">

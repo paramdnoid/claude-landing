@@ -11,7 +11,7 @@ import Signet from './Signet';
 const NAV_IDS = ['manifesto', 'work', 'capabilities', 'process', 'contact'] as const;
 
 const LINK_CLASS =
-  'group/link inline-flex w-fit items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-fg';
+  'link-underline group/link inline-flex w-fit items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-fg';
 
 export default function Footer() {
   const { t } = useTranslation();

@@ -36,11 +36,11 @@ export default function Marquee() {
       <div className="mx-auto mb-6 max-w-400 px-6 md:px-10">
         <div className="tag">{t('marquee.eyebrow')}</div>
       </div>
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
         <div ref={trackRef} className="flex w-max items-center gap-12 whitespace-nowrap will-change-transform md:gap-20">
           {items.map((label, i) => (
             <div key={i} className="flex items-center gap-12 md:gap-20">
-              <span className="font-display text-5xl text-fg/70 md:text-7xl">{label}</span>
+              <span className="font-display text-5xl text-fg/60 transition-colors duration-300 hover:text-fg md:text-7xl">{label}</span>
               <span className="inline-block h-2 w-2 rotate-45 bg-plasma-lime" />
             </div>
           ))}

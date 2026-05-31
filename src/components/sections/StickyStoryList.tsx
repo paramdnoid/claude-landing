@@ -1,4 +1,4 @@
-import { type ReactNode, type RefObject } from 'react';
+import { Fragment, type ReactNode, type RefObject } from 'react';
 import { scrollToSection } from '../../lib/scrollToSection';
 import Aura from '../Aura';
 
@@ -154,29 +154,29 @@ export default function StickyStoryList<T extends StickyStoryItem>({
                 ? { 'data-slug': dataValue }
                 : { 'data-step-index': dataValue };
             return (
-              <article
-                key={it.key}
-                id={it.anchorId}
-                ref={(el) => {
-                  if (articlesRef.current) articlesRef.current[i] = el;
-                }}
-                aria-labelledby={`${it.anchorId}-title`}
-                className={`group/article relative isolate flex scroll-mt-[clamp(6rem,12vh,9rem)] flex-col justify-start gap-6 overflow-hidden py-12 md:gap-7 md:py-24 ${
-                  i > 0 ? 'border-t border-border' : ''
-                }`}
-                {...dataAttrs}
-              >
-                {/* Oversized ghost index — editorial depth behind the content. */}
-                <span
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute top-6 -z-10 select-none font-display text-[6.5rem] leading-none tabular-nums text-fg/[0.04] transition-colors duration-500 group-hover/article:text-fg/[0.07] md:top-12 md:text-[10rem] ${
-                    mirror ? 'left-0' : 'right-0'
-                  }`}
+              <Fragment key={it.key}>
+                {i > 0 && <div aria-hidden="true" className="rule-fade" />}
+                <article
+                  id={it.anchorId}
+                  ref={(el) => {
+                    if (articlesRef.current) articlesRef.current[i] = el;
+                  }}
+                  aria-labelledby={`${it.anchorId}-title`}
+                  className="group/article relative isolate flex scroll-mt-[clamp(6rem,12vh,9rem)] flex-col justify-start gap-6 overflow-hidden py-12 md:gap-7 md:py-24"
+                  {...dataAttrs}
                 >
-                  {it.index}
-                </span>
-                {renderArticleBody(it)}
-              </article>
+                  {/* Oversized ghost index — editorial depth behind the content. */}
+                  <span
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute top-6 -z-10 select-none font-display text-[6.5rem] leading-none tabular-nums text-fg/[0.04] transition-colors duration-500 group-hover/article:text-fg/[0.07] md:top-12 md:text-[10rem] ${
+                      mirror ? 'left-0' : 'right-0'
+                    }`}
+                  >
+                    {it.index}
+                  </span>
+                  {renderArticleBody(it)}
+                </article>
+              </Fragment>
             );
           })}
         </div>

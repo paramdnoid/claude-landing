@@ -5,6 +5,7 @@ import LangToggle from './LangToggle';
 import BrandMark from './BrandMark';
 import { scrollToSection } from '../lib/scrollToSection';
 import { useLocale } from '../lib/useLocale';
+import { useMagnet } from '../lib/useMagnet';
 
 const NAV_IDS = ['manifesto', 'work', 'capabilities', 'process', 'contact'] as const;
 type NavId = (typeof NAV_IDS)[number];
@@ -18,6 +19,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<NavId | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const brandRef = useMagnet<HTMLAnchorElement>(0.3);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -107,7 +109,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-400 items-center justify-between px-6 md:px-10">
-        <Link to={homePath} className="group flex items-center gap-3" aria-label={t('nav.brandLabel')}>
+        <Link ref={brandRef} to={homePath} className="group flex items-center gap-3" aria-label={t('nav.brandLabel')}>
           <BrandMark variant="header" />
         </Link>
         <nav aria-label={t('nav.primary')} className="hidden items-center gap-7 font-mono text-xs uppercase tracking-[0.18em] md:flex">

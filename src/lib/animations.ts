@@ -9,6 +9,23 @@ export const prefersReducedMotion = (): boolean =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**
+ * GSAP-side motion rhythm — mirrors the `--ease-*` / `--dur-*` design tokens in
+ * globals.css so JS animations and CSS transitions share one feel. GSAP cannot
+ * read CSS custom properties, so we duplicate the values here intentionally.
+ */
+export const EASE = {
+  outExpo: 'expo.out',
+  outQuint: 'power4.out',
+  inOutSoft: 'power2.inOut',
+} as const;
+
+export const DUR = {
+  fast: 0.15,
+  base: 0.25,
+  slow: 0.4,
+} as const;
+
+/**
  * Splits an element's text into word + char spans for stagger animations.
  * Returns array of char spans for tweening. Idempotent via `data-split`.
  *
@@ -133,7 +150,7 @@ export function revealWordsOnScroll(
 export function horizontalScroll(
   viewport: HTMLElement,
   track: HTMLElement,
-  opts: { snap?: boolean } = {},
+  opts: { snap?: boolean; scrub?: number; onUpdate?: (progress: number) => void } = {},
 ): ScrollTrigger | null {
   if (prefersReducedMotion()) return null;
   const getDistance = () => track.scrollWidth - viewport.clientWidth;
@@ -146,8 +163,9 @@ export function horizontalScroll(
     start: 'top top',
     end: () => `+=${getDistance()}`,
     pin: true,
-    scrub: 1,
+    scrub: opts.scrub ?? 1,
     animation: tween,
+    onUpdate: opts.onUpdate ? (self) => opts.onUpdate?.(self.progress) : undefined,
     invalidateOnRefresh: true,
     // Higher priority refreshes first. This pin sits above sibling pins (e.g. Process)
     // in DOM order, so its pin-spacer must be inserted before later pins measure their

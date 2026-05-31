@@ -31,6 +31,28 @@
   --shadow-glow-cyan: 0 0 24px rgba(6, 182, 212, 0.5), 0 0 80px rgba(6, 182, 212, 0.22);
   --shadow-glow-indigo: 0 0 24px rgba(99, 102, 241, 0.55), 0 0 80px rgba(99, 102, 241, 0.25);
   --shadow-premium: 0 30px 80px -30px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.05) inset;
+
+  /* Elevation scale — consistent surface depth for pills, cards, sheets, modals.
+     Each step pairs a soft ambient drop with a hairline inset edge. */
+  --shadow-e1: 0 1px 2px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.05);
+  --shadow-e2: 0 8px 32px -12px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08);
+  --shadow-e3: 0 18px 50px -18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.10);
+  --shadow-e4: 0 30px 80px -30px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.12);
+
+  /* Radius scale — replaces ad-hoc 28px / pill values in components. */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Motion tokens — one rhythm shared by GSAP and CSS so every micro-interaction
+     feels part of the same system. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
 }
 
 @layer base {
@@ -118,6 +140,9 @@
   }
 
   .font-mono { font-family: var(--font-mono); }
+
+  /* Tabular figures keep counters, years and metrics from reflowing as digits change. */
+  .tabular-nums { font-variant-numeric: tabular-nums; }
 
   /* Editorial display sizing */
   .text-display-xl {
@@ -238,6 +263,29 @@
       linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
     background-size: 80px 80px;
+  }
+}
+
+/* Premium scrollbar — thin, plasma-tinted thumb on the dark canvas. */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(99, 102, 241, 0.45) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-plasma-cyan), var(--color-plasma-indigo));
+    border: 3px solid var(--color-bg);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(var(--color-plasma-lime), var(--color-plasma-cyan));
   }
 }
 

@@ -93,7 +93,7 @@ export default function Hero() {
           content (z-10); decorative; desktop only. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-[-3%] z-[1] hidden items-center pt-16 opacity-20 mix-blend-overlay lg:flex"
+        className="pointer-events-none absolute inset-y-0 right-[1%] z-[1] hidden items-center pt-16 opacity-20 mix-blend-overlay lg:flex"
       >
         <Signet animated className="w-[clamp(360px,44vw,760px)]" />
       </div>

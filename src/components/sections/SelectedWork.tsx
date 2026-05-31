@@ -1,10 +1,11 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '../../lib/gsap';
-import { splitText, revealWordsOnScroll, prefersReducedMotion } from '../../lib/animations';
+import { horizontalScroll, prefersReducedMotion } from '../../lib/animations';
+import { ScrollTrigger } from '../../lib/gsap';
 import { getLenis } from '../../lib/smoothScroll';
-
+// vite-imagetools generates AVIF + WebP + JPEG variants at 400/800/1200 wide
+// for each source asset. `?as=picture` returns { sources, img } so we can wire
+// up a `<picture>` element with progressive format negotiation.
 import personalengelPic from '../../assets/work/personalengel.jpg?as=picture&w=400;800;1200&format=avif;webp;jpg';
 import supriumPic from '../../assets/work/suprium.png?as=picture&w=400;800;1200&format=avif;webp;png';
 import fieconPic from '../../assets/work/fiecon.png?as=picture&w=400;800;1200&format=avif;webp;png';
@@ -36,343 +37,288 @@ const THUMBS: Record<string, Picture> = {
   '05': nanasPic,
 };
 
-// Shared turbulence-noise overlay — defined once so the same data URL
-// does not ship multiple times in rendered HTML.
-const NOISE_OVERLAY_URL =
-  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/filter%3E%3C/svg%3E\")";
+// On desktop the screenshot frame occupies ~58% of a 64svw card (≈37vw); on
+// tablet the card is 58vw wide; on mobile 78vw. The sizes attribute mirrors that
+// so the browser picks the smallest variant that fits.
+const THUMB_SIZES = '(min-width: 1024px) 37vw, (min-width: 768px) 58vw, 78vw';
+
+// Decorative browser-chrome domain pill, derived from the case title. Purely
+// cosmetic (and aria-hidden), so it carries no locale-sensitive copy and needs
+// no i18n key.
+const domainFor = (title: string): string =>
+  `${title.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`;
 
 export default function SelectedWork() {
   const { t, i18n } = useTranslation();
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
 
-  // -- Refs --
-  const sectionRef   = useRef<HTMLElement>(null);
-  const eyebrowRef   = useRef<HTMLDivElement>(null);
-  const headingRef   = useRef<HTMLHeadingElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const panelRefs    = useRef<(HTMLDivElement | null)[]>([]);
-  const endLineRef   = useRef<HTMLParagraphElement>(null);
-
-  // Which panel is currently in view (driven by ScrollTrigger onUpdate)
-  const [activePanel, setActivePanel] = useState(0);
-
-  // -- Data --
+  // Stabilise on `i18n.language` rather than the re-allocated `rawCases`
+  // reference so the horizontalScroll trigger isn't killed and recreated on
+  // every parent render — only when the user actually switches locale.
   const cases = useMemo<Case[]>(
     () => {
       const raw = t('work.cases', { returnObjects: true }) as RawCase[];
-      return raw.map((c) => ({ ...c, thumb: THUMBS[c.index] }));
+      return raw.map((c) => ({
+        ...c,
+        thumb: THUMBS[c.index],
+      }));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [i18n.language],
   );
 
-  // -- Header entry animations (eyebrow + heading char stagger) --
-  useGSAP(
-    () => {
-      if (prefersReducedMotion()) return;
-      if (!headingRef.current || !eyebrowRef.current) return;
-
-      gsap.from(eyebrowRef.current, {
-        y: 20, opacity: 0, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: { trigger: eyebrowRef.current, start: 'top 88%', once: true },
-      });
-
-      const chars = splitText(headingRef.current);
-      gsap.from(chars, {
-        y: 28, opacity: 0, duration: 0.8, ease: 'expo.out', stagger: 0.018,
-        scrollTrigger: { trigger: headingRef.current, start: 'top 85%', once: true },
-      });
-
-      if (endLineRef.current) {
-        revealWordsOnScroll(endLineRef.current, { scrub: 0.8 });
-      }
-    },
-    { scope: sectionRef, dependencies: [] },
-  );
-
-  // -- Scroll-driven panel stack --
-  // Each panel (yPercent: 100) slides up to cover the previous one (yPercent: 0).
-  // ScrollTrigger pins the container and provides scrubbing + snap between panels.
   useLayoutEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const panels = panelRefs.current.filter(Boolean) as HTMLDivElement[];
-    if (panels.length < 2) return;
-
-    const n = panels.length;
-
-    if (prefersReducedMotion()) {
-      panels.forEach((p, i) => { gsap.set(p, { yPercent: i === 0 ? 0 : 100 }); });
-      return;
-    }
-
-    // Initial state: first panel visible, rest stacked below
-    panels.forEach((p, i) => { gsap.set(p, { yPercent: i === 0 ? 0 : 100 }); });
-
-    // One timeline slot per transition (panel i starts at time i-1)
-    const tl = gsap.timeline();
-    panels.slice(1).forEach((panel, offset) => {
-      tl.to(panel, { yPercent: 0, duration: 1, ease: 'power2.inOut' }, offset);
+    if (viewportRef.current === null || trackRef.current === null) return;
+    const st = horizontalScroll(viewportRef.current, trackRef.current, {
+      snap: true,
+      // Slightly tighter than the default so a pointer drag (below) tracks the
+      // finger closely instead of lagging a full second behind.
+      scrub: 0.6,
+      onUpdate: (p) => {
+        if (progressRef.current) progressRef.current.style.transform = `scaleX(${p})`;
+      },
     });
 
-    const st = ScrollTrigger.create({
-      trigger: container,
-      start: 'top top',
-      end: () => `+=${(n - 1) * window.innerHeight}`,
-      pin: true,
-      scrub: 1,
-      animation: tl,
-      snap: {
-        snapTo: 1 / (n - 1),
-        duration: { min: 0.2, max: 0.55 },
-        ease: 'power2.inOut',
-        delay: 0.05,
-      },
-      onUpdate: (self) => {
-        const idx = Math.round(self.progress * (n - 1));
-        setActivePanel((prev) => (prev === idx ? prev : idx));
-      },
-      invalidateOnRefresh: true,
-      refreshPriority: 1,
-    });
-
-    // Refresh once images decode so pin-spacer height is accurate
-    const imgs = container.querySelectorAll('img');
+    const imgs = viewportRef.current.querySelectorAll('img');
     if (imgs.length > 0) {
-      void Promise.all(Array.from(imgs).map((img) => img.decode().catch(() => {})))
-        .then(() => ScrollTrigger.refresh());
+      const promises = Array.from(imgs).map((img) => img.decode().catch(() => {}));
+      void Promise.all(promises).then(() => ScrollTrigger.refresh());
     }
 
     return () => {
-      st.kill();
-      panels.forEach((p) => { gsap.set(p, { clearProps: 'transform,yPercent' }); });
+      st?.kill();
     };
   }, [cases]);
 
-  // -- Jump to a specific panel via Lenis (smooth) or native fallback --
-  const scrollToPanel = useCallback(
-    (idx: number) => {
-      const container = containerRef.current;
-      if (!container) return;
-      const top =
-        container.getBoundingClientRect().top + window.scrollY + idx * window.innerHeight;
-      const lenis = getLenis();
-      if (lenis) lenis.scrollTo(top, { duration: 0.8 });
-      else window.scrollTo({ top, behavior: 'smooth' });
-    },
-    [],
-  );
+  // Pointer drag → page scroll. The ScrollTrigger pin owns the track's `x`, so we
+  // never write `x` directly; instead a horizontal drag drives the scroll position
+  // (which the pin maps 1:1 back to horizontal travel). Fine pointers only — touch
+  // keeps native vertical scroll, and reduced-motion opts out entirely.
+  useEffect(() => {
+    const vp = viewportRef.current;
+    if (!vp || typeof window === 'undefined') return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (prefersReducedMotion()) return;
 
-  // --------------------------------------------------------------------------
+    let dragging = false;
+    let lastX = 0;
+    let velocity = 0;
+
+    const scrollBy = (delta: number, immediate: boolean) => {
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.scrollTo(window.scrollY + delta, immediate ? { immediate: true } : { duration: 0.8 });
+      } else {
+        window.scrollBy({ top: delta, behavior: immediate ? 'auto' : 'smooth' });
+      }
+    };
+
+    const onDown = (e: PointerEvent) => {
+      if (e.button !== 0) return;
+      const el = e.target as Element | null;
+      if (el?.closest('a, button, input, textarea')) return;
+      dragging = true;
+      lastX = e.clientX;
+      velocity = 0;
+      vp.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      lastX = e.clientX;
+      velocity = velocity * 0.8 + -dx * 0.2;
+      scrollBy(-dx, true);
+    };
+    const endDrag = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      try {
+        vp.releasePointerCapture(e.pointerId);
+      } catch {
+        /* pointer already released */
+      }
+      const momentum = velocity * 14;
+      if (Math.abs(momentum) > 6) scrollBy(momentum, false);
+    };
+
+    vp.addEventListener('pointerdown', onDown);
+    vp.addEventListener('pointermove', onMove);
+    vp.addEventListener('pointerup', endDrag);
+    vp.addEventListener('pointercancel', endDrag);
+    return () => {
+      vp.removeEventListener('pointerdown', onDown);
+      vp.removeEventListener('pointermove', onMove);
+      vp.removeEventListener('pointerup', endDrag);
+      vp.removeEventListener('pointercancel', endDrag);
+    };
+  }, []);
+
+  const onCarouselKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    const step = viewport.clientHeight;
+    const lenis = getLenis();
+    const scrollBy = (delta: number) => {
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(window.scrollY + delta, { duration: 0.6 });
+      else window.scrollBy({ top: delta, behavior: 'smooth' });
+    };
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case 'PageDown':
+        scrollBy(step);
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+      case 'PageUp':
+        scrollBy(-step);
+        break;
+      case 'Home': {
+        e.preventDefault();
+        const target = viewport.getBoundingClientRect().top + window.scrollY;
+        if (lenis) lenis.scrollTo(target, { duration: 0.6 });
+        else window.scrollTo({ top: target, behavior: 'smooth' });
+        break;
+      }
+      case 'End': {
+        e.preventDefault();
+        const target = viewport.getBoundingClientRect().top + window.scrollY + step * (cases.length - 1);
+        if (lenis) lenis.scrollTo(target, { duration: 0.6 });
+        else window.scrollTo({ top: target, behavior: 'smooth' });
+        break;
+      }
+    }
+  };
+
   return (
-    <section
-      ref={sectionRef}
-      id="work"
-      aria-labelledby="work-title"
-      className="relative"
-    >
-      {/* -- Section header -------------------------------------------------- */}
-      <div className="px-6 pb-12 pt-24 md:px-10 lg:pt-32">
-        <div className="mx-auto max-w-400">
-          <div ref={eyebrowRef} className="mb-6 inline-flex items-center gap-3">
-            <span
-              aria-hidden="true"
-              className="inline-block h-px w-8 rounded-full bg-plasma-lime glow-lime"
-            />
-            <span className="tag">{t('work.eyebrow')}</span>
+    <section id="work" aria-labelledby="work-title" className="relative">
+      <div className="px-6 pb-12 pt-16 md:px-10">
+        <div className="mx-auto flex max-w-400 items-end justify-between gap-8">
+          <div>
+            <div className="tag mb-4">{t('work.eyebrow')}</div>
+            <h2 id="work-title" className="font-display text-display-lg">{t('work.title')}</h2>
           </div>
-          <h2
-            id="work-title"
-            ref={headingRef}
-            lang={i18n.language}
-            className="font-display text-display-lg [hyphens:auto]"
-          >
-            {t('work.title')}
-          </h2>
+          <p className="lead hidden max-w-sm md:block">{t('work.intro')}</p>
         </div>
       </div>
 
-      {/* -- Pinned panel stack ---------------------------------------------- */}
       <div
-        ref={containerRef}
-        className="relative h-svh overflow-hidden"
+        ref={viewportRef}
         role="region"
         aria-roledescription="carousel"
         aria-label={t('work.title')}
         tabIndex={0}
+        onKeyDown={onCarouselKeyDown}
         data-cursor-label={t('work.dragLabel')}
+        className="relative h-[100svh] select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
       >
         <span className="sr-only">{t('work.carouselKeyboardHint')}</span>
+        <div ref={trackRef} className="flex h-full items-center gap-6 px-6 will-change-transform md:gap-10 md:px-10">
+          {cases.map((c, i) => (
+            <article
+              key={c.index}
+              aria-labelledby={`work-card-${c.index}`}
+              aria-roledescription="slide"
+              aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
+              className="group relative flex h-[72svh] w-[78svw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[58svw] lg:w-[64svw] lg:flex-row"
+            >
+              {/* Faint plasma radial — static, CSS-only, identical per card. */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -inset-px opacity-60 [background:radial-gradient(120%_80%_at_30%_0%,rgba(163,255,18,0.10),transparent_55%)]"
+              />
 
-        {cases.map((c, i) => (
-          <div
-            key={c.index}
-            ref={(el) => { panelRefs.current[i] = el; }}
-            className="absolute inset-0 overflow-hidden"
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
-            aria-hidden={activePanel !== i ? true : undefined}
-          >
-            {/* Full-bleed background image */}
-            {c.thumb ? (
-              <picture>
-                {c.thumb.sources.avif && (
-                  <source type="image/avif" srcSet={c.thumb.sources.avif} sizes="100vw" />
-                )}
-                {c.thumb.sources.webp && (
-                  <source type="image/webp" srcSet={c.thumb.sources.webp} sizes="100vw" />
-                )}
-                <img
-                  src={c.thumb.img.src}
-                  width={c.thumb.img.w}
-                  height={c.thumb.img.h}
-                  alt=""
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover object-top"
-                />
-              </picture>
-            ) : (
-              <div className="absolute inset-0 bg-bg-elev-2" />
-            )}
+              {/* Left — bright browser frame with the screenshot fully visible. */}
+              <div className="relative z-10 flex-shrink-0 p-5 md:p-6 lg:basis-[58%] lg:p-8">
+                <div className="overflow-hidden rounded-md border border-border-strong bg-bg-elev-2 shadow-[var(--shadow-e3)]">
+                  {/* Refined chrome bar — no traffic-light dots. */}
+                  <div className="flex h-9 items-center gap-2 border-b border-border bg-bg-elev/80 px-3 backdrop-blur-sm">
+                    <span aria-hidden="true" className="font-mono text-[0.6rem] text-muted-2">▸</span>
+                    <span
+                      aria-hidden="true"
+                      className="rounded-full border border-border bg-white/[0.03] px-2 py-0.5 font-mono text-[0.65rem] tracking-tight text-muted-2"
+                    >
+                      {domainFor(c.title)}
+                    </span>
+                    <span aria-hidden="true" className="tag tabular-nums !text-muted-2 ml-auto">{c.year}</span>
+                  </div>
 
-            {/* Heavy bottom gradient — ensures white-on-image legibility */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(5,5,7,0.97)_0%,rgba(5,5,7,0.82)_30%,rgba(5,5,7,0.45)_55%,rgba(5,5,7,0.1)_75%,rgba(5,5,7,0.0)_100%)]" />
-            {/* Subtle top vignette for eyebrow readability */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(5,5,7,0.65)_0%,transparent_22%)]" />
-            {/* Film-grain depth */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 opacity-[0.1] mix-blend-overlay"
-              style={{ backgroundImage: NOISE_OVERLAY_URL }}
-            />
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    {c.thumb ? (
+                      <picture>
+                        {c.thumb.sources.avif && (
+                          <source type="image/avif" srcSet={c.thumb.sources.avif} sizes={THUMB_SIZES} />
+                        )}
+                        {c.thumb.sources.webp && (
+                          <source type="image/webp" srcSet={c.thumb.sources.webp} sizes={THUMB_SIZES} />
+                        )}
+                        <img
+                          src={c.thumb.img.src}
+                          width={c.thumb.img.w}
+                          height={c.thumb.img.h}
+                          alt={t('work.casePreviewAlt', { title: c.title })}
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                        />
+                      </picture>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
 
-            {/* Panel content */}
-            <div className="relative z-10 flex h-full flex-col justify-between p-8 md:p-12 lg:p-16">
-
-              {/* Top: section label + decorative index */}
-              <div className="flex items-start justify-between">
-                <span className="tag text-white/40">{t('work.eyebrow')}</span>
+              {/* Right — editorial metadata on the dark canvas. */}
+              <div className="relative z-10 flex flex-1 flex-col justify-center gap-4 px-6 pb-8 lg:basis-[42%] lg:px-8 lg:py-10">
                 <span
                   aria-hidden="true"
-                  className="select-none font-mono font-bold leading-none tabular-nums text-[6rem] lg:text-[9rem]"
-                  style={{ color: 'rgba(163,255,18,0.06)' }}
+                  className="font-display text-display-lg leading-none tabular-nums text-white/[0.07]"
                 >
                   {c.index}
                 </span>
-              </div>
-
-              {/* Bottom: project identity */}
-              <div>
-                {/* Tech stack pills */}
-                <div className="mb-4 flex flex-wrap gap-2">
-                  {c.tag.split(' · ').map((tag) => (
-                    <span key={tag} className="glass glass-pill tag">{tag}</span>
-                  ))}
-                </div>
-
-                {/* Project title */}
                 <h3
-                  id={`work-panel-${c.index}`}
-                  className="font-display text-display-xl text-white"
-                  style={{ lineHeight: '0.91' }}
+                  id={`work-card-${c.index}`}
+                  className="font-display text-3xl text-fg md:text-4xl lg:text-display-md"
                 >
                   {c.title}
                 </h3>
-
-                {/* Description */}
-                <p className="mt-5 max-w-xl text-base leading-relaxed text-white/55 md:text-lg">
-                  {c.blurb}
-                </p>
-
-                {/* Footer: case-study badge + year */}
-                <div className="mt-6 flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2">
-                    <span
-                      aria-hidden="true"
-                      className="inline-block h-1.5 w-1.5 rounded-full bg-plasma-lime glow-lime"
-                    />
-                    <span className="tag text-white/60">{t('work.onRequest')}</span>
-                  </div>
-                  <span className="font-mono text-sm tabular-nums text-white/30">{c.year}</span>
-                </div>
+                <div className="tag !text-plasma-lime">{c.tag}</div>
+                <p className="lead max-w-sm !text-base text-muted">{c.blurb}</p>
+                <a
+                  href="#contact"
+                  className="tag mt-2 inline-flex w-fit items-center gap-2 rounded-full border border-border-strong px-3 py-1.5 text-muted-2 transition-colors duration-[var(--dur-base)] hover:border-plasma-lime hover:!text-plasma-lime focus-visible:!text-plasma-lime"
+                >
+                  {t('work.onRequest')} <span aria-hidden="true">→</span>
+                </a>
               </div>
-            </div>
-
-            {/* Plasma bottom accent line */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-0 bottom-0 z-10 h-px"
-              style={{
-                background:
-                  'linear-gradient(90deg,var(--color-plasma-lime),var(--color-plasma-cyan) 60%,transparent)',
-                boxShadow: 'var(--shadow-glow-lime)',
-                opacity: 0.55,
-              }}
-            />
-          </div>
-        ))}
-
-        {/* -- Progress indicator: vertical pills on right edge --------------- */}
-        <nav
-          aria-label="Projekt-Navigation"
-          className="absolute right-5 top-1/2 z-20 flex -translate-y-1/2 flex-col items-center gap-3 lg:right-8"
-        >
-          {cases.map((c, i) => (
-            <button
-              key={c.index}
-              type="button"
-              onClick={() => scrollToPanel(i)}
-              aria-label={`Projekt ${i + 1}: ${c.title}`}
-              aria-current={activePanel === i ? 'true' : undefined}
-              className="w-1.5 origin-center rounded-full transition-all duration-[400ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plasma-lime"
-              style={{
-                height: activePanel === i ? '2rem' : '0.4rem',
-                backgroundColor:
-                  activePanel === i
-                    ? 'var(--color-plasma-lime)'
-                    : 'rgba(255,255,255,0.25)',
-                boxShadow: activePanel === i ? 'var(--shadow-glow-lime)' : 'none',
-              }}
-            />
+            </article>
           ))}
-        </nav>
 
-        {/* -- Panel counter: bottom-center ----------------------------------- */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-10 left-1/2 z-20 -translate-x-1/2"
-        >
-          <div className="flex items-baseline gap-1">
-            <span className="font-mono text-2xl font-bold tabular-nums text-white/70">
-              {String(activePanel + 1).padStart(2, '0')}
-            </span>
-            <span className="font-mono text-xs tabular-nums text-white/30">
-              {`/${String(cases.length).padStart(2, '0')}`}
-            </span>
+          <div className="flex h-[72svh] w-[60svw] flex-shrink-0 flex-col justify-center gap-4 pr-10 lg:w-[40svw]">
+            <div className="tag !text-plasma-lime">{t('work.endTag')}</div>
+            <p className="font-display text-display-md text-fg">{t('work.endLine')}</p>
+            <a
+              href="#contact"
+              className="tag inline-flex w-fit items-center gap-2 rounded-full border border-border-strong px-3 py-1.5 text-muted-2 transition-colors duration-[var(--dur-base)] hover:border-plasma-lime hover:!text-plasma-lime focus-visible:!text-plasma-lime"
+            >
+              {t('work.onRequest')} <span aria-hidden="true">→</span>
+            </a>
           </div>
         </div>
-      </div>
 
-      {/* -- End callout ----------------------------------------------------- */}
-      <div className="px-6 pb-16 pt-14 md:px-10 lg:pb-24 lg:pt-20">
-        <div className="mx-auto max-w-400">
+        {/* Horizontal-journey progress — scaleX driven directly from ScrollTrigger
+            (no React state churn per frame). */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-6 bottom-6 h-px bg-border-strong md:inset-x-10"
+        >
           <div
-            aria-hidden="true"
-            className="mb-10 h-px rounded-full"
-            style={{
-              background:
-                'linear-gradient(90deg,transparent,var(--color-plasma-indigo) 20%,var(--color-plasma-cyan) 60%,transparent)',
-            }}
+            ref={progressRef}
+            className="h-full origin-left bg-plasma-lime glow-lime"
+            style={{ transform: 'scaleX(0)' }}
           />
-          <div className="tag mb-4 text-muted">{t('work.endTag')}</div>
-          <p
-            ref={endLineRef}
-            className="font-display text-display-md text-muted-2"
-          >
-            {t('work.endLine')}
-          </p>
         </div>
       </div>
     </section>

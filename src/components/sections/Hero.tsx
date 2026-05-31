@@ -30,16 +30,25 @@ export default function Hero() {
   useGSAP(() => {
     if (!headlineRef.current) return;
     const rm = prefersReducedMotion();
+    // The signet joins the intro (fade + scale-in). The scroll parallax below
+    // also writes the signet's opacity, so it must stay hands-off until this
+    // entrance has finished — otherwise it snaps the signet to full opacity on
+    // the first ScrollTrigger tick and kills the fade.
+    let signetIntroDone = false;
 
-    // --- intro timeline (unchanged) ---
+    // --- intro timeline ---
     if (!rm) {
       const chars = splitText(headlineRef.current);
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({ onComplete: () => { signetIntroDone = true; } });
       tl.from(eyebrowRef.current, { y: 20, opacity: 0, duration: 0.7, ease: 'power3.out' })
         .from(chars, { y: 28, opacity: 0, duration: 0.8, ease: 'expo.out', stagger: 0.018 }, '-=0.45')
         .from(subRef.current, { y: 24, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.55')
         .from(ctaRef.current?.children ?? [], { y: 16, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.08 }, '-=0.4')
         .from(metaRef.current?.children ?? [], { y: 14, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.07 }, '-=0.4');
+      // Signet fades + scales in alongside the headline (absolute t≈0.3s).
+      if (signetRef.current) {
+        tl.from(signetRef.current, { opacity: 0, scale: 0.92, duration: 1.1, ease: 'power3.out' }, 0.3);
+      }
     }
 
     // --- scroll-linked parallax on the content block ---
@@ -59,8 +68,9 @@ export default function Hero() {
             });
           }
           // Signet drifts down + fades as the hero leaves — opposite direction
-          // to the content for a layered, parallaxed feel.
-          if (signetRef.current) {
+          // to the content for a layered, parallaxed feel. Held back until the
+          // intro entrance has played so the two don't fight over opacity.
+          if (signetRef.current && signetIntroDone) {
             gsap.set(signetRef.current, {
               y: self.progress * 90,
               opacity: 1 - self.progress * 0.6,

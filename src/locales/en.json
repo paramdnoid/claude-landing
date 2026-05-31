@@ -45,7 +45,6 @@
     "onRequest": "Case study on request",
     "casePreviewAlt": "Preview of {{title}}",
     "carouselKeyboardHint": "Use the arrow keys to browse cases.",
-    "dragLabel": "Drag",
     "cases": [
       {
         "index": "01",

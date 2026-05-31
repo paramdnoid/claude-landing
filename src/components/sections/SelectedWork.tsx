@@ -202,7 +202,6 @@ export default function SelectedWork() {
         aria-label={t('work.title')}
         tabIndex={0}
         onKeyDown={onCarouselKeyDown}
-        data-cursor-label={t('work.dragLabel')}
         className="relative flex h-[100svh] flex-col select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
       >
         {/* Section header — lives inside the pinned viewport so it stays visible

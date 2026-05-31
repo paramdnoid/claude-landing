@@ -1,5 +1,12 @@
 import { useId } from 'react';
 
+/**
+ * Outer hexagon contour of the signet, in the `0 0 360 360` viewBox space.
+ * Exported so other surfaces (e.g. the loader's self-drawing outline) can trace
+ * the exact same silhouette without duplicating the path data.
+ */
+export const SIGNET_OUTLINE_PATH = 'M180 35 274 89v141l-94 97-94-97V89l94-54Z';
+
 type SignetProps = {
   className?: string;
   /**
@@ -89,13 +96,13 @@ export default function Signet({ className, title, animated = false }: SignetPro
       >
         <ellipse cx="180" cy="170" rx="150" ry="160" fill={`url(#${id('aura')})`} />
       </g>
-      <path d="M180 35 274 89v141l-94 97-94-97V89l94-54Z" fill={`url(#${id('shell')})`} stroke="rgba(163, 255, 18, 0.22)" strokeWidth="1.25" />
+      <path d={SIGNET_OUTLINE_PATH} fill={`url(#${id('shell')})`} stroke="rgba(163, 255, 18, 0.22)" strokeWidth="1.25" />
       <path d="M180 35 86 89v141l94 97v-43l-65-68V106l65-38V35Z" fill={`url(#${id('shellL')})`} opacity="0.86" />
       <path d="M180 35 274 89v141l-94 97v-43l65-68V106l-65-38V35Z" fill={`url(#${id('shellR')})`} opacity="0.86" />
       <path d="M180 72 238 107v104l-58 61-58-61V107l58-35Z" fill="rgba(6, 182, 212, 0.06)" stroke="rgba(163, 255, 18, 0.22)" strokeLinejoin="round" strokeWidth="0.85" />
       <path d="M180 52 250 93l-70 41-70-41 70-41Z" fill="rgba(255, 255, 255, 0.04)" opacity="0.58" />
       <path
-        d="M180 35 274 89v141l-94 97-94-97V89l94-54Z"
+        d={SIGNET_OUTLINE_PATH}
         fill="none"
         stroke={`url(#${id('rim')})`}
         strokeLinejoin="round"
@@ -120,7 +127,7 @@ export default function Signet({ className, title, animated = false }: SignetPro
         <path d="M110 89 180 48 250 89" />
         <path d="M100 229 180 310 260 229" />
       </g>
-      <path d="M180 35 274 89v141l-94 97-94-97V89l94-54Z" fill="none" stroke={`url(#${id('rim')})`} strokeLinejoin="round" strokeWidth="1.85" />
+      <path d={SIGNET_OUTLINE_PATH} fill="none" stroke={`url(#${id('rim')})`} strokeLinejoin="round" strokeWidth="1.85" />
     </svg>
   );
 }

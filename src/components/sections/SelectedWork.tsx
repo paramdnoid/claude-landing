@@ -40,7 +40,7 @@ const THUMBS: Record<string, Picture> = {
 // On desktop the screenshot frame occupies ~58% of a 64svw card (≈37vw); on
 // tablet the card is 58vw wide; on mobile 78vw. The sizes attribute mirrors that
 // so the browser picks the smallest variant that fits.
-const THUMB_SIZES = '(min-width: 1024px) 37vw, (min-width: 768px) 58vw, 78vw';
+const THUMB_SIZES = '(min-width: 1024px) 30vw, (min-width: 768px) 56vw, 80vw';
 
 // Decorative browser-chrome domain pill, derived from the case title. Purely
 // cosmetic (and aria-hidden), so it carries no locale-sensitive copy and needs
@@ -221,7 +221,7 @@ export default function SelectedWork() {
               aria-labelledby={`work-card-${c.index}`}
               aria-roledescription="slide"
               aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
-              className="group relative flex h-[72svh] w-[78svw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[58svw] lg:w-[64svw] lg:flex-row"
+              className="group relative flex w-[80svw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[56svw] lg:h-[58svh] lg:w-[52svw] lg:flex-row xl:w-[44svw]"
             >
               {/* Faint plasma radial — static, CSS-only, identical per card. */}
               <div
@@ -229,9 +229,11 @@ export default function SelectedWork() {
                 className="pointer-events-none absolute -inset-px opacity-60 [background:radial-gradient(120%_80%_at_30%_0%,rgba(163,255,18,0.10),transparent_55%)]"
               />
 
-              {/* Left — bright browser frame with the screenshot fully visible. */}
-              <div className="relative z-10 flex-shrink-0 p-5 md:p-6 lg:basis-[58%] lg:p-8">
-                <div className="overflow-hidden rounded-md border border-border-strong bg-bg-elev-2 shadow-[var(--shadow-e3)]">
+              {/* Left — bright browser frame with the screenshot fully visible.
+                  On lg the frame stretches to the full card height so there is
+                  no dead band below it. */}
+              <div className="relative z-10 flex-shrink-0 p-4 md:p-5 lg:flex lg:basis-[58%] lg:p-6">
+                <div className="flex w-full flex-col overflow-hidden rounded-md border border-border-strong bg-bg-elev-2 shadow-[var(--shadow-e3)]">
                   {/* Refined chrome bar — no traffic-light dots. */}
                   <div className="flex h-9 items-center gap-2 border-b border-border bg-bg-elev/80 px-3 backdrop-blur-sm">
                     <span aria-hidden="true" className="font-mono text-[0.6rem] text-muted-2">▸</span>
@@ -244,7 +246,7 @@ export default function SelectedWork() {
                     <span aria-hidden="true" className="tag tabular-nums !text-muted-2 ml-auto">{c.year}</span>
                   </div>
 
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                  <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:flex-1">
                     {c.thumb ? (
                       <picture>
                         {c.thumb.sources.avif && (
@@ -269,7 +271,7 @@ export default function SelectedWork() {
               </div>
 
               {/* Right — editorial metadata on the dark canvas. */}
-              <div className="relative z-10 flex flex-1 flex-col justify-center gap-4 px-6 pb-8 lg:basis-[42%] lg:px-8 lg:py-10">
+              <div className="relative z-10 flex flex-1 flex-col justify-center gap-3 px-6 pb-7 lg:basis-[42%] lg:px-7 lg:py-8">
                 <span
                   aria-hidden="true"
                   className="font-display text-display-lg leading-none tabular-nums text-white/[0.07]"
@@ -294,7 +296,7 @@ export default function SelectedWork() {
             </article>
           ))}
 
-          <div className="flex h-[72svh] w-[60svw] flex-shrink-0 flex-col justify-center gap-4 pr-10 lg:w-[40svw]">
+          <div className="flex w-[60svw] flex-shrink-0 flex-col justify-center gap-4 pr-10 lg:h-[58svh] lg:w-[36svw]">
             <div className="tag !text-plasma-lime">{t('work.endTag')}</div>
             <p className="font-display text-display-md text-fg">{t('work.endLine')}</p>
             <a

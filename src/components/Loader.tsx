@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { useTranslation } from 'react-i18next';
 import { prefersReducedMotion } from '../lib/animations';
+import Signet, { SIGNET_OUTLINE_PATH } from './Signet';
 
-const RING_RADIUS = 92;
-const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+/** Opacity the signet mark starts at while its outline is still drawing. */
+const SIGNET_GHOST_OPACITY = 0.18;
 
 export default function Loader({ onDone }: { onDone: () => void }) {
   const { t } = useTranslation();
@@ -18,8 +19,8 @@ export default function Loader({ onDone }: { onDone: () => void }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
-  const ringRef = useRef<SVGCircleElement>(null);
-  const monogramRef = useRef<HTMLDivElement>(null);
+  const outlineRef = useRef<SVGPathElement>(null);
+  const signetRef = useRef<HTMLDivElement>(null);
   const topLeftRef = useRef<HTMLDivElement>(null);
   const topRightRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -34,11 +35,13 @@ export default function Loader({ onDone }: { onDone: () => void }) {
     }
     const ctx = gsap.context(() => {
       const chips = [topLeftRef.current, topRightRef.current, bottomRef.current].filter(Boolean);
-      if (!ringRef.current || !stageRef.current || !rootRef.current || chips.length < 3) return;
+      if (!outlineRef.current || !stageRef.current || !rootRef.current || chips.length < 3) return;
 
-      gsap.set(ringRef.current, {
-        strokeDasharray: RING_CIRCUMFERENCE,
-        strokeDashoffset: RING_CIRCUMFERENCE,
+      // Measure the hexagon contour so the dash animation traces it exactly once.
+      const outlineLen = outlineRef.current.getTotalLength();
+      gsap.set(outlineRef.current, {
+        strokeDasharray: outlineLen,
+        strokeDashoffset: outlineLen,
       });
 
       // Breathing radial glow
@@ -46,15 +49,6 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         scale: 1.15,
         opacity: 0.9,
         duration: 2.2,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: -1,
-      });
-
-      // Subtle monogram float
-      gsap.to(monogramRef.current, {
-        y: -4,
-        duration: 2.4,
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
@@ -88,8 +82,15 @@ export default function Loader({ onDone }: { onDone: () => void }) {
             onUpdate: () => {
               const v = count.v;
               if (counterRef.current) counterRef.current.textContent = String(Math.round(v)).padStart(3, '0');
-              if (ringRef.current) {
-                ringRef.current.style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - v / 100));
+              // The bright outline traces the hexagon as the counter climbs…
+              if (outlineRef.current) {
+                outlineRef.current.style.strokeDashoffset = String(outlineLen * (1 - v / 100));
+              }
+              // …while the full signet mark resolves out of its ghost state.
+              if (signetRef.current) {
+                signetRef.current.style.opacity = String(
+                  SIGNET_GHOST_OPACITY + (1 - SIGNET_GHOST_OPACITY) * (v / 100)
+                );
               }
             },
           },
@@ -154,14 +155,20 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         <div className="glass glass-pill tag">v0.2 · {new Date().getFullYear()}</div>
       </div>
 
-      {/* Center: monogram + progress ring */}
+      {/* Center: signet that draws its own outline */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div ref={stageRef} className="relative" style={{ opacity: 0 }}>
+          {/* Base mark — ghosted while drawing, resolves to full as the outline closes */}
+          <div ref={signetRef} style={{ opacity: SIGNET_GHOST_OPACITY }}>
+            <Signet className="block h-[220px] w-[220px]" />
+          </div>
+
+          {/* Self-drawing outer hexagon outline, aligned to the signet's silhouette */}
           <svg
             width="220"
             height="220"
-            viewBox="0 0 220 220"
-            className="block"
+            viewBox="0 0 360 360"
+            className="absolute inset-0 block"
             aria-hidden="true"
           >
             <defs>
@@ -172,43 +179,28 @@ export default function Loader({ onDone }: { onDone: () => void }) {
               </linearGradient>
             </defs>
             {/* Track */}
-            <circle
-              cx="110"
-              cy="110"
-              r={RING_RADIUS}
+            <path
+              d={SIGNET_OUTLINE_PATH}
               fill="none"
               stroke="rgba(255,255,255,0.08)"
-              strokeWidth="1.5"
+              strokeWidth="2"
+              strokeLinejoin="round"
             />
             {/* Progress */}
-            <circle
-              ref={ringRef}
-              cx="110"
-              cy="110"
-              r={RING_RADIUS}
+            <path
+              ref={outlineRef}
+              data-testid="loader-signet-outline"
+              d={SIGNET_OUTLINE_PATH}
               fill="none"
               stroke="url(#loader-ring)"
-              strokeWidth="1.5"
+              strokeWidth="2.5"
               strokeLinecap="round"
-              transform="rotate(-90 110 110)"
+              strokeLinejoin="round"
               style={{
                 filter: 'drop-shadow(0 0 8px rgba(6,182,212,0.55))',
               }}
             />
           </svg>
-
-          {/* Monogram */}
-          <div
-            ref={monogramRef}
-            className="font-display absolute inset-0 flex items-center justify-center text-plasma"
-            style={{
-              fontSize: '4.5rem',
-              letterSpacing: '-0.06em',
-              lineHeight: 1,
-            }}
-          >
-            AZ
-          </div>
 
           {/* Counter */}
           <div className="absolute left-1/2 top-full mt-8 -translate-x-1/2 font-mono text-xs uppercase tracking-[0.3em] text-muted">

@@ -262,7 +262,11 @@
     "tagline": "ZIAN AI CONCEPTS — Intelligenz gestalten. Geführt von Andre Zimmermann. KI · Motion · Code.",
     "rights": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",
-    "privacy": "Datenschutz"
+    "privacy": "Datenschutz",
+    "navHeading": "Navigation",
+    "connectHeading": "Verbinden",
+    "legalHeading": "Rechtliches",
+    "backToTop": "Nach oben"
   },
   "imprint": {
     "title": "Impressum",

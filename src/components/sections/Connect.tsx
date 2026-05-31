@@ -11,6 +11,7 @@ import { sendChat, isLiveBackend, OLLAMA_MODEL, type ChatMessage } from '../../l
 import { prefersReducedMotion, revealWordsOnScroll } from "../../lib/animations";
 import { resolveLang } from "../../lib/lang";
 import { useMagnet } from '../../lib/useMagnet';
+import { SOCIAL_LINKS } from '../../lib/socials';
 
 type ChatStatus = 'idle' | 'streaming' | 'error' | 'stopped';
 type FormStatus = 'closed' | 'open' | 'pending' | 'success' | 'error';
@@ -20,19 +21,6 @@ const liveMode = isLiveBackend();
 const isDemoForm = !FORM_ENDPOINT;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const INTENT_RE = /(contact|email|reach|hire|work\s+together|projekt|kontakt|erreich|schreib|anfrage|zusammenarbeit)/i;
-
-type SocialKey = 'github' | 'twitter' | 'linkedin';
-type SocialLink = { key: SocialKey; url: string };
-
-// Social profile URLs are env-driven so the production build can't ship the
-// placeholder handles. Missing values silently drop the link from the rail.
-const SOCIAL_CONFIG: ReadonlyArray<SocialLink> = (
-  [
-    { key: 'github', url: import.meta.env.VITE_SOCIAL_GITHUB ?? '' },
-    { key: 'twitter', url: import.meta.env.VITE_SOCIAL_TWITTER ?? '' },
-    { key: 'linkedin', url: import.meta.env.VITE_SOCIAL_LINKEDIN ?? '' },
-  ] as ReadonlyArray<SocialLink>
-).filter((s) => s.url.length > 0);
 
 export default function Connect() {
   const { t, i18n } = useTranslation();
@@ -710,10 +698,10 @@ export default function Connect() {
               </p>
             </div>
 
-            {SOCIAL_CONFIG.length > 0 && (
+            {SOCIAL_LINKS.length > 0 && (
               <div className="flex flex-col gap-2">
                 <div className="tag mb-2">{t('contact.socials')}</div>
-                {SOCIAL_CONFIG.map(({ key, url }) => (
+                {SOCIAL_LINKS.map(({ key, url }) => (
                   <a
                     key={key}
                     className="hover:text-plasma-lime"

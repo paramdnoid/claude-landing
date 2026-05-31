@@ -120,7 +120,10 @@ export default function Header() {
           {navLink('contact', t('nav.contact'))}
         </nav>
         <div className="flex items-center gap-2">
-          <LangToggle />
+          {/* Desktop: inline switcher. On mobile it moves into the menu below. */}
+          <div className="hidden md:block">
+            <LangToggle />
+          </div>
           <button
             type="button"
             aria-label={t('nav.menu')}
@@ -164,6 +167,10 @@ export default function Header() {
               </li>
             ))}
           </ul>
+          <div className="flex items-center justify-between gap-4 border-t border-border px-6 py-4">
+            <span className="font-mono text-sm uppercase tracking-[0.18em] text-muted">{t('nav.language')}</span>
+            <LangToggle />
+          </div>
         </div>
       </nav>
     </header>

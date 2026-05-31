@@ -357,7 +357,14 @@ export default function Connect() {
 
               {/* Scroll container: holds chat log + form + success — form sits outside the
                   aria-live region so keystrokes don't re-announce on every state tick. */}
-              <div ref={logRef} className="h-80 overflow-y-auto p-5 font-mono text-sm">
+              {/* Compact by default; grows when the inline form opens so the
+                  whole form stays visible without an empty terminal otherwise. */}
+              <div
+                ref={logRef}
+                className={`overflow-y-auto p-5 font-mono text-sm transition-[height] duration-300 ${
+                  formIsOpen ? 'h-80' : 'h-64'
+                }`}
+              >
                 <div
                   role="log"
                   aria-live="polite"

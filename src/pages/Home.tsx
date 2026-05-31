@@ -5,10 +5,12 @@ import Capabilities from '../components/sections/Capabilities';
 import Process from '../components/sections/Process';
 import Marquee from '../components/sections/Marquee';
 import Connect from '../components/sections/Connect';
+import SectionRail from '../components/SectionRail';
 
 export default function Home() {
   return (
     <>
+      <SectionRail />
       <Hero />
       <Manifesto />
       <SelectedWork />

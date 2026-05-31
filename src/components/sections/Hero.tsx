@@ -108,15 +108,20 @@ export default function Hero() {
           4.5:1 contrast floor on small screens. Desktop keeps the vibrant look. */}
       <div className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
 
-      {/* Brand signet anchor — desktop only, sits above the scrims but below the
-          content (z-10) so the headline always reads over it. Decorative: the
-          wordmark in the header already names the brand. */}
+      {/* Brand signet — a large statement on the right, vertically centered and
+          bleeding off the edge, sitting above the scrims but below the content
+          (z-10) so the left-aligned headline always reads over its dark facets.
+          Decorative: the header wordmark already names the brand.
+          Outer wrapper owns positioning (flex centering + edge bleed, no
+          transform); the inner wrapper is the GSAP target, so the parallax /
+          entrance transforms never fight the positioning. */}
       <div
-        ref={signetRef}
         aria-hidden="true"
-        className="pointer-events-none absolute right-[5%] top-[16%] z-[1] hidden w-[clamp(150px,18vw,280px)] will-change-transform lg:block"
+        className="pointer-events-none absolute inset-y-0 right-[-6%] z-[1] hidden items-center pt-16 lg:flex"
       >
-        <Signet animated className="h-full w-full" />
+        <div ref={signetRef} className="w-[clamp(360px,42vw,720px)] will-change-transform">
+          <Signet animated className="h-full w-full" />
+        </div>
       </div>
 
       <div

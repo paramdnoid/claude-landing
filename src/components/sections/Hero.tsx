@@ -111,7 +111,7 @@ export default function Hero() {
           <h1
             ref={headlineRef}
             lang={i18n.language}
-            className="font-display text-display-lg md:text-display-xl text-fg [hyphens:auto]"
+            className="font-display text-display-md lg:text-display-lg text-fg [hyphens:auto]"
           >
             {t('hero.headline')}
           </h1>

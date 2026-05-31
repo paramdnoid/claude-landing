@@ -96,7 +96,7 @@ export default function Capabilities() {
       renderHeader={() => (
         <>
           <div className="tag">{t('capabilities.eyebrow')}</div>
-          <h2 id="capabilities-heading" className="font-display text-display-lg">
+          <h2 id="capabilities-heading" className="font-display text-display-md lg:text-display-lg">
             {t('capabilities.title')}
           </h2>
           <p className="lead max-w-md">{t('capabilities.intro')}</p>

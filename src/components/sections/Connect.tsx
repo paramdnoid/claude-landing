@@ -298,7 +298,7 @@ export default function Connect() {
         <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="tag mb-6">{t('connect.eyebrow')}</div>
-            <h2 ref={headlineRef} className="font-display text-display-lg">
+            <h2 ref={headlineRef} className="font-display text-display-md lg:text-display-lg">
               {t('contact.title')}
             </h2>
             <p className="lead mt-4 max-w-xl">{t('connect.intro')}</p>

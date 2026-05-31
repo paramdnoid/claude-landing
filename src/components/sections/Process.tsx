@@ -64,7 +64,7 @@ export default function Process() {
       renderHeader={() => (
         <>
           <div className="tag">{t('process.eyebrow')}</div>
-          <h2 id="process-heading" className="font-display text-display-lg">
+          <h2 id="process-heading" className="font-display text-display-md lg:text-display-lg">
             {t('process.title')}
           </h2>
           <p className="lead max-w-md">{t('process.intro')}</p>

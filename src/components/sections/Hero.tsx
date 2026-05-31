@@ -5,6 +5,7 @@ import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { splitText, prefersReducedMotion } from '../../lib/animations';
 import { scrollToSection } from '../../lib/scrollToSection';
 import { useMagnet } from '../../lib/useMagnet';
+import Signet from '../Signet';
 import WebGLErrorBoundary from '../webgl/WebGLErrorBoundary';
 import StaticGradientFallback from '../webgl/StaticGradientFallback';
 
@@ -20,6 +21,8 @@ export default function Hero() {
   const metaRef = useRef<HTMLDivElement>(null);
   // Content block for scroll-parallax — translated upward slightly as user scrolls
   const contentRef = useRef<HTMLDivElement>(null);
+  // Brand signet anchor — parallaxes the opposite way for depth
+  const signetRef = useRef<HTMLDivElement>(null);
   // Magnetic primary CTAs (fine-pointer + motion-safe; the hook no-ops otherwise)
   const workCtaRef = useMagnet<HTMLAnchorElement>(0.4);
   const contactCtaRef = useMagnet<HTMLAnchorElement>(0.4);
@@ -55,6 +58,15 @@ export default function Hero() {
               force3D: true,
             });
           }
+          // Signet drifts down + fades as the hero leaves — opposite direction
+          // to the content for a layered, parallaxed feel.
+          if (signetRef.current) {
+            gsap.set(signetRef.current, {
+              y: self.progress * 90,
+              opacity: 1 - self.progress * 0.6,
+              force3D: true,
+            });
+          }
         },
       });
       return () => st.kill();
@@ -85,6 +97,17 @@ export default function Hero() {
           the WebGL gradient is brightest, so the radial alone can dip below the
           4.5:1 contrast floor on small screens. Desktop keeps the vibrant look. */}
       <div className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
+
+      {/* Brand signet anchor — desktop only, sits above the scrims but below the
+          content (z-10) so the headline always reads over it. Decorative: the
+          wordmark in the header already names the brand. */}
+      <div
+        ref={signetRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[5%] top-[16%] z-[1] hidden w-[clamp(150px,18vw,280px)] will-change-transform lg:block"
+      >
+        <Signet animated className="h-full w-full" />
+      </div>
 
       <div
         ref={contentRef}

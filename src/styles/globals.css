@@ -257,6 +257,25 @@
     50%       { transform: translateY(5px); }
   }
 
+  /* Brand signet motion — aura breathe + plasma rim shimmer. Globally paused by
+     the prefers-reduced-motion reset further down, so no local guard needed. */
+  @keyframes signet-breathe {
+    0%, 100% { opacity: 0.55; transform: scale(0.99); }
+    50%       { opacity: 0.95; transform: scale(1.04); }
+  }
+  @keyframes signet-rim-shimmer {
+    0%, 100% { opacity: 0.65; }
+    50%       { opacity: 1; }
+  }
+  .signet-aura {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: signet-breathe 7s ease-in-out infinite;
+  }
+  .signet-rim {
+    animation: signet-rim-shimmer 5s ease-in-out infinite;
+  }
+
   /* Subtle grid background for sections */
   .bg-grid {
     background-image:

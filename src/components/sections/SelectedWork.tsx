@@ -1,6 +1,6 @@
-import { useLayoutEffect, useMemo, useRef, type KeyboardEvent } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, type KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { horizontalScroll } from '../../lib/animations';
+import { horizontalScroll, prefersReducedMotion } from '../../lib/animations';
 import { ScrollTrigger } from '../../lib/gsap';
 import { getLenis } from '../../lib/smoothScroll';
 // vite-imagetools generates AVIF + WebP + JPEG variants at 400/800/1200 wide
@@ -61,6 +61,7 @@ export default function SelectedWork() {
   const { t, i18n } = useTranslation();
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   // Stabilise on `i18n.language` rather than the re-allocated `rawCases`
   // reference so the horizontalScroll trigger isn't killed and recreated on
@@ -80,7 +81,15 @@ export default function SelectedWork() {
 
   useLayoutEffect(() => {
     if (viewportRef.current === null || trackRef.current === null) return;
-    const st = horizontalScroll(viewportRef.current, trackRef.current, { snap: true });
+    const st = horizontalScroll(viewportRef.current, trackRef.current, {
+      snap: true,
+      // Slightly tighter than the default so a pointer drag (below) tracks the
+      // finger closely instead of lagging a full second behind.
+      scrub: 0.6,
+      onUpdate: (p) => {
+        if (progressRef.current) progressRef.current.style.transform = `scaleX(${p})`;
+      },
+    });
 
     const imgs = viewportRef.current.querySelectorAll('img');
     if (imgs.length > 0) {
@@ -92,6 +101,69 @@ export default function SelectedWork() {
       st?.kill();
     };
   }, [cases]);
+
+  // Pointer drag → page scroll. The ScrollTrigger pin owns the track's `x`, so we
+  // never write `x` directly; instead a horizontal drag drives the scroll position
+  // (which the pin maps 1:1 back to horizontal travel). Fine pointers only — touch
+  // keeps native vertical scroll, and reduced-motion opts out entirely.
+  useEffect(() => {
+    const vp = viewportRef.current;
+    if (!vp || typeof window === 'undefined') return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (prefersReducedMotion()) return;
+
+    let dragging = false;
+    let lastX = 0;
+    let velocity = 0;
+
+    const scrollBy = (delta: number, immediate: boolean) => {
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.scrollTo(window.scrollY + delta, immediate ? { immediate: true } : { duration: 0.8 });
+      } else {
+        window.scrollBy({ top: delta, behavior: immediate ? 'auto' : 'smooth' });
+      }
+    };
+
+    const onDown = (e: PointerEvent) => {
+      if (e.button !== 0) return;
+      const el = e.target as Element | null;
+      if (el?.closest('a, button, input, textarea')) return;
+      dragging = true;
+      lastX = e.clientX;
+      velocity = 0;
+      vp.setPointerCapture(e.pointerId);
+    };
+    const onMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      lastX = e.clientX;
+      velocity = velocity * 0.8 + -dx * 0.2;
+      scrollBy(-dx, true);
+    };
+    const endDrag = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      try {
+        vp.releasePointerCapture(e.pointerId);
+      } catch {
+        /* pointer already released */
+      }
+      const momentum = velocity * 14;
+      if (Math.abs(momentum) > 6) scrollBy(momentum, false);
+    };
+
+    vp.addEventListener('pointerdown', onDown);
+    vp.addEventListener('pointermove', onMove);
+    vp.addEventListener('pointerup', endDrag);
+    vp.addEventListener('pointercancel', endDrag);
+    return () => {
+      vp.removeEventListener('pointerdown', onDown);
+      vp.removeEventListener('pointermove', onMove);
+      vp.removeEventListener('pointerup', endDrag);
+      vp.removeEventListener('pointercancel', endDrag);
+    };
+  }, []);
 
   const onCarouselKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     const viewport = viewportRef.current;
@@ -150,7 +222,8 @@ export default function SelectedWork() {
         aria-label={t('work.title')}
         tabIndex={0}
         onKeyDown={onCarouselKeyDown}
-        className="relative h-[100svh] overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
+        data-cursor-label={t('work.dragLabel')}
+        className="relative h-[100svh] select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
       >
         <span className="sr-only">{t('work.carouselKeyboardHint')}</span>
         <div ref={trackRef} className="flex h-full items-center gap-6 px-6 will-change-transform md:gap-10 md:px-10">
@@ -176,7 +249,7 @@ export default function SelectedWork() {
                       alt={t('work.casePreviewAlt', { title: c.title })}
                       loading="lazy"
                       decoding="async"
-                      className="absolute inset-0 h-full w-full object-cover object-top"
+                      className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-[1200ms] ease-out will-change-transform group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                     />
                   </picture>
                 ) : null}
@@ -205,7 +278,7 @@ export default function SelectedWork() {
                 aria-labelledby={`work-card-${c.index}`}
                 aria-roledescription="slide"
                 aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
-                className="flex flex-col relative h-[72svh] w-[78svw] flex-shrink-0 overflow-hidden rounded-[28px] md:w-[58svw] lg:w-[44svw]"
+                className="group flex flex-col relative h-[72svh] w-[78svw] flex-shrink-0 overflow-hidden rounded-xl md:w-[58svw] lg:w-[44svw]"
               >
                 {/* Browser chrome titlebar */}
                 <div className="relative z-10 flex h-10 flex-shrink-0 items-center border-b border-white/[0.08] bg-bg-elev/85 px-4 backdrop-blur-sm">
@@ -217,7 +290,7 @@ export default function SelectedWork() {
                   <div aria-hidden="true" className="pointer-events-none absolute inset-0 flex items-center justify-center">
                     <span className="tag !text-white/60">{c.title}</span>
                   </div>
-                  <span aria-hidden="true" className="tag !text-white/50 ml-auto">{c.year}</span>
+                  <span aria-hidden="true" className="tag tabular-nums !text-white/50 ml-auto">{c.year}</span>
                 </div>
 
                 {/* Content area */}
@@ -231,6 +304,19 @@ export default function SelectedWork() {
             <div className="tag mb-3">{t('work.endTag')}</div>
             <p className="font-display text-3xl md:text-5xl">{t('work.endLine')}</p>
           </div>
+        </div>
+
+        {/* Horizontal-journey progress — scaleX driven directly from ScrollTrigger
+            (no React state churn per frame). */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-6 bottom-6 h-px bg-border-strong md:inset-x-10"
+        >
+          <div
+            ref={progressRef}
+            className="h-full origin-left bg-plasma-lime glow-lime"
+            style={{ transform: 'scaleX(0)' }}
+          />
         </div>
       </div>
     </section>

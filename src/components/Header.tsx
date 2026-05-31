@@ -6,9 +6,7 @@ import BrandMark from './BrandMark';
 import { scrollToSection } from '../lib/scrollToSection';
 import { useLocale } from '../lib/useLocale';
 import { useMagnet } from '../lib/useMagnet';
-
-const NAV_IDS = ['manifesto', 'work', 'capabilities', 'process', 'contact'] as const;
-type NavId = (typeof NAV_IDS)[number];
+import { SECTION_IDS as NAV_IDS, type SectionId as NavId } from '../lib/sections';
 
 export default function Header() {
   const { t } = useTranslation();

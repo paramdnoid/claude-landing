@@ -196,12 +196,10 @@ export default function SelectedWork() {
   return (
     <section id="work" aria-labelledby="work-title" className="relative">
       <div className="px-6 pb-12 pt-16 md:px-10">
-        <div className="mx-auto flex max-w-400 items-end justify-between gap-8">
-          <div>
-            <div className="tag mb-4">{t('work.eyebrow')}</div>
-            <h2 id="work-title" className="font-display text-display-lg">{t('work.title')}</h2>
-          </div>
-          <p className="lead hidden max-w-sm md:block">{t('work.intro')}</p>
+        <div className="mx-auto max-w-400">
+          <div className="tag mb-4">{t('work.eyebrow')}</div>
+          <h2 id="work-title" className="font-display text-display-lg">{t('work.title')}</h2>
+          <p className="lead mt-5 max-w-xl">{t('work.intro')}</p>
         </div>
       </div>
 

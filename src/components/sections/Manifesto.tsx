@@ -1,9 +1,7 @@
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
-import { gsap } from '../../lib/gsap';
-import { prefersReducedMotion } from '../../lib/animations';
-import Aura from '../Aura';
+import { revealWordsOnScroll } from '../../lib/animations';
 
 export default function Manifesto() {
   const { t } = useTranslation();
@@ -15,25 +13,10 @@ export default function Manifesto() {
   useGSAP(
     () => {
       const els = lineRefs.current.filter((el): el is HTMLParagraphElement => el !== null);
-      if (els.length === 0) return;
-
-      if (prefersReducedMotion()) {
-        gsap.set(els, { opacity: 1, y: 0 });
-        return;
-      }
-
+      // Scrub each line's words up into place as the reader scrolls — the
+      // manifesto "writes itself". revealWordsOnScroll handles reduced motion.
       els.forEach((el) => {
-        gsap.fromTo(
-          el,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            ease: 'power3.out',
-            duration: 0.9,
-            scrollTrigger: { trigger: el, start: 'top 85%', once: true },
-          },
-        );
+        revealWordsOnScroll(el, { start: 'top 82%', end: 'top 42%', scrub: 0.6 });
       });
     },
     { scope: sectionRef, dependencies: [lines.length] },
@@ -43,9 +26,16 @@ export default function Manifesto() {
     <section
       ref={sectionRef}
       id="manifesto"
-      className="relative px-6 py-16 md:px-10 md:py-24"
+      className="relative overflow-hidden px-6 py-20 md:px-10 md:py-32"
     >
-      <Aura color="lime" className="h-[460px] w-[460px] -left-32 top-[12%]" />
+      {/* Plasma wash — a richer, more colourful backdrop than the flat-black
+          neighbours, marking the manifesto as the page's tonal peak. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-40 top-[-16%] h-[680px] w-[680px] rounded-full bg-plasma-indigo/[0.28] blur-[150px]" />
+        <div className="absolute bottom-[-16%] right-[-12%] h-[560px] w-[560px] rounded-full bg-plasma-cyan/[0.13] blur-[150px]" />
+        <div className="absolute left-[26%] top-[24%] h-[460px] w-[460px] rounded-full bg-plasma-lime/[0.09] blur-[150px]" />
+      </div>
+
       <div className="relative mx-auto max-w-350">
         <div className="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-12">
 
@@ -70,7 +60,6 @@ export default function Manifesto() {
                       ? 'text-plasma pt-2 md:pt-3'
                       : 'text-fg'
                   }`}
-                  style={{ opacity: 0 }}
                 >
                   {line}
                 </p>

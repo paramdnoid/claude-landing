@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '../../lib/gsap';
 import { prefersReducedMotion } from '../../lib/animations';
+import Aura from '../Aura';
 
 export default function Manifesto() {
   const { t } = useTranslation();
@@ -44,12 +45,17 @@ export default function Manifesto() {
       id="manifesto"
       className="relative px-6 py-16 md:px-10 md:py-24"
     >
-      <div className="mx-auto max-w-350">
+      <Aura color="lime" className="h-[460px] w-[460px] -left-32 top-[12%]" />
+      <div className="relative mx-auto max-w-350">
         <div className="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-12">
 
           {/* Left: label sidebar */}
           <div className="md:col-span-3 md:border-r md:border-border md:pr-10">
             <div className="tag">{t('manifesto.eyebrow')}</div>
+            <div
+              aria-hidden="true"
+              className="mt-6 hidden h-20 w-px bg-[linear-gradient(to_bottom,var(--color-plasma-lime),transparent)] md:block"
+            />
           </div>
 
           {/* Right: manifesto lines */}

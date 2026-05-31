@@ -91,6 +91,7 @@ export default function Capabilities() {
       articlesRef={articleRefs}
       sectionRef={sectionRef}
       headerRef={headerRef}
+      auraColor="indigo"
       className="relative px-6 pt-16 md:px-10 md:pt-24"
       renderHeader={() => (
         <>

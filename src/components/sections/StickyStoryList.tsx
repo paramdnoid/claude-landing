@@ -1,5 +1,6 @@
 import { type ReactNode, type RefObject } from 'react';
 import { scrollToSection } from '../../lib/scrollToSection';
+import Aura from '../Aura';
 
 export type StickyStoryItem = {
   /** Stable key for the React list. */
@@ -51,6 +52,8 @@ type Props<T extends StickyStoryItem> = {
    * column placement flips, so the two sister sections read distinctly.
    */
   mirror?: boolean;
+  /** Optional atmospheric plasma glow tint for depth behind the section. */
+  auraColor?: 'lime' | 'cyan' | 'indigo';
 };
 
 const DEFAULT_HEADER_CLS = 'flex flex-col gap-6';
@@ -78,6 +81,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
   className,
   headerClassName = DEFAULT_HEADER_CLS,
   mirror = false,
+  auraColor,
 }: Props<T>) {
   // When mirrored, pin the sticky column to the right 5 cols and the articles
   // to the left 7 — explicit col-start keeps both in the same grid row despite
@@ -96,7 +100,13 @@ export default function StickyStoryList<T extends StickyStoryItem>({
       aria-labelledby={headingId}
       className={className}
     >
-      <div className="mx-auto grid max-w-400 grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
+      {auraColor && (
+        <Aura
+          color={auraColor}
+          className={`h-[480px] w-[480px] top-[8%] ${mirror ? '-right-40' : '-left-40'}`}
+        />
+      )}
+      <div className="relative mx-auto grid max-w-400 grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
         <div className={`${sidebarColCls} md:sticky md:top-[clamp(6rem,12vh,9rem)] md:self-start`}>
           <div ref={headerRef} className={headerClassName}>
             {renderHeader()}
@@ -151,11 +161,20 @@ export default function StickyStoryList<T extends StickyStoryItem>({
                   if (articlesRef.current) articlesRef.current[i] = el;
                 }}
                 aria-labelledby={`${it.anchorId}-title`}
-                className={`flex scroll-mt-[clamp(6rem,12vh,9rem)] flex-col justify-start gap-6 py-12 md:gap-7 md:py-24 ${
+                className={`group/article relative isolate flex scroll-mt-[clamp(6rem,12vh,9rem)] flex-col justify-start gap-6 overflow-hidden py-12 md:gap-7 md:py-24 ${
                   i > 0 ? 'border-t border-border' : ''
                 }`}
                 {...dataAttrs}
               >
+                {/* Oversized ghost index — editorial depth behind the content. */}
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute top-6 -z-10 select-none font-display text-[6.5rem] leading-none tabular-nums text-fg/[0.04] transition-colors duration-500 group-hover/article:text-fg/[0.07] md:top-12 md:text-[10rem] ${
+                    mirror ? 'left-0' : 'right-0'
+                  }`}
+                >
+                  {it.index}
+                </span>
                 {renderArticleBody(it)}
               </article>
             );

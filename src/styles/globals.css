@@ -301,6 +301,13 @@
     0%, 100% { opacity: 0.65; }
     50%       { opacity: 1; }
   }
+
+  /* Terminal caret blink (Connect idle state). Paused by the prefers-reduced-
+     motion reset, which leaves the caret statically visible. */
+  @keyframes cursor-blink {
+    0%, 49%   { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
   .signet-aura {
     transform-origin: center;
     transform-box: fill-box;

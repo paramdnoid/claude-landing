@@ -191,6 +191,8 @@
   },
   "aiDemo": {
     "placeholder": "Stell mir eine Frage…",
+    "greeting": "Frag mich zu KI-Engineering, Projekten oder Zusammenarbeit.",
+    "greetingHint": "Oder wähle unten einen Vorschlag.",
     "suggestions": [
       "Was macht ZIAN AI CONCEPTS?",
       "Wie läuft eine Zusammenarbeit ab?",

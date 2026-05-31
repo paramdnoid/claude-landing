@@ -363,10 +363,24 @@ export default function Connect() {
                   aria-label={t('aiDemo.logLabel')}
                 >
                   {messages.length === 0 && !streamBuffer && formStatus === 'closed' && (
-                    <p className="text-muted">
-                      <span aria-hidden="true" className="text-plasma-lime">→</span>{' '}
-                      {t('aiDemo.status.idle')}
-                    </p>
+                    <div className="space-y-2">
+                      <p className="text-muted">
+                        <span aria-hidden="true" className="text-plasma-lime">→</span>{' '}
+                        {t('aiDemo.status.idle')}
+                      </p>
+                      <p className="text-muted-2">
+                        <span aria-hidden="true" className="mr-2 select-none">//</span>
+                        {t('aiDemo.greeting')}
+                      </p>
+                      <p className="text-muted-2">
+                        <span aria-hidden="true" className="mr-2 select-none">//</span>
+                        {t('aiDemo.greetingHint')}
+                      </p>
+                      <p aria-hidden="true" className="flex items-center pt-1 text-plasma-lime">
+                        <span className="select-none">{'>'}</span>
+                        <span className="ml-2 inline-block h-4 w-[7px] animate-[cursor-blink_1.1s_steps(1)_infinite] bg-plasma-lime" />
+                      </p>
+                    </div>
                   )}
                   {messages.map((msg, i) => (
                     <div

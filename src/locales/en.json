@@ -191,6 +191,8 @@
   },
   "aiDemo": {
     "placeholder": "Ask me anything…",
+    "greeting": "Ask me about AI engineering, projects, or working together.",
+    "greetingHint": "Or pick a prompt below.",
     "suggestions": [
       "What does ZIAN AI CONCEPTS do?",
       "How does a collaboration work?",

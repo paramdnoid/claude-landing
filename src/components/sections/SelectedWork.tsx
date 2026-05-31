@@ -195,14 +195,6 @@ export default function SelectedWork() {
 
   return (
     <section id="work" aria-labelledby="work-title" className="relative">
-      <div className="px-6 pb-12 pt-16 md:px-10">
-        <div className="mx-auto max-w-400">
-          <div className="tag mb-4">{t('work.eyebrow')}</div>
-          <h2 id="work-title" className="font-display text-display-lg">{t('work.title')}</h2>
-          <p className="lead mt-5 max-w-xl">{t('work.intro')}</p>
-        </div>
-      </div>
-
       <div
         ref={viewportRef}
         role="region"
@@ -211,17 +203,27 @@ export default function SelectedWork() {
         tabIndex={0}
         onKeyDown={onCarouselKeyDown}
         data-cursor-label={t('work.dragLabel')}
-        className="relative h-[100svh] select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
+        className="relative flex h-[100svh] flex-col select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
       >
+        {/* Section header — lives inside the pinned viewport so it stays visible
+            for the whole horizontal scroll instead of scrolling away above it. */}
+        <div className="flex-shrink-0 px-6 pb-6 pt-16 md:px-10 md:pt-20">
+          <div className="mx-auto max-w-400">
+            <div className="tag mb-3">{t('work.eyebrow')}</div>
+            <h2 id="work-title" className="font-display text-display-md lg:text-display-lg">{t('work.title')}</h2>
+            <p className="lead mt-4 hidden max-w-xl md:block">{t('work.intro')}</p>
+          </div>
+        </div>
+
         <span className="sr-only">{t('work.carouselKeyboardHint')}</span>
-        <div ref={trackRef} className="flex h-full items-center gap-6 px-6 will-change-transform md:gap-10 md:px-10">
+        <div ref={trackRef} className="flex flex-1 items-center gap-6 px-6 will-change-transform md:gap-10 md:px-10">
           {cases.map((c, i) => (
             <article
               key={c.index}
               aria-labelledby={`work-card-${c.index}`}
               aria-roledescription="slide"
               aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
-              className="group relative flex w-[80svw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[56svw] lg:h-[58svh] lg:w-[52svw] lg:flex-row xl:w-[44svw]"
+              className="group relative flex w-[80svw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[56svw] lg:h-[50svh] lg:w-[52svw] lg:flex-row xl:w-[44svw]"
             >
               {/* Faint plasma radial — static, CSS-only, identical per card. */}
               <div
@@ -296,7 +298,7 @@ export default function SelectedWork() {
             </article>
           ))}
 
-          <div className="flex w-[60svw] flex-shrink-0 flex-col justify-center gap-4 pr-10 lg:h-[58svh] lg:w-[36svw]">
+          <div className="flex w-[60svw] flex-shrink-0 flex-col justify-center gap-4 pr-10 lg:h-[50svh] lg:w-[36svw]">
             <div className="tag !text-plasma-lime">{t('work.endTag')}</div>
             <p className="font-display text-display-md text-fg">{t('work.endLine')}</p>
             <a

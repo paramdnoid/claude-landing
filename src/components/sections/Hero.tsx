@@ -90,7 +90,7 @@ export default function Hero() {
       {/* 3-D signet above all CSS overlays -- polished obsidian monolith */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-[1%] z-[1] hidden items-center pt-16 lg:flex"
+        className="pointer-events-none absolute inset-y-0 right-[1%] z-1 hidden items-center pt-16 lg:flex"
       >
         <Suspense fallback={null}>
           <HeroSignet3D />

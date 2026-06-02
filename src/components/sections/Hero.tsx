@@ -5,11 +5,11 @@ import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { splitText, prefersReducedMotion } from '../../lib/animations';
 import { scrollToSection } from '../../lib/scrollToSection';
 import { useMagnet } from '../../lib/useMagnet';
-import Signet from '../Signet';
 import WebGLErrorBoundary from '../webgl/WebGLErrorBoundary';
 import StaticGradientFallback from '../webgl/StaticGradientFallback';
 
 const LiquidGradientMesh = lazy(() => import('../webgl/LiquidGradientMesh'));
+const HeroSignet3D = lazy(() => import('../webgl/HeroSignet3D'));
 
 export default function Hero() {
   const { t, i18n } = useTranslation();
@@ -19,17 +19,14 @@ export default function Hero() {
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const metaRef = useRef<HTMLDivElement>(null);
-  // Content block for scroll-parallax — translated upward slightly as user scrolls
   const contentRef = useRef<HTMLDivElement>(null);
-  // Magnetic primary CTAs (fine-pointer + motion-safe; the hook no-ops otherwise)
   const workCtaRef = useMagnet<HTMLAnchorElement>(0.4);
   const contactCtaRef = useMagnet<HTMLAnchorElement>(0.4);
 
   useGSAP(() => {
-    if (!headlineRef.current) return;
+    if (headlineRef.current === null) return;
     const rm = prefersReducedMotion();
 
-    // --- intro timeline ---
     if (!rm) {
       const chars = splitText(headlineRef.current);
       const tl = gsap.timeline();
@@ -40,9 +37,7 @@ export default function Hero() {
         .from(metaRef.current?.children ?? [], { y: 14, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.07 }, '-=0.4');
     }
 
-    // --- scroll-linked parallax on the content block ---
-    // Translates content upward by ~60px as hero scrolls out — pure transform, no layout shift.
-    if (!rm && contentRef.current && sectionRef.current) {
+    if (!rm && contentRef.current !== null && sectionRef.current !== null) {
       const st = ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top top',
@@ -50,7 +45,7 @@ export default function Hero() {
         scrub: 1.2,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
-          if (contentRef.current) {
+          if (contentRef.current !== null) {
             gsap.set(contentRef.current, {
               y: self.progress * -60,
               force3D: true,
@@ -82,22 +77,18 @@ export default function Hero() {
       </div>
 
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_60%,rgba(5,5,7,0.25)_0%,rgba(5,5,7,0.65)_70%,rgba(5,5,7,0.92)_100%)]" />
-      {/* Extra flat scrim on mobile only: text spans the full hero height where
-          the WebGL gradient is brightest, so the radial alone can dip below the
-          4.5:1 contrast floor on small screens. Desktop keeps the vibrant look. */}
       <div className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
 
-      {/* Logo woven into the backdrop: the large signet sits over the animated
-          gradient with an overlay blend + low opacity, so the moving mesh
-          shimmers through it instead of reading as a solid mark. Sits below the
-          content (z-10); decorative; desktop only. */}
+
+      {/* 3-D signet above all CSS overlays -- polished obsidian monolith */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-[1%] z-[1] hidden items-center pt-16 opacity-20 mix-blend-overlay lg:flex"
+        className="pointer-events-none absolute inset-y-0 right-[1%] z-[1] hidden items-center pt-16 lg:flex"
       >
-        <Signet animated className="w-[clamp(360px,44vw,760px)]" />
+        <Suspense fallback={null}>
+          <HeroSignet3D />
+        </Suspense>
       </div>
-
       <div
         ref={contentRef}
         className="relative z-10 flex min-h-svh flex-col justify-between gap-10 px-6 pb-14 pt-24 md:gap-12 md:px-10 md:pb-16 md:pt-32"

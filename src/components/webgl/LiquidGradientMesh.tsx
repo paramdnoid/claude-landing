@@ -153,8 +153,7 @@ export default function LiquidGradientMesh({ scrollTriggerId }: Props) {
       camera={{ position: [0, 0, 1], zoom: 1 }}
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
     >
-      <GradientPlane scrollTriggerId={scrollTriggerId} />
-      <EffectComposer multisampling={0}>
+      <GradientPlane scrollTriggerId={scrollTriggerId} />      <EffectComposer multisampling={0}>
         <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
       </EffectComposer>
     </Canvas>

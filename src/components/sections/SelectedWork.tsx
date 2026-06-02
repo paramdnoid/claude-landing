@@ -211,6 +211,12 @@ export default function SelectedWork() {
           <div className="tag mb-3">{t('work.eyebrow')}</div>
           <h2 id="work-title" className="font-display text-display-md lg:text-display-lg">{t('work.title')}</h2>
           <p className="lead mt-4 hidden max-w-xl md:block">{t('work.intro')}</p>
+          <p
+            aria-hidden="true"
+            className="tag mt-3 hidden items-center gap-2 !text-plasma-lime pointer-coarse:flex"
+          >
+            {t('work.carouselTouchHint')} <span aria-hidden="true">→</span>
+          </p>
         </div>
 
         <span className="sr-only">{t('work.carouselKeyboardHint')}</span>
@@ -280,7 +286,7 @@ export default function SelectedWork() {
                 </span>
                 <h3
                   id={`work-card-${c.index}`}
-                  className="font-display text-3xl text-fg md:text-4xl lg:text-display-md"
+                  className="font-display text-display-md text-fg"
                 >
                   {c.title}
                 </h3>

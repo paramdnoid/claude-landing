@@ -26,6 +26,7 @@ export default function Manifesto() {
     <section
       ref={sectionRef}
       id="manifesto"
+      aria-labelledby="manifesto-heading"
       className="relative overflow-hidden py-20 md:py-32"
     >
       {/* Plasma panel — a saturated, pervasive gradient fill (not corner glows)
@@ -45,6 +46,7 @@ export default function Manifesto() {
 
           {/* Left: label sidebar */}
           <div className="md:col-span-3 md:border-r md:border-border md:pr-10">
+            <h2 id="manifesto-heading" className="sr-only">{t('nav.manifesto')}</h2>
             <div className="tag">{t('manifesto.eyebrow')}</div>
             <div
               aria-hidden="true"

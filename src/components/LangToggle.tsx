@@ -26,7 +26,7 @@ export default function LangToggle() {
     <div
       role="group"
       aria-label={t('nav.language')}
-      className="flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-1 py-1 font-mono text-xs uppercase tracking-widest backdrop-blur"
+      className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-1 py-1 font-mono text-xs uppercase tracking-widest backdrop-blur"
     >
       {SUPPORTED_LANGS.map((lng) => {
         const active = current === lng;
@@ -36,7 +36,7 @@ export default function LangToggle() {
             type="button"
             onClick={() => switchTo(lng)}
             aria-pressed={active}
-            className={`relative rounded-full px-2.5 py-1 transition-colors after:absolute after:-inset-y-2.5 after:inset-x-0 after:content-[''] ${
+            className={`relative inline-flex items-center justify-center rounded-full px-2.5 py-1 transition-colors after:absolute after:-inset-y-2.5 after:inset-x-0 after:content-[''] pointer-coarse:min-h-11 pointer-coarse:min-w-11 ${
               active
                 ? 'bg-white text-bg'
                 : 'text-muted hover:text-white'

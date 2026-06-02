@@ -45,6 +45,7 @@
     "onRequest": "Case Study auf Anfrage",
     "casePreviewAlt": "Vorschau von {{title}}",
     "carouselKeyboardHint": "Mit den Pfeiltasten durch die Cases blättern.",
+    "carouselTouchHint": "Wischen zum Blättern.",
     "cases": [
       {
         "index": "01",
@@ -149,7 +150,7 @@
     }
   },
   "process": {
-    "eyebrow": "Prozess · 05",
+    "eyebrow": "Prozess · 04",
     "title": "Wie ich arbeite.",
     "steps": [
       {
@@ -177,7 +178,7 @@
     "miniIndexLabel": "Prozessschritte"
   },
   "connect": {
-    "eyebrow": "Verbinden · 06",
+    "eyebrow": "Verbinden · 05",
     "intro": "Sprich mit der KI — oder hinterlasse Spuren. Beides erreicht mich.",
     "leaveTracePill": "Spuren hinterlassen →",
     "inlineFormPrompt": "Lass mir deine E-Mail und das Wesentliche da — ich melde mich innerhalb von 24 Stunden.",

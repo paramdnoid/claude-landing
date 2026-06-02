@@ -45,6 +45,7 @@
     "onRequest": "Case study on request",
     "casePreviewAlt": "Preview of {{title}}",
     "carouselKeyboardHint": "Use the arrow keys to browse cases.",
+    "carouselTouchHint": "Swipe to browse.",
     "cases": [
       {
         "index": "01",
@@ -149,7 +150,7 @@
     }
   },
   "process": {
-    "eyebrow": "Process · 05",
+    "eyebrow": "Process · 04",
     "title": "How I work.",
     "steps": [
       {
@@ -177,7 +178,7 @@
     "miniIndexLabel": "Process steps"
   },
   "connect": {
-    "eyebrow": "Connect · 06",
+    "eyebrow": "Connect · 05",
     "intro": "Talk to the AI — or leave a trace. Both reach me.",
     "leaveTracePill": "Leave a trace →",
     "inlineFormPrompt": "Drop your email and the gist — I'll get back to you within 24 hours.",

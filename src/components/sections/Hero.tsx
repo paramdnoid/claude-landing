@@ -79,6 +79,13 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_60%,rgba(5,5,7,0.25)_0%,rgba(5,5,7,0.65)_70%,rgba(5,5,7,0.92)_100%)]" />
       <div className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
 
+      {/* Dissolve the mesh to solid page-black before the hero's edge so it hands
+          off seamlessly to the Manifesto's black top fade — no ragged mesh cut. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-[linear-gradient(to_top,var(--color-bg),transparent)]"
+      />
+
 
       {/* 3-D signet above all CSS overlays -- polished obsidian monolith */}
       <div
@@ -91,25 +98,28 @@ export default function Hero() {
       </div>
       <div
         ref={contentRef}
-        className="relative z-10 flex min-h-svh flex-col justify-between gap-10 px-6 pb-14 pt-24 md:gap-12 md:px-10 md:pb-16 md:pt-32"
+        className="shell relative z-10 flex min-h-svh flex-col gap-10 pb-14 pt-24 md:gap-12 md:pb-16 md:pt-32"
       >
-        <div ref={eyebrowRef} className="glass glass-pill tag inline-flex w-fit max-w-full items-start gap-2.5 leading-snug md:items-center md:gap-3">
-          <span className="mt-[0.3rem] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-plasma-lime glow-lime md:mt-0" />
-          <span className="text-[0.62rem] tracking-[0.12em] md:text-[0.7rem] md:tracking-[0.18em]">{t('hero.eyebrow')}</span>
-        </div>
+        {/* Eyebrow + headline form one vertically-centered group so the hero
+            stays compact and balanced at any height (FHD through 4K). */}
+        <div className="flex flex-1 flex-col justify-center gap-10 md:gap-12">
+          <div ref={eyebrowRef} className="glass glass-pill tag inline-flex w-fit max-w-full items-start gap-2.5 leading-snug md:items-center md:gap-3">
+            <span className="mt-[0.3rem] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-plasma-lime glow-lime md:mt-0" />
+            <span className="text-[0.62rem] tracking-[0.12em] md:text-[0.7rem] md:tracking-[0.18em]">{t('hero.eyebrow')}</span>
+          </div>
 
-        <div className="max-w-400">
-          <h1
-            ref={headlineRef}
-            lang={i18n.language}
-            className="font-display text-display-md lg:text-display-lg text-fg [hyphens:auto]"
-          >
-            {t('hero.headline')}
-          </h1>
-          <p ref={subRef} className="lead mt-6 max-w-2xl md:mt-8">
-            {t('hero.sub')}
-          </p>
-          <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3 md:mt-10 md:gap-4">
+          <div className="max-w-400">
+            <h1
+              ref={headlineRef}
+              lang={i18n.language}
+              className="font-display text-display-md lg:text-display-lg text-fg [hyphens:auto]"
+            >
+              {t('hero.headline')}
+            </h1>
+            <p ref={subRef} className="lead mt-6 max-w-2xl md:mt-8">
+              {t('hero.sub')}
+            </p>
+            <div ref={ctaRef} className="mt-8 flex flex-wrap items-center gap-3 md:mt-10 md:gap-4">
             <a
               ref={workCtaRef}
               href="#work"
@@ -130,9 +140,10 @@ export default function Hero() {
               {t('hero.ctaContact')}
             </a>
           </div>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-8 md:gap-6">
+        <div className="mt-auto flex flex-col gap-8 md:gap-6">
           <div ref={metaRef} className="flex flex-wrap items-end gap-3">
             <div className="glass glass-pill tag">{t('hero.metaRole')}</div>
             <div className="glass glass-pill tag">{t('hero.metaLocation')}</div>

@@ -26,7 +26,7 @@ export default function Manifesto() {
     <section
       ref={sectionRef}
       id="manifesto"
-      className="relative overflow-hidden px-6 py-20 md:px-10 md:py-32"
+      className="relative overflow-hidden py-20 md:py-32"
     >
       {/* Plasma panel — a saturated, pervasive gradient fill (not corner glows)
           that turns the manifesto into a luminous colour chapter. Top + bottom
@@ -40,7 +40,7 @@ export default function Manifesto() {
         <div className="absolute inset-x-0 bottom-0 h-44 bg-[linear-gradient(to_top,var(--color-bg),transparent)]" />
       </div>
 
-      <div className="relative mx-auto max-w-350">
+      <div className="shell relative">
         <div className="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-12">
 
           {/* Left: label sidebar */}

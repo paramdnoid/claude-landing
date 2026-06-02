@@ -92,7 +92,7 @@ export default function Capabilities() {
       sectionRef={sectionRef}
       headerRef={headerRef}
       auraColor="indigo"
-      className="relative pt-16 md:pt-24"
+      className="relative pt-16 pb-16 md:pt-24 md:pb-24"
       renderHeader={() => (
         <>
           <div className="tag">{t('capabilities.eyebrow')}</div>

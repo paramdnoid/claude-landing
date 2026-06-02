@@ -37,10 +37,11 @@ const THUMBS: Record<string, Picture> = {
   '05': nanasPic,
 };
 
-// On desktop the screenshot frame occupies ~58% of a 64svw card (≈37vw); on
-// tablet the card is 58vw wide; on mobile 78vw. The sizes attribute mirrors that
-// so the browser picks the smallest variant that fits.
-const THUMB_SIZES = '(min-width: 1024px) 30vw, (min-width: 768px) 56vw, 80vw';
+// Card widths are rem-based so they scale with the root font-size above 1920.
+// On lg the screenshot frame is ~58% of a 40rem card (≈23rem); on tablet the
+// frame spans the full 34rem card; on mobile the card is 78vw. rem in `sizes`
+// resolves against root font-size, so this stays accurate when the page zooms.
+const THUMB_SIZES = '(min-width: 1024px) 23rem, (min-width: 768px) 33rem, 78vw';
 
 // Decorative browser-chrome domain pill, derived from the case title. Purely
 // cosmetic (and aria-hidden), so it carries no locale-sensitive copy and needs
@@ -202,27 +203,25 @@ export default function SelectedWork() {
         aria-label={t('work.title')}
         tabIndex={0}
         onKeyDown={onCarouselKeyDown}
-        className="relative flex h-[100svh] flex-col select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
+        className="shell relative flex h-[100svh] flex-col select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
       >
         {/* Section header — lives inside the pinned viewport so it stays visible
             for the whole horizontal scroll instead of scrolling away above it. */}
-        <div className="flex-shrink-0 px-6 pb-6 pt-16 md:px-10 md:pt-20">
-          <div className="mx-auto max-w-400">
-            <div className="tag mb-3">{t('work.eyebrow')}</div>
-            <h2 id="work-title" className="font-display text-display-md lg:text-display-lg">{t('work.title')}</h2>
-            <p className="lead mt-4 hidden max-w-xl md:block">{t('work.intro')}</p>
-          </div>
+        <div className="flex-shrink-0 pb-6 pt-16 md:pt-20">
+          <div className="tag mb-3">{t('work.eyebrow')}</div>
+          <h2 id="work-title" className="font-display text-display-md lg:text-display-lg">{t('work.title')}</h2>
+          <p className="lead mt-4 hidden max-w-xl md:block">{t('work.intro')}</p>
         </div>
 
         <span className="sr-only">{t('work.carouselKeyboardHint')}</span>
-        <div ref={trackRef} className="flex flex-1 items-center gap-6 px-6 will-change-transform md:gap-10 md:px-10">
+        <div ref={trackRef} className="flex flex-1 items-center gap-6 will-change-transform md:gap-10">
           {cases.map((c, i) => (
             <article
               key={c.index}
               aria-labelledby={`work-card-${c.index}`}
               aria-roledescription="slide"
               aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
-              className="group relative flex w-[80svw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[56svw] lg:h-[50svh] lg:w-[52svw] lg:flex-row xl:w-[44svw]"
+              className="group relative flex w-[78vw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[34rem] lg:h-[50svh] lg:w-[40rem] lg:flex-row xl:w-[44rem]"
             >
               {/* Faint plasma radial — static, CSS-only, identical per card. */}
               <div
@@ -297,7 +296,7 @@ export default function SelectedWork() {
             </article>
           ))}
 
-          <div className="flex w-[60svw] flex-shrink-0 flex-col justify-center gap-4 pr-10 lg:h-[50svh] lg:w-[36svw]">
+          <div className="flex w-[60vw] flex-shrink-0 flex-col justify-center gap-4 pr-10 lg:h-[50svh] lg:w-[34rem]">
             <div className="tag !text-plasma-lime">{t('work.endTag')}</div>
             <p className="font-display text-display-md text-fg">{t('work.endLine')}</p>
             <a

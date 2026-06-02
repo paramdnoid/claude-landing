@@ -62,6 +62,11 @@
     scroll-behavior: auto;
     -webkit-text-size-adjust: 100%;
     background: var(--color-bg);
+    /* Uniform zoom above Full‑HD: the root grows linearly with viewport width so
+       every rem‑based size (max-w-400 column, spacing, display/.lead rem caps)
+       scales together. 0.8333vw = 16px at exactly 1920 → the 1rem floor keeps
+       ≤1920 unchanged; caps at 2rem (32px) at 3840, giving 4K a ~2× zoom of FHD. */
+    font-size: clamp(1rem, 0.8333vw, 2rem);
   }
 
   html.lenis, html.lenis body { height: auto; }
@@ -132,6 +137,19 @@
 }
 
 @layer utilities {
+  /* Single source of truth for the page's centered content column. Mirrors the
+     header's `mx-auto max-w-400 px-6 md:px-10` so every section shares one edge
+     and width. Full‑bleed backgrounds (plasma panels, Aura) stay outside it. */
+  .shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 100rem; /* = max-w-400 = 1600px at root 16px */
+    padding-inline: 1.5rem; /* = px-6 */
+  }
+  @media (min-width: 48rem) {
+    .shell { padding-inline: 2.5rem; } /* = md:px-10 */
+  }
+
   .font-display {
     font-family: var(--font-sans);
     letter-spacing: -0.045em;

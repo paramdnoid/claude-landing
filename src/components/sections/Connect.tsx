@@ -287,13 +287,13 @@ export default function Connect() {
     'flex-1 rounded-sm bg-transparent py-1.5 font-mono text-sm text-fg outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)]';
 
   return (
-    <section id="contact" className="relative px-6 pb-12 pt-16 md:px-10 md:pb-16 md:pt-24">
+    <section id="contact" className="relative pb-12 pt-16 md:pb-16 md:pt-24">
       {/* Backwards-compat anchor for legacy #ai-demo links */}
       <span id="ai-demo" aria-hidden="true" className="block -translate-y-24" />
 
       <Aura color="indigo" className="h-[520px] w-[520px] -right-40 top-[6%]" />
 
-      <div className="relative mx-auto max-w-400">
+      <div className="shell relative">
         {/* Header */}
         <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

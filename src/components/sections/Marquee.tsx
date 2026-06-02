@@ -33,10 +33,10 @@ export default function Marquee() {
 
   return (
     <section id="stack" className="relative overflow-hidden border-y border-border py-10 md:py-16">
-      <div className="mx-auto mb-6 max-w-400 px-6 md:px-10">
+      <div className="shell mb-6">
         <div className="tag">{t('marquee.eyebrow')}</div>
       </div>
-      <div className="relative w-full overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+      <div className="shell relative overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
         <div ref={trackRef} className="flex w-max items-center gap-12 whitespace-nowrap will-change-transform md:gap-20">
           {items.map((label, i) => (
             <div key={i} className="flex items-center gap-12 md:gap-20">

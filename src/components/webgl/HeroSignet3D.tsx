@@ -6,7 +6,9 @@ import Signet from '../Signet';
 import SignetMesh3D from './SignetMesh3D';
 import { prefersReducedMotion } from '../../lib/animations';
 
-const SIZE = 'clamp(320px, 42vw, 680px)';
+// Ceiling raised so the 42vw term governs through 4K (~806px @1920 → ~1613px
+// @3840), keeping the signet a uniform 42% of viewport instead of capping early.
+const SIZE = 'clamp(320px, 42vw, 1664px)';
 
 // Dissolve the square canvas edges so the signet (and its bloom) floats in the
 // hero instead of reading as a pasted-on panel. Elliptical to respect the

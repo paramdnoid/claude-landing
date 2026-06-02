@@ -106,7 +106,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
           className={`h-[480px] w-[480px] top-[8%] ${mirror ? '-right-40' : '-left-40'}`}
         />
       )}
-      <div className="relative mx-auto grid max-w-400 grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
+      <div className="shell relative grid grid-cols-1 gap-x-12 gap-y-16 md:grid-cols-12">
         <div className={`${sidebarColCls} md:sticky md:top-[clamp(6rem,12vh,9rem)] md:self-start`}>
           <div ref={headerRef} className={headerClassName}>
             {renderHeader()}

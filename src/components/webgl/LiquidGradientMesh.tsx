@@ -13,9 +13,11 @@ const webGL2Available = typeof document !== 'undefined' ? WebGL.isWebGL2Availabl
 type Props = {
   /** id of the section that drives uScroll progress */
   scrollTriggerId?: string;
+  /** When false (hero scrolled offscreen), pause the render loop + mouse rAF. */
+  inView?: boolean;
 };
 
-function GradientPlane({ scrollTriggerId }: Props) {
+function GradientPlane({ scrollTriggerId, inView = true }: Props) {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const { size } = useThree();
 
@@ -42,8 +44,10 @@ function GradientPlane({ scrollTriggerId }: Props) {
     uniforms.uResolution.value.set(size.width, size.height);
   }, [size, uniforms]);
 
-  // mouse parallax
+  // mouse parallax — paused while the hero is offscreen. This rAF is independent
+  // of the R3F frameloop, so it must be stopped explicitly or it keeps lerping.
   useEffect(() => {
+    if (!inView) return;
     const target = new THREE.Vector2();
     const onMove = (e: PointerEvent) => {
       target.set((e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1));
@@ -59,7 +63,7 @@ function GradientPlane({ scrollTriggerId }: Props) {
       window.removeEventListener('pointermove', onMove);
       cancelAnimationFrame(raf);
     };
-  }, [uniforms]);
+  }, [uniforms, inView]);
 
   // pointer impulse — disabled when reducedMotion
   useEffect(() => {
@@ -96,7 +100,7 @@ function GradientPlane({ scrollTriggerId }: Props) {
   }, [scrollTriggerId]);
 
   useFrame((_, dt) => {
-    if (!materialRef.current) return;
+    if (!materialRef.current || !inView) return;
 
     (materialRef.current.uniforms.uTime as { value: number }).value += dt;
 
@@ -140,20 +144,21 @@ function GradientPlane({ scrollTriggerId }: Props) {
   );
 }
 
-export default function LiquidGradientMesh({ scrollTriggerId }: Props) {
+export default function LiquidGradientMesh({ scrollTriggerId, inView = true }: Props) {
   if (prefersReducedMotion() || !webGL2Available) {
     return <StaticGradientFallback />;
   }
 
   return (
     <Canvas
+      frameloop={inView ? 'always' : 'never'}
       gl={{ antialias: false, powerPreference: 'high-performance', alpha: false }}
       dpr={[1, 1.5]}
       orthographic
       camera={{ position: [0, 0, 1], zoom: 1 }}
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
     >
-      <GradientPlane scrollTriggerId={scrollTriggerId} />      <EffectComposer multisampling={0}>
+      <GradientPlane scrollTriggerId={scrollTriggerId} inView={inView} />      <EffectComposer multisampling={0}>
         <Bloom intensity={0.55} luminanceThreshold={0.45} luminanceSmoothing={0.3} mipmapBlur />
       </EffectComposer>
     </Canvas>

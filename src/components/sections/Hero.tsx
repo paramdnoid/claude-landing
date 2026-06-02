@@ -7,13 +7,26 @@ import { scrollToSection } from '../../lib/scrollToSection';
 import { useMagnet } from '../../lib/useMagnet';
 import WebGLErrorBoundary from '../webgl/WebGLErrorBoundary';
 import StaticGradientFallback from '../webgl/StaticGradientFallback';
+import Signet from '../Signet';
+import { useInView } from '../../lib/useInView';
+import { isWebGL2Available } from '../../lib/webgl';
 
 const LiquidGradientMesh = lazy(() => import('../webgl/LiquidGradientMesh'));
 const HeroSignet3D = lazy(() => import('../webgl/HeroSignet3D'));
 
+// Mirrors HeroSignet3D's SIZE so the lightweight 2-D fallback — rendered for
+// reduced-motion / non-WebGL2 clients, who never fetch the heavy three chunk —
+// occupies the same footprint as the 3-D signet.
+const SIGNET_FALLBACK_SIZE = 'clamp(320px, 42vw, 1664px)';
+
 export default function Hero() {
   const { t, i18n } = useTranslation();
-  const sectionRef = useRef<HTMLElement>(null);
+  // The same ref drives the GSAP scope and the in-view observer that pauses the
+  // hero's WebGL render loops once it scrolls offscreen.
+  const { ref: sectionRef, inView } = useInView<HTMLElement>({ rootMargin: '200px' });
+  // Decide capability ONCE: reduced-motion or no WebGL2 → never render (or even
+  // fetch) the heavy 3-D; show the static fallbacks instead.
+  const allowWebGL = !prefersReducedMotion() && isWebGL2Available();
   const eyebrowRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
@@ -70,9 +83,13 @@ export default function Hero() {
     >
       <div className="absolute inset-0">
         <WebGLErrorBoundary fallback={<StaticGradientFallback />}>
-          <Suspense fallback={<div className="absolute inset-0 bg-bg" />}>
-            <LiquidGradientMesh scrollTriggerId="hero" />
-          </Suspense>
+          {allowWebGL ? (
+            <Suspense fallback={<div className="absolute inset-0 bg-bg" />}>
+              <LiquidGradientMesh scrollTriggerId="hero" inView={inView} />
+            </Suspense>
+          ) : (
+            <StaticGradientFallback />
+          )}
         </WebGLErrorBoundary>
       </div>
 
@@ -87,14 +104,22 @@ export default function Hero() {
       />
 
 
-      {/* 3-D signet above all CSS overlays -- polished obsidian monolith */}
+      {/* 3-D signet above all CSS overlays -- polished obsidian monolith.
+          Reduced-motion / non-WebGL2 clients get the lightweight 2-D signet
+          directly, so the heavy three chunk is never fetched for them. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-y-0 right-[1%] z-1 hidden items-center pt-16 lg:flex"
       >
-        <Suspense fallback={null}>
-          <HeroSignet3D />
-        </Suspense>
+        {allowWebGL ? (
+          <Suspense fallback={null}>
+            <HeroSignet3D inView={inView} />
+          </Suspense>
+        ) : (
+          <div style={{ width: SIGNET_FALLBACK_SIZE, height: SIGNET_FALLBACK_SIZE, opacity: 0.25, mixBlendMode: 'overlay' }}>
+            <Signet animated className="h-full w-full" />
+          </div>
+        )}
       </div>
       <div
         ref={contentRef}

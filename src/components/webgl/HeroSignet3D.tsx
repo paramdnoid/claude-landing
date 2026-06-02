@@ -24,7 +24,7 @@ const EDGE_FADE = 'radial-gradient(ellipse 62% 70% at 50% 50%, #000 60%, transpa
  * SMAA for crisp silhouette edges) under ACES tone mapping. No canvas-level
  * opacity — the crisp render composites directly over the hero gradient.
  */
-export default function HeroSignet3D() {
+export default function HeroSignet3D({ inView = true }: { inView?: boolean }) {
   const rm = prefersReducedMotion();
 
   const fallback = (
@@ -39,8 +39,9 @@ export default function HeroSignet3D() {
     <div style={{ position: 'relative', width: SIZE, height: SIZE }}>
       <WebGLErrorBoundary fallback={fallback}>
         <Canvas
+          frameloop={inView ? 'always' : 'never'}
           gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
-          dpr={[1, 2]}
+          dpr={[1, 1.5]}
           camera={{ position: [0, 0, 5], fov: 52 }}
           onCreated={({ gl }) => {
             gl.toneMapping = THREE.ACESFilmicToneMapping;

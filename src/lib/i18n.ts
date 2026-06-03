@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import de from '../locales/de.json';
 import en from '../locales/en.json';
+import { SUPPORTED_LANGS, DEFAULT_LANG } from './lang';
 
 void i18n
   .use(LanguageDetector)
@@ -12,9 +13,13 @@ void i18n
       de: { translation: de },
       en: { translation: en },
     },
-    fallbackLng: 'de',
-    supportedLngs: ['de', 'en'],
+    fallbackLng: DEFAULT_LANG,
+    supportedLngs: SUPPORTED_LANGS,
     returnNull: false,
+    // Resources are bundled and init is synchronous, so translations are ready
+    // on first render. Declaring this explicitly keeps first paint safe if an
+    // async backend is ever added without a Suspense boundary.
+    react: { useSuspense: false },
     interpolation: { escapeValue: false },
     detection: {
       order: ['localStorage', 'navigator'],

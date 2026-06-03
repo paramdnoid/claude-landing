@@ -2,7 +2,7 @@ export const SUPPORTED_LANGS = ['de', 'en'] as const;
 export type Lang = (typeof SUPPORTED_LANGS)[number];
 
 const SUPPORTED_SET: ReadonlySet<string> = new Set(SUPPORTED_LANGS);
-const DEFAULT_LANG: Lang = 'de';
+export const DEFAULT_LANG: Lang = 'de';
 
 /** Type guard for {@link Lang}. Add a locale once in {@link SUPPORTED_LANGS} — both
  * `isLang` and `resolveLang` track it automatically. */

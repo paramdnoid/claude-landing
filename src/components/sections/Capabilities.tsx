@@ -27,7 +27,9 @@ export default function Capabilities() {
 
   // Stabilise on locale so derived items + their dependent effects don't churn.
   const items = useMemo<CapabilityItem[]>(() => {
-    const raw = t('capabilities.items', { returnObjects: true }) as Capability[];
+    // Annotate (don't cast) so a future de.json shape drift fails typecheck
+    // instead of slipping through to a runtime `.map of undefined` crash.
+    const raw: Capability[] = t('capabilities.items', { returnObjects: true });
     return raw.map((it) => ({
       ...it,
       key: it.slug,

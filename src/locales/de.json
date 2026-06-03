@@ -12,6 +12,19 @@
     "home": "Start",
     "brandLabel": "ZIAN AI CONCEPTS – Startseite"
   },
+  "meta": {
+    "description": "André Zimmermann baut KI-gestützte Web- & App-Produkte, hält KI-Kurse und integriert KI in Unternehmen.",
+    "jobTitle": "KI-Engineer & Trainer",
+    "home": {
+      "title": "ZIAN AI CONCEPTS — KI-Engineering, Kurse, Integration"
+    },
+    "imprint": {
+      "title": "Impressum — ZIAN AI CONCEPTS"
+    },
+    "privacy": {
+      "title": "Datenschutz — ZIAN AI CONCEPTS"
+    }
+  },
   "loader": {
     "label": "Szene wird komponiert",
     "composing": "Lade Shader & Bewegung"
@@ -47,6 +60,7 @@
     "casePreviewAlt": "Vorschau von {{title}}",
     "carouselKeyboardHint": "Mit den Pfeiltasten durch die Cases blättern.",
     "carouselTouchHint": "Wischen zum Blättern.",
+    "slideLabel": "{{current}} / {{total}}: {{title}}",
     "cases": [
       {
         "index": "01",
@@ -252,6 +266,7 @@
       "errorBody": "Bitte versuche es erneut oder schreib mir direkt per E-Mail.",
       "required": "Pflichtfeld",
       "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+      "fallbackName": "Freund",
       "demoNote": "[Demo] Nachricht wurde nicht wirklich gesendet."
     }
   },
@@ -264,6 +279,9 @@
     "close": "Banner schließen"
   },
   "footer": {
+    "brandName": "ZIAN AI CONCEPTS",
+    "byLine": "von {{name}}",
+    "copyright": "© {{year}} {{brand}} · {{rights}}",
     "tagline": "ZIAN AI CONCEPTS — Intelligenz gestalten. Geführt von Andre Zimmermann. KI · Motion · Code.",
     "rights": "Alle Rechte vorbehalten.",
     "imprint": "Impressum",

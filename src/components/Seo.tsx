@@ -7,25 +7,13 @@ const SITE_URL_RAW = (import.meta.env.VITE_SITE_URL ?? "https://zian-ai.dev");
 const SITE_URL = SITE_URL_RAW.replace(/\/$/, "");
 const PERSON_NAME = "André Zimmermann";
 
-const TITLES: Record<string, Record<Lang, string>> = {
-  "/": {
-    de: "ZIAN AI CONCEPTS — KI-Engineering, Kurse, Integration",
-    en: "ZIAN AI CONCEPTS — AI Engineering, Courses, Integration",
-  },
-  "/impressum": {
-    de: "Impressum — ZIAN AI CONCEPTS",
-    en: "Imprint — ZIAN AI CONCEPTS",
-  },
-  "/datenschutz": {
-    de: "Datenschutz — ZIAN AI CONCEPTS",
-    en: "Privacy — ZIAN AI CONCEPTS",
-  },
-};
-
-const DESC: Record<Lang, string> = {
-  de: "André Zimmermann baut KI-gestützte Web- & App-Produkte, hält KI-Kurse und integriert KI in Unternehmen.",
-  en: "André Zimmermann builds AI-driven web & app products, runs AI courses and integrates AI into companies.",
-};
+// Map each locale-stripped subpath to its i18n title key. `as const` keeps the
+// values as literal key strings so they satisfy i18next's strictKeyChecks.
+const TITLE_KEYS = {
+  "/": "meta.home.title",
+  "/impressum": "meta.imprint.title",
+  "/datenschutz": "meta.privacy.title",
+} as const;
 
 function setMeta(name: string, content: string, attr: "name" | "property" = "name") {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${name}"]`);
@@ -74,8 +62,12 @@ export default function Seo() {
     const rest = isLang(segments[0]) ? segments.slice(1) : segments;
     const subpath = rest.length === 0 ? "/" : `/${rest.join("/")}`;
 
-    const title = TITLES[subpath]?.[lang] ?? TITLES["/"]?.[lang] ?? "ZIAN AI CONCEPTS";
-    const desc = DESC[lang];
+    // Translate for the URL's locale explicitly — `lang` may differ from the
+    // active i18n language during navigation, so a fixed-language t() is required.
+    const tl = i18n.getFixedT(lang);
+    const titleKey = TITLE_KEYS[subpath as keyof typeof TITLE_KEYS] ?? "meta.home.title";
+    const title = tl(titleKey);
+    const desc = tl("meta.description");
     const canonical = subpath === "/" ? `${SITE_URL}/${lang}` : `${SITE_URL}/${lang}${subpath}`;
     const altDe = subpath === "/" ? `${SITE_URL}/de` : `${SITE_URL}/de${subpath}`;
     const altEn = subpath === "/" ? `${SITE_URL}/en` : `${SITE_URL}/en${subpath}`;
@@ -108,7 +100,7 @@ export default function Seo() {
       "@type": "Person",
       name: PERSON_NAME,
       url: SITE_URL,
-      jobTitle: lang === "de" ? "KI-Engineer & Trainer" : "AI Engineer & Trainer",
+      jobTitle: tl("meta.jobTitle"),
       worksFor: { "@type": "Organization", name: "ZIAN AI CONCEPTS" },
     });
 
@@ -135,7 +127,6 @@ export default function Seo() {
     }
 
     if (subpath === "/impressum" || subpath === "/datenschutz") {
-      const pageTitle = TITLES[subpath]?.[lang] ?? title;
       setJsonLd("breadcrumb", {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -149,13 +140,13 @@ export default function Seo() {
           {
             "@type": "ListItem",
             position: 2,
-            name: pageTitle,
+            name: title,
             item: canonical,
           },
         ],
       });
     }
-  }, [pathname, lang]);
+  }, [pathname, lang, i18n]);
 
   return null;
 }

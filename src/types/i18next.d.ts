@@ -8,5 +8,6 @@ declare module 'i18next' {
       translation: typeof de;
     };
     returnNull: false;
+    strictKeyChecks: true;
   }
 }

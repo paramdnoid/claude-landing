@@ -12,6 +12,19 @@
     "home": "Home",
     "brandLabel": "ZIAN AI CONCEPTS – Home"
   },
+  "meta": {
+    "description": "André Zimmermann builds AI-driven web & app products, runs AI courses and integrates AI into companies.",
+    "jobTitle": "AI Engineer & Trainer",
+    "home": {
+      "title": "ZIAN AI CONCEPTS — AI Engineering, Courses, Integration"
+    },
+    "imprint": {
+      "title": "Imprint — ZIAN AI CONCEPTS"
+    },
+    "privacy": {
+      "title": "Privacy — ZIAN AI CONCEPTS"
+    }
+  },
   "loader": {
     "label": "Composing scene",
     "composing": "Loading shaders & motion"
@@ -47,6 +60,7 @@
     "casePreviewAlt": "Preview of {{title}}",
     "carouselKeyboardHint": "Use the arrow keys to browse cases.",
     "carouselTouchHint": "Swipe to browse.",
+    "slideLabel": "{{current}} / {{total}}: {{title}}",
     "cases": [
       {
         "index": "01",
@@ -252,6 +266,7 @@
       "errorBody": "Please try again or reach out via email directly.",
       "required": "Required",
       "invalidEmail": "Please enter a valid email address.",
+      "fallbackName": "friend",
       "demoNote": "[Demo] Message was not actually sent."
     }
   },
@@ -264,6 +279,9 @@
     "close": "Close banner"
   },
   "footer": {
+    "brandName": "ZIAN AI CONCEPTS",
+    "byLine": "by {{name}}",
+    "copyright": "© {{year}} {{brand}} · {{rights}}",
     "tagline": "ZIAN AI CONCEPTS — designing intelligence. Led by Andre Zimmermann. AI · Motion · Code.",
     "rights": "All rights reserved.",
     "imprint": "Imprint",

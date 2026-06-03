@@ -1,13 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { SUPPORTED_LANGS, isLang, resolveLang, type Lang } from '../lib/lang';
+import { SUPPORTED_LANGS, isLang, type Lang } from '../lib/lang';
+import { useLocale } from '../lib/useLocale';
 
 export default function LangToggle() {
   const { i18n, t } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const navigate = useNavigate();
   const { pathname, search, hash } = useLocation();
-  const current: Lang = resolveLang(i18n.language);
+  // Reflect the URL's locale (via useLocale) rather than i18n.language so the
+  // active pill can't briefly show the wrong language during the
+  // changeLanguage→navigate transition on first load.
+  const current = useLocale();
 
   const switchTo = (next: Lang) => {
     if (next === current && lang === next) return;

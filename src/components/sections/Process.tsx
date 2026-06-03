@@ -15,7 +15,9 @@ export default function Process() {
   const articleRefs = useRef<(HTMLElement | null)[]>([]);
 
   const items = useMemo<StepItem[]>(() => {
-    const raw = t('process.steps', { returnObjects: true }) as Step[];
+    // Annotate (don't cast) so a future de.json shape drift fails typecheck
+    // instead of slipping through to a runtime crash.
+    const raw: Step[] = t('process.steps', { returnObjects: true });
     return raw.map((s) => ({
       key: s.index,
       anchorId: `process-step-${s.index}`,

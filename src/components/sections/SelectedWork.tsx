@@ -60,7 +60,9 @@ export default function SelectedWork() {
   // every parent render — only when the user actually switches locale.
   const cases = useMemo<Case[]>(
     () => {
-      const raw = t('work.cases', { returnObjects: true }) as RawCase[];
+      // Annotate (don't cast) so a future de.json shape drift fails typecheck
+      // instead of slipping through to a runtime crash.
+      const raw: RawCase[] = t('work.cases', { returnObjects: true });
       return raw.map((c) => ({
         ...c,
         thumb: THUMBS[c.index],
@@ -227,7 +229,7 @@ export default function SelectedWork() {
               key={c.index}
               aria-labelledby={`work-card-${c.index}`}
               aria-roledescription="slide"
-              aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
+              aria-label={t('work.slideLabel', { current: i + 1, total: cases.length, title: c.title })}
               className="group relative flex w-[78vw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[34rem] lg:h-[50svh] lg:w-[40rem] lg:flex-row xl:w-[44rem] [@media(max-height:700px)]:h-full [@media(max-height:700px)]:flex-row"
             >
               {/* Faint plasma radial — static, CSS-only, identical per card. */}

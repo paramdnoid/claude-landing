@@ -58,8 +58,10 @@ export default function Footer() {
                 className="h-10 w-10 transition-transform duration-500 group-hover:rotate-3 group-hover:scale-110"
               />
               <span className="font-mono text-[11px] uppercase leading-tight tracking-[0.22em]">
-                <span className="block text-fg">ZIAN AI CONCEPTS</span>
-                <span className="block text-[10px] text-muted">by Andre Zimmermann</span>
+                <span className="block text-fg">{t('footer.brandName')}</span>
+                <span className="block text-[10px] text-muted">
+                  {t('footer.byLine', { name: 'Andre Zimmermann' })}
+                </span>
               </span>
             </a>
             <p className="max-w-xs text-sm leading-relaxed text-muted">{t('footer.tagline')}</p>
@@ -140,7 +142,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col gap-4 border-t border-border pt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-2 md:mt-16 md:flex-row md:items-center md:justify-between">
-          <p>© {year} ZIAN AI CONCEPTS · {t('footer.rights')}</p>
+          <p>{t('footer.copyright', { year, brand: t('footer.brandName'), rights: t('footer.rights') })}</p>
           <button
             type="button"
             onClick={scrollTop}

@@ -593,7 +593,7 @@ export default function Connect() {
                       tabIndex={-1}
                       className="font-display text-2xl outline-none"
                     >
-                      {t('contact.form.successTitle', { name: nameVal || 'friend' })}
+                      {t('contact.form.successTitle', { name: nameVal || t('contact.form.fallbackName') })}
                     </p>
                     <p className="mt-2 text-sm text-muted">
                       {t('contact.form.successBody')}

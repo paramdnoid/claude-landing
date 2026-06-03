@@ -46,7 +46,7 @@ export default function Signet({ className, title, animated = false }: SignetPro
         <radialGradient id={id('aura')} cx="50%" cy="38%" r="62%">
           <stop offset="0" stopColor="#a3ff12" stopOpacity="0.18" />
           <stop offset="0.45" stopColor="#06b6d4" stopOpacity="0.12" />
-          <stop offset="0.8" stopColor="#0d9488" stopOpacity="0.06" />
+          <stop offset="0.8" stopColor="#3b82f6" stopOpacity="0.06" />
           <stop offset="1" stopColor="#000000" stopOpacity="0" />
         </radialGradient>
         <linearGradient id={id('shell')} x1="100" y1="58" x2="250" y2="306" gradientUnits="userSpaceOnUse">
@@ -60,7 +60,7 @@ export default function Signet({ className, title, animated = false }: SignetPro
           <stop offset="1" stopColor="#050507" stopOpacity="0.1" />
         </linearGradient>
         <linearGradient id={id('shellR')} x1="259" y1="82" x2="166" y2="295" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#0d9488" stopOpacity="0.14" />
+          <stop offset="0" stopColor="#3b82f6" stopOpacity="0.14" />
           <stop offset="0.48" stopColor="#06b6d4" stopOpacity="0.05" />
           <stop offset="1" stopColor="#050507" stopOpacity="0.12" />
         </linearGradient>
@@ -77,8 +77,8 @@ export default function Signet({ className, title, animated = false }: SignetPro
         <linearGradient id={id('rim')} x1="108" y1="54" x2="258" y2="290" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#a3ff12" stopOpacity="0.85" />
           <stop offset="0.42" stopColor="#06b6d4" stopOpacity="0.6" />
-          <stop offset="0.72" stopColor="#0d9488" stopOpacity="0.75" />
-          <stop offset="1" stopColor="#042f2e" stopOpacity="0.4" />
+          <stop offset="0.72" stopColor="#3b82f6" stopOpacity="0.75" />
+          <stop offset="1" stopColor="#172554" stopOpacity="0.4" />
         </linearGradient>
         <filter id={id('innerShadow')} x="-20%" y="-20%" width="140%" height="140%">
           <feDropShadow dx="0" dy="12" stdDeviation="10" floodColor="#050507" floodOpacity="0.75" />

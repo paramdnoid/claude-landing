@@ -209,7 +209,7 @@ export default function SignetMesh3D() {
         <Lightformer intensity={3} color="#ffffff" position={[-2, 4, 3]} scale={[2, 0.4, 1]} />
         <Lightformer intensity={2.2} color="#a3ff12" position={[-5, 2, 1]} scale={[1, 4, 1]} />
         <Lightformer intensity={2} color="#06b6d4" position={[5, -2, 1]} scale={[1.5, 4, 1]} />
-        <Lightformer intensity={2.4} color="#0d9488" position={[1, -1, -4]} scale={[5, 5, 1]} />
+        <Lightformer intensity={2.4} color="#3b82f6" position={[1, -1, -4]} scale={[5, 5, 1]} />
       </Environment>
 
       <ambientLight intensity={0.3} />

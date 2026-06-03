@@ -132,7 +132,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         className="pointer-events-none absolute left-1/2 top-1/2 h-[60vmin] w-[60vmin] -translate-x-1/2 -translate-y-1/2 opacity-60"
         style={{
           background:
-            'radial-gradient(circle at center, rgba(13,148,136,0.45) 0%, rgba(6,182,212,0.22) 35%, rgba(163,255,18,0.08) 60%, transparent 75%)',
+            'radial-gradient(circle at center, rgba(59,130,246,0.45) 0%, rgba(6,182,212,0.22) 35%, rgba(163,255,18,0.08) 60%, transparent 75%)',
           filter: 'blur(40px)',
         }}
       />

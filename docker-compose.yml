@@ -1,0 +1,54 @@
+# Local Ollama backend for the AI chat demo (Connect section).
+#
+# Quick start:
+#   docker compose up -d
+#   docker compose logs -f model-init   # wait for the model pull to finish
+#   echo 'VITE_OLLAMA_ENDPOINT=http://localhost:11434' >> .env   # then: npm run dev
+#
+# Tear down:
+#   docker compose down       # keep the downloaded model
+#   docker compose down -v    # also drop the 'ollama' volume (~2GB model)
+#
+# Note (macOS): Docker can't pass through the Metal GPU, so this runs CPU-only
+# and is slower than the native Ollama.app. The native app serves the same
+# http://localhost:11434 endpoint if you prefer the speed.
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: claude-landing-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    environment:
+      # CORS allow-list: the browser fetches Ollama directly (see src/lib/chatBackend.ts),
+      # so the dev (5173), preview (4173) and Playwright (5180) origins must be allowed.
+      # Lazy local-only alternative: OLLAMA_ORIGINS=*
+      - OLLAMA_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:4173,http://127.0.0.1:4173,http://localhost:5180,http://127.0.0.1:5180
+    healthcheck:
+      test: ["CMD", "ollama", "ls"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  # One-shot: waits for the server to be healthy, triggers a server-side model
+  # pull into the shared 'ollama' volume, then exits. Re-running is a no-op once
+  # the model is cached.
+  model-init:
+    image: ollama/ollama:latest
+    container_name: claude-landing-ollama-pull
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+    # Single-element list so the whole string reaches `sh -c` as one script
+    # (a bare string would be shell-split and break the `sh -c` invocation).
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["ollama pull qwen2.5:3b && echo 'qwen2.5:3b ready'"]
+    restart: "no"
+
+volumes:
+  ollama:

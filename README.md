@@ -40,11 +40,44 @@ npm run dev                     # http://localhost:5173
 |---|---|
 | `VITE_FORM_ENDPOINT` | POST URL for the contact form. Unset → form runs in demo mode (700ms fake delay, console.info payload). |
 | `VITE_SITE_URL` | Public origin used for canonical URLs, OG, sitemap. Default `https://zian-ai.dev`. |
-| `VITE_OLLAMA_ENDPOINT` | Ollama base URL (e.g. `https://ollama.example.com`). Unset → AI demo plays from mocked replies with Ollama branding. |
-| `VITE_OLLAMA_MODEL` | Model name (default `llama3.2:3b`). |
+| `VITE_OLLAMA_ENDPOINT` | Ollama base URL (e.g. `http://localhost:11434` for the local Docker stack, or `https://ollama.example.com`). Unset → AI demo plays from mocked replies with Ollama branding. |
+| `VITE_OLLAMA_MODEL` | Model name (default `qwen2.5:3b`). |
 | `VITE_ANALYTICS_SCRIPT_URL` | Privacy-friendly analytics snippet (Plausible/Umami). Triggers the cookie banner; loaded only after consent. |
 | `VITE_ANALYTICS_SITE_ID` | Site/website id forwarded as `data-website-id`. |
 | `VITE_ANALYTICS_DOMAIN` | Domain attribute forwarded as `data-domain`. |
+
+## Local AI demo via Docker
+
+The Connect section's AI chat streams from an Ollama `/api/chat` endpoint. Without
+`VITE_OLLAMA_ENDPOINT` it runs in mock mode (canned replies). To run a real model
+locally, use the bundled `docker-compose.yml`:
+
+```bash
+docker compose up -d                  # starts Ollama + pulls qwen2.5:3b
+docker compose logs -f model-init     # wait until the pull finishes & the container exits
+```
+
+Then point the app at it:
+
+```bash
+echo 'VITE_OLLAMA_ENDPOINT=http://localhost:11434' >> .env
+npm run dev                           # the mode badge should now read "Powered by Ollama · qwen2.5:3b"
+```
+
+Sanity-check the API directly:
+
+```bash
+curl http://localhost:11434/api/tags  # qwen2.5:3b is listed
+```
+
+Tear down with `docker compose down` (keeps the model) or `docker compose down -v`
+(also drops the `ollama` volume, ~2GB). The browser calls Ollama directly, so the
+compose file sets `OLLAMA_ORIGINS` to allow the dev/preview/Playwright origins — add
+yours there if you change ports.
+
+> **macOS note:** Docker can't pass through the Metal GPU, so this runs CPU-only and
+> is slower than the native [Ollama.app](https://ollama.com), which serves the same
+> `http://localhost:11434` endpoint if you prefer the speed.
 
 ## What to customize after install
 

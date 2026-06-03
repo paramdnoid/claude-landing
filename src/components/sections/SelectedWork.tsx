@@ -82,11 +82,12 @@ export default function SelectedWork() {
       },
     });
 
-    const imgs = viewportRef.current.querySelectorAll('img');
-    if (imgs.length > 0) {
-      const promises = Array.from(imgs).map((img) => img.decode().catch(() => {}));
-      void Promise.all(promises).then(() => ScrollTrigger.refresh());
-    }
+    // Only the first (above-the-fold) card image gates the pin refresh; decoding
+    // all five up front competed with hero-WebGL startup. The rest decode lazily.
+    const firstImg = viewportRef.current.querySelector('img');
+    void (firstImg?.decode().catch(() => {}) ?? Promise.resolve()).then(() =>
+      ScrollTrigger.refresh(),
+    );
 
     return () => {
       st?.kill();
@@ -203,14 +204,14 @@ export default function SelectedWork() {
         aria-label={t('work.title')}
         tabIndex={0}
         onKeyDown={onCarouselKeyDown}
-        className="shell relative flex h-[100svh] flex-col select-none overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
+        className="shell relative flex h-[100svh] flex-col overflow-hidden pointer-fine:select-none focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-[var(--color-plasma-lime)]"
       >
         {/* Section header — lives inside the pinned viewport so it stays visible
             for the whole horizontal scroll instead of scrolling away above it. */}
-        <div className="flex-shrink-0 pb-6 pt-16 md:pt-20">
-          <div className="tag mb-3">{t('work.eyebrow')}</div>
-          <h2 id="work-title" className="font-display text-display-md lg:text-display-lg">{t('work.title')}</h2>
-          <p className="lead mt-4 hidden max-w-xl md:block">{t('work.intro')}</p>
+        <div className="flex-shrink-0 pb-6 pt-16 md:pt-20 [@media(max-height:700px)]:pb-2 [@media(max-height:700px)]:pt-6">
+          <div className="tag mb-3 [@media(max-height:700px)]:hidden">{t('work.eyebrow')}</div>
+          <h2 id="work-title" className="font-display text-display-md lg:text-display-lg [@media(max-height:700px)]:text-2xl">{t('work.title')}</h2>
+          <p className="lead mt-4 hidden max-w-xl md:block [@media(max-height:700px)]:!hidden">{t('work.intro')}</p>
           <p
             aria-hidden="true"
             className="tag mt-3 hidden items-center gap-2 !text-plasma-lime pointer-coarse:flex"
@@ -227,7 +228,7 @@ export default function SelectedWork() {
               aria-labelledby={`work-card-${c.index}`}
               aria-roledescription="slide"
               aria-label={`${i + 1} / ${cases.length}: ${c.title}`}
-              className="group relative flex w-[78vw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[34rem] lg:h-[50svh] lg:w-[40rem] lg:flex-row xl:w-[44rem]"
+              className="group relative flex w-[78vw] flex-shrink-0 flex-col overflow-hidden rounded-xl border border-border bg-bg-elev shadow-[var(--shadow-e4)] md:w-[34rem] lg:h-[50svh] lg:w-[40rem] lg:flex-row xl:w-[44rem] [@media(max-height:700px)]:h-full [@media(max-height:700px)]:flex-row"
             >
               {/* Faint plasma radial — static, CSS-only, identical per card. */}
               <div
@@ -238,7 +239,7 @@ export default function SelectedWork() {
               {/* Left — bright browser frame with the screenshot fully visible.
                   On lg the frame stretches to the full card height so there is
                   no dead band below it. */}
-              <div className="relative z-10 flex-shrink-0 p-4 md:p-5 lg:flex lg:basis-[58%] lg:p-6">
+              <div className="relative z-10 flex-shrink-0 p-4 md:p-5 lg:flex lg:basis-[58%] lg:p-6 [@media(max-height:700px)]:flex [@media(max-height:700px)]:basis-[55%] [@media(max-height:700px)]:p-3">
                 <div className="flex w-full flex-col overflow-hidden rounded-md border border-border-strong bg-bg-elev-2 shadow-[var(--shadow-e3)]">
                   {/* Refined chrome bar — no traffic-light dots. */}
                   <div className="flex h-9 items-center gap-2 border-b border-border bg-bg-elev/80 px-3 backdrop-blur-sm">
@@ -252,7 +253,7 @@ export default function SelectedWork() {
                     <span aria-hidden="true" className="tag tabular-nums !text-muted-2 ml-auto">{c.year}</span>
                   </div>
 
-                  <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:flex-1">
+                  <div className="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:flex-1 [@media(max-height:700px)]:aspect-auto [@media(max-height:700px)]:flex-1">
                     {c.thumb ? (
                       <picture>
                         {c.thumb.sources.avif && (
@@ -266,7 +267,8 @@ export default function SelectedWork() {
                           width={c.thumb.img.w}
                           height={c.thumb.img.h}
                           alt={t('work.casePreviewAlt', { title: c.title })}
-                          loading="lazy"
+                          loading={i === 0 ? 'eager' : 'lazy'}
+                          fetchPriority={i === 0 ? 'high' : undefined}
                           decoding="async"
                           className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                         />
@@ -277,7 +279,7 @@ export default function SelectedWork() {
               </div>
 
               {/* Right — editorial metadata on the dark canvas. */}
-              <div className="relative z-10 flex flex-1 flex-col justify-center gap-3 px-6 pb-7 lg:basis-[42%] lg:px-7 lg:py-8">
+              <div className="relative z-10 flex flex-1 flex-col justify-center gap-3 px-6 pb-7 lg:basis-[42%] lg:px-7 lg:py-8 [@media(max-height:700px)]:basis-[45%] [@media(max-height:700px)]:gap-2 [@media(max-height:700px)]:py-3">
                 <span
                   aria-hidden="true"
                   className="font-display text-display-lg leading-none tabular-nums text-white/[0.07]"
@@ -318,7 +320,7 @@ export default function SelectedWork() {
             (no React state churn per frame). */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-6 bottom-6 h-px bg-border-strong md:inset-x-10"
+          className="pointer-events-none absolute inset-x-6 bottom-6 h-px bg-border-strong md:inset-x-10 [@media(max-height:700px)]:hidden"
         >
           <div
             ref={progressRef}

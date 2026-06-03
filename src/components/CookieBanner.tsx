@@ -84,7 +84,7 @@ export default function CookieBanner() {
           <Cookie size={16} strokeWidth={1.75} />
         </span>
         <div className="flex-1">
-          <h2 className="font-display text-base text-white">{t("consent.title")}</h2>
+          <p className="font-display text-base text-white">{t("consent.title")}</p>
           <p id="consent-body" className="mt-1 text-sm text-muted">
             {t("consent.body")}{" "}
             <Link

@@ -630,7 +630,7 @@ export default function Connect() {
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKey}
                     placeholder={t('aiDemo.placeholder')}
-                    aria-label={t('aiDemo.placeholder')}
+                    aria-label={t('aiDemo.inputLabel')}
                     disabled={chatStatus === 'streaming'}
                     className="flex-1 rounded-sm bg-transparent font-mono text-sm text-fg outline-none placeholder-[var(--color-muted)] focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-plasma-lime)] disabled:opacity-50"
                   />

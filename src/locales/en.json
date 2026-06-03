@@ -192,6 +192,7 @@
   },
   "aiDemo": {
     "placeholder": "Ask me anything…",
+    "inputLabel": "Message to the AI assistant",
     "greeting": "Ask me about AI engineering, projects, or working together.",
     "greetingHint": "Or pick a prompt below.",
     "suggestions": [

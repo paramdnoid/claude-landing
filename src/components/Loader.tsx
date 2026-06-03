@@ -152,7 +152,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
 
       {/* Top-right: version chip */}
       <div ref={topRightRef} className="absolute right-6 top-6 md:right-10 md:top-10" style={{ opacity: 0 }}>
-        <div className="glass glass-pill tag">v0.2 · {new Date().getFullYear()}</div>
+        <div className="glass glass-pill tag" aria-hidden="true">v0.2 · {new Date().getFullYear()}</div>
       </div>
 
       {/* Center: signet that draws its own outline */}
@@ -217,7 +217,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
         style={{ opacity: 0 }}
       >
         <div className="font-mono text-[10px] uppercase tracking-[0.32em] text-muted-2">
-          {t('loader.composing')} · WEBGL · GSAP · LENIS
+          {t('loader.composing')} <span aria-hidden="true">· WEBGL · GSAP · LENIS</span>
         </div>
       </div>
     </div>

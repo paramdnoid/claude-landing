@@ -683,7 +683,12 @@ export default function Connect() {
             {/* Disclaimer */}
             <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
               {liveMode ? t('aiDemo.liveDisclaimer') : t('aiDemo.disclaimer')}
-              {isDemoForm && <> · {t('contact.form.demoNote')}</>}
+              {isDemoForm && (
+                <>
+                  <span aria-hidden="true"> · </span>
+                  {t('contact.form.demoNote')}
+                </>
+              )}
             </p>
           </div>
 

@@ -45,10 +45,10 @@ function ScrollRefresh({ ready }: { ready: boolean }) {
 }
 
 function RootRedirect() {
-  const stored = typeof window !== 'undefined' ? window.localStorage.getItem('zian.lang') : null;
-  const lang = isLang(stored)
-    ? stored
-    : resolveLang(typeof navigator !== 'undefined' ? navigator.language : null);
+  // i18next's LanguageDetector already resolved the locale from localStorage
+  // ('zian.lang') then navigator at init, so derive from it rather than
+  // re-reading those sources by hand.
+  const lang = resolveLang(i18n.language);
   return <Navigate to={`/${lang}`} replace />;
 }
 
@@ -75,12 +75,17 @@ function LocaleGate({ children }: { children: ReactNode }) {
 
 function LocaleLayout({ ready }: { ready: boolean }) {
   return (
-    <Layout>
-      <ScrollRefresh ready={ready} />
-      <PageTransition>
-        <Outlet />
-      </PageTransition>
-    </Layout>
+    <>
+      {/* Seo lives inside the /:lang route so it reads the locale from the URL
+          param directly instead of falling back to i18n.language. */}
+      <Seo />
+      <Layout>
+        <ScrollRefresh ready={ready} />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
+      </Layout>
+    </>
   );
 }
 
@@ -116,7 +121,6 @@ export default function App() {
 
   return (
     <>
-      <Seo />
       <Cursor />
       <Loader onDone={() => setLoaded(true)} />
       <Routes>
@@ -133,7 +137,7 @@ export default function App() {
           <Route path="impressum" element={<Impressum />} />
           <Route path="datenschutz" element={<Datenschutz />} />
         </Route>
-        <Route path="*" element={<Navigate to="/de" replace />} />
+        <Route path="*" element={<RootRedirect />} />
       </Routes>
       <CookieBanner />
     </>

@@ -28,7 +28,7 @@ export default function Process() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
 
-  const miniIndexLabel = t('process.miniIndexLabel', { defaultValue: 'Prozessschritte' });
+  const miniIndexLabel = t('process.miniIndexLabel');
 
   const activeIndex = useActiveSection(articleRefs, {
     dataKey: 'stepIndex',

@@ -6,9 +6,8 @@ import { scrollToSection } from '../lib/scrollToSection';
 import { getLenis } from '../lib/smoothScroll';
 import { prefersReducedMotion } from '../lib/animations';
 import { SOCIAL_LINKS } from '../lib/socials';
+import { SECTION_IDS as NAV_IDS } from '../lib/sections';
 import Signet from './Signet';
-
-const NAV_IDS = ['manifesto', 'work', 'capabilities', 'process', 'contact'] as const;
 
 const LINK_CLASS =
   'link-underline group/link inline-flex w-fit items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-fg';

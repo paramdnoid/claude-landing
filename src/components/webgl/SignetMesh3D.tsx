@@ -4,7 +4,7 @@ import { Environment, Lightformer, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
 import { ScrollTrigger } from '../../lib/gsap';
 import { prefersReducedMotion } from '../../lib/animations';
-import { buildEngravingTexture, buildAuraTexture } from './signetEngravingTexture';
+import { buildEngravingTexture, buildAuraTexture, buildZShadowTexture } from './signetEngravingTexture';
 
 /** Map SVG `0 0 360 360` coords into the signet's local 3-D space. */
 function sv(x: number, y: number): [number, number] {
@@ -379,9 +379,13 @@ export default function SignetMesh3D() {
   /** Aura sprite plane: 2.6 × 3.0 local units, behind the body. */
   const auraGeo = useMemo(() => new THREE.PlaneGeometry(2.6, 3.0), []);
 
+  /** Z drop-shadow plane: hex-bbox sized, same mapping as the engraving plane. */
+  const zShadowGeo = useMemo(() => new THREE.PlaneGeometry(2.089, 3.244), []);
+
   // --- Textures ---------------------------------------------------------
   const engraveTex = useMemo(() => buildEngravingTexture(maxAnisotropy), [maxAnisotropy]);
   const auraTex = useMemo(() => buildAuraTexture(), []);
+  const zShadowTex = useMemo(() => buildZShadowTexture(maxAnisotropy), [maxAnisotropy]);
 
   // --- Materials ---------------------------------------------------------
   /**
@@ -439,6 +443,14 @@ export default function SignetMesh3D() {
     transparent: true, opacity: 0, depthWrite: false,
   }), []);
 
+  const zShadowMat = useMemo(() => new THREE.MeshBasicMaterial({
+    map: zShadowTex,
+    transparent: true,
+    depthWrite: false,
+    toneMapped: false,
+    opacity: 0.45,
+  }), [zShadowTex]);
+
   const auraMat = useMemo(() => new THREE.MeshBasicMaterial({
     map: auraTex,
     transparent: true,
@@ -446,7 +458,7 @@ export default function SignetMesh3D() {
     depthWrite: false,
     depthTest: false,
     toneMapped: false,
-    opacity: 0.5,
+    opacity: 0.35,
   }), [auraTex]);
 
   // --- Scroll tilt -------------------------------------------------------
@@ -466,18 +478,18 @@ export default function SignetMesh3D() {
     return () => {
       hexGeo.dispose(); panelGeo.dispose(); zGeo.dispose();
       engraveGeo.dispose(); rim1Geo.dispose();
-      frameRingGeo.dispose(); auraGeo.dispose();
+      frameRingGeo.dispose(); auraGeo.dispose(); zShadowGeo.dispose();
       hexMat.dispose(); panelMat.dispose(); zMat.dispose();
       engraveMat.dispose(); rim1Mat.dispose();
-      frameRingMat.dispose(); auraMat.dispose();
-      engraveTex.dispose(); auraTex.dispose();
+      frameRingMat.dispose(); auraMat.dispose(); zShadowMat.dispose();
+      engraveTex.dispose(); auraTex.dispose(); zShadowTex.dispose();
     };
   }, [
     hexGeo, panelGeo, zGeo,
-    engraveGeo, rim1Geo, frameRingGeo, auraGeo,
+    engraveGeo, rim1Geo, frameRingGeo, auraGeo, zShadowGeo,
     hexMat, panelMat, zMat,
-    engraveMat, rim1Mat, frameRingMat, auraMat,
-    engraveTex, auraTex,
+    engraveMat, rim1Mat, frameRingMat, auraMat, zShadowMat,
+    engraveTex, auraTex, zShadowTex,
   ]);
 
   useFrame((_, dt) => {
@@ -553,6 +565,10 @@ export default function SignetMesh3D() {
           <mesh geometry={panelGeo} material={panelMat} position={[0, 0, frontZ - 0.06]} />
           {/* Beveled "Schrank" frame wrapping the Z — symmetric on all sides */}
           <mesh geometry={frameRingGeo} material={frameRingMat} position={[0, 0, frontZ - 0.005]} />
+
+          {/* Soft drop-shadow behind the Z — the opaque Z hides its centre, the
+              blurred offset edge peeks out down-right to lift the letterform. */}
+          <mesh geometry={zShadowGeo} material={zShadowMat} position={[0, 0.011, frontZ - 0.035]} />
 
           {/* Z letterform, beveled and proud of the face */}
           <mesh ref={zMeshRef} geometry={zGeo} material={zMat} position={[0, 0, frontZ + 0.05]} />

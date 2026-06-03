@@ -15,6 +15,9 @@ void i18n
     },
     fallbackLng: DEFAULT_LANG,
     supportedLngs: SUPPORTED_LANGS,
+    // Strip BCP-47 region suffixes (e.g. de-DE → de) before lookup so a detected
+    // regional locale resolves directly instead of cycling through fallback.
+    load: 'languageOnly',
     returnNull: false,
     // Resources are bundled and init is synchronous, so translations are ready
     // on first render. Declaring this explicitly keeps first paint safe if an

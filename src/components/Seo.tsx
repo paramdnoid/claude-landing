@@ -93,7 +93,9 @@ export default function Seo() {
     setLink("canonical", canonical);
     setLink("alternate", altDe, "de");
     setLink("alternate", altEn, "en");
-    setLink("alternate", altDe, "x-default");
+    // x-default points at the locale-detecting root for the home page; legal
+    // subpaths have no language-neutral URL, so they fall back to the default (de).
+    setLink("alternate", subpath === "/" ? `${SITE_URL}/` : altDe, "x-default");
 
     setJsonLd("person", {
       "@context": "https://schema.org",

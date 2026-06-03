@@ -45,6 +45,19 @@ function centroid(pts: Array<[number, number]>): [number, number] {
 }
 
 /**
+ * The Z scaled ~+12% about its own centroid so it dominates the shield like the
+ * brand reference. Scaling the point list (not a mesh `scale` prop) keeps the Z
+ * centred: its points carry a baked vertical offset inside the yShift group, so a
+ * mesh `scale` would drift it downward instead.
+ */
+const Z_SCALE = 1.12;
+const Z_CTR = centroid(Z_PTS);
+const Z_PTS_SCALED: Array<[number, number]> = Z_PTS.map(([x, y]): [number, number] => [
+  Z_CTR[0] + (x - Z_CTR[0]) * Z_SCALE,
+  Z_CTR[1] + (y - Z_CTR[1]) * Z_SCALE,
+]);
+
+/**
  * Bake a vertical lime gradient into the Z so it reads as a lit solid, not a flat fill.
  * After baking, also brighten the top-bar region toward #ffffff→#d4ff6e (Z highlight layer,
  * matching the SVG `zian-monolith-z-highlight-gradient`).
@@ -64,7 +77,7 @@ function paintZWithHighlights(geo: THREE.BufferGeometry): void {
   // Highlight colours for top-bar region — light lime, NOT pure white. A white
   // target plus the bright IBL + bloom blew the top bar out to a flat white
   // stroke; the SVG's highlight is a translucent lift over lime, so keep it lime.
-  const hiTop = new THREE.Color(0xf4ffe0);
+  const hiTop = new THREE.Color(0xf8ffe6);
   const hiMid = new THREE.Color(0xd4ff6e);
   const pos = geo.attributes.position;
   const nrm = geo.attributes.normal;
@@ -73,7 +86,7 @@ function paintZWithHighlights(geo: THREE.BufferGeometry): void {
   const c = new THREE.Color();
   const h = new THREE.Color();
   // Top 16% of the Z's Y span = the top-bar highlight region.
-  const topBarThreshold = minY + spanY * 0.84;
+  const topBarThreshold = minY + spanY * 0.80;
   // Lower-bar region: bottom 30% of Y span.
   const lowerBarThreshold = minY + spanY * 0.30;
   for (let i = 0; i < pos.count; i += 1) {
@@ -89,7 +102,7 @@ function paintZWithHighlights(geo: THREE.BufferGeometry): void {
       if (y > topBarThreshold) {
         // Top bar — gentle highlight toward light lime (kept subtle so it reads
         // as a lit lime stroke, not a white bar that booms under bloom).
-        const factor = Math.min((y - topBarThreshold) / (spanY * 0.16), 1) * 0.32;
+        const factor = Math.min((y - topBarThreshold) / (spanY * 0.16), 1) * 0.46;
         const th = (y - topBarThreshold) / (spanY * 0.16);
         h.copy(hiTop).lerp(hiMid, th);
         c.lerp(h, factor);
@@ -213,10 +226,10 @@ function paintRimGradient(geo: THREE.BufferGeometry): void {
   // Colour stops for the rim ramp. These follow the CURRENT blue palette
   // (#3b82f6 / #172554), which intentionally diverges from the stale indigo
   // (#6366f1 / #1e1b4b) still in logo.svg — do not "fix" these back to the SVG.
-  const lime = new THREE.Color(0xa3ff12);
-  const cyan = new THREE.Color(0x06b6d4);
-  const blue = new THREE.Color(0x3b82f6);
-  const darkIndigo = new THREE.Color(0x172554);
+  const lime = new THREE.Color(0xc4ff3a);
+  const cyan = new THREE.Color(0x22d3ee);
+  const blue = new THREE.Color(0x4f93ff);
+  const darkIndigo = new THREE.Color(0x1e3a8a);
 
   const pos = geo.attributes.position;
   if (pos === undefined) return;
@@ -282,8 +295,8 @@ export default function SignetMesh3D() {
   // --- Geometry ----------------------------------------------------------
   const hexGeo = useMemo(() => {
     const geo = new THREE.ExtrudeGeometry(shapeFrom(HEX_OUTER), {
-      depth: 0.42, bevelEnabled: true,
-      bevelThickness: 0.06, bevelSize: 0.05, bevelSegments: 12, curveSegments: 24,
+      depth: 0.18, bevelEnabled: true,
+      bevelThickness: 0.03, bevelSize: 0.025, bevelSegments: 12, curveSegments: 24,
     });
     geo.center();
     geo.computeVertexNormals();
@@ -314,7 +327,7 @@ export default function SignetMesh3D() {
   }, []);
 
   const zGeo = useMemo(() => {
-    const geo = new THREE.ExtrudeGeometry(shapeFrom(Z_PTS), {
+    const geo = new THREE.ExtrudeGeometry(shapeFrom(Z_PTS_SCALED), {
       depth: 0.12, bevelEnabled: true,
       bevelThickness: 0.02, bevelSize: 0.016, bevelSegments: 8, curveSegments: 12,
     });
@@ -380,9 +393,9 @@ export default function SignetMesh3D() {
   const hexMat = useMemo(() => new THREE.MeshPhysicalMaterial({
     vertexColors: true,
     color: new THREE.Color(0xffffff),
-    metalness: 0, roughness: 0.09,
-    clearcoat: 1, clearcoatRoughness: 0.05,
-    reflectivity: 0.7, envMapIntensity: 1.3, ior: 1.5,
+    metalness: 0, roughness: 0.16,
+    clearcoat: 1, clearcoatRoughness: 0.12,
+    reflectivity: 0.55, envMapIntensity: 0.8, ior: 1.5,
     transmission: 0.16, thickness: 0.6, specularIntensity: 1,
     emissive: new THREE.Color(0x0a0e1a), emissiveIntensity: 0.35,
     iridescence: 0.3, iridescenceIOR: 1.35,
@@ -395,11 +408,11 @@ export default function SignetMesh3D() {
   const panelMat = useMemo(() => new THREE.MeshPhysicalMaterial({
     color: 0x080b14, metalness: 0.1, roughness: 0.2,
     clearcoat: 1, clearcoatRoughness: 0.12, envMapIntensity: 1.4,
-    emissive: new THREE.Color(0x061820), emissiveIntensity: 0.40,
+    emissive: new THREE.Color(0x061820), emissiveIntensity: 0.18,
   }), []);
 
   const zMat = useMemo(() => new THREE.MeshPhysicalMaterial({
-    vertexColors: true, roughness: 0.22, metalness: 0,
+    vertexColors: true, roughness: 0.16, metalness: 0,
     clearcoat: 1, clearcoatRoughness: 0.06, envMapIntensity: 1,
     // Brand-lime emissive reinforces the hue and feeds bloom cleanly; kept low so
     // the vertex-colour gradient (lit form) drives the look, not a flat glow.
@@ -421,9 +434,9 @@ export default function SignetMesh3D() {
   }), []);
 
   const frameRingMat = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: 0x636b78, metalness: 0.2, roughness: 0.22,
-    clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 1.3,
-    transparent: true, opacity: 0.9,
+    color: 0x0e1219, metalness: 0, roughness: 1,
+    clearcoat: 0, clearcoatRoughness: 0.4, envMapIntensity: 0,
+    transparent: true, opacity: 0, depthWrite: false,
   }), []);
 
   const auraMat = useMemo(() => new THREE.MeshBasicMaterial({
@@ -433,7 +446,7 @@ export default function SignetMesh3D() {
     depthWrite: false,
     depthTest: false,
     toneMapped: false,
-    opacity: 0.85,
+    opacity: 0.5,
   }), [auraTex]);
 
   // --- Scroll tilt -------------------------------------------------------
@@ -470,12 +483,12 @@ export default function SignetMesh3D() {
   useFrame((_, dt) => {
     const group = groupRef.current;
     if (group === null) return;
-    if (rm) { group.rotation.set(0.04, 0.32, 0); return; }
+    if (rm) { group.rotation.set(0.04, 0.04, 0); return; }
     timeRef.current += dt;
     const t = timeRef.current;
 
     // Stay front-facing: gentle sway around the viewer, never edge-on. Keeps the Z legible.
-    group.rotation.y = Math.sin(t * 0.32) * 0.38;
+    group.rotation.y = Math.sin(t * 0.32) * 0.12;
     group.rotation.x = Math.sin(t * 0.24) * 0.05 + scrollRef.current * 0.14;
 
     // Z emissive breathe — drives bloom. Reduced-motion-safe (gated above).
@@ -487,7 +500,7 @@ export default function SignetMesh3D() {
     // Rim shimmer (5 s period, matches SVG .signet-rim)
     const rim1Mesh = rim1MeshRef.current;
     if (rim1Mesh !== null && rim1Mesh.material instanceof THREE.MeshBasicMaterial) {
-      rim1Mesh.material.opacity = 0.88 + 0.12 * Math.sin(t * ((2 * Math.PI) / 5));
+      rim1Mesh.material.opacity = 0.96 + 0.04 * Math.sin(t * ((2 * Math.PI) / 5));
     }
 
     // Aura breathe (7 s period, matches SVG .signet-aura)
@@ -506,20 +519,20 @@ export default function SignetMesh3D() {
       {/* Brand-coloured IBL: streak reflections sweep the obsidian clearcoat as it turns. */}
       <Environment background={false} resolution={256}>
         <color attach="background" args={['#05050a']} />
-        <Lightformer intensity={3.2} color="#ffffff" position={[0, 3, 2]} scale={[7, 2, 1]} />
+        <Lightformer intensity={1.6} color="#ffffff" position={[0, 3, 4]} scale={[9, 4, 1]} />
         {/* Mirror of the top key below, so the lower half (and the bottom bevel
             facet) is lit the same as the crown — symmetric upper/lower reading. */}
-        <Lightformer intensity={3.2} color="#ffffff" position={[0, -3, 2]} scale={[7, 2, 1]} />
+        <Lightformer intensity={1.6} color="#ffffff" position={[0, -3, 4]} scale={[9, 4, 1]} />
         <Lightformer intensity={3} color="#ffffff" position={[-2, 4, 3]} scale={[2, 0.4, 1]} />
         <Lightformer intensity={3} color="#a3ff12" position={[-5, 2, 1]} scale={[1, 4, 1]} />
-        <Lightformer intensity={2} color="#06b6d4" position={[5, -2, 1]} scale={[1.5, 4, 1]} />
-        <Lightformer intensity={2.4} color="#3b82f6" position={[1, -1, -4]} scale={[5, 5, 1]} />
+        <Lightformer intensity={1.2} color="#06b6d4" position={[5, -2, 1]} scale={[1.5, 4, 1]} />
+        <Lightformer intensity={1.5} color="#3b82f6" position={[1, -1, -4]} scale={[5, 5, 1]} />
       </Environment>
 
       <ambientLight intensity={0.3} />
       <directionalLight position={[2, 4, 5]} intensity={1.4} color={0xffffff} />
 
-      <group ref={groupRef} rotation={[0.04, 0.2, 0]}>
+      <group ref={groupRef} rotation={[0.04, 0.0, 0]}>
         {/*
           Plasma aura halo — Billboard so it always faces the camera regardless
           of the body's yaw. renderOrder={-1} keeps it behind the body.

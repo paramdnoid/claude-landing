@@ -87,10 +87,10 @@ export function buildEngravingTexture(maxAnisotropy: number): THREE.CanvasTextur
       ctx.beginPath();
       ring.forEach(([x, y], i) => (i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)));
       ctx.closePath();
-      ctx.strokeStyle = 'rgba(163,255,18,0.4)';
-      ctx.lineWidth = 0.9 * s;
+      ctx.strokeStyle = 'rgba(163,255,18,0.65)';
+      ctx.lineWidth = 1.3 * s;
       ctx.setLineDash([2.2 * s, 6 * s]);
-      ctx.globalAlpha = 0.9;
+      ctx.globalAlpha = 1.0;
       ctx.stroke();
       ctx.setLineDash([]);
     }

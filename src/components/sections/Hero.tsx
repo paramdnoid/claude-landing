@@ -128,14 +128,15 @@ export default function Hero() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_60%,rgba(5,5,7,0.4)_0%,rgba(5,5,7,0.74)_70%,rgba(5,5,7,0.95)_100%)]" />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
 
-      {/* Clean dark field behind the 3-D signet (right side) so the obsidian
-          shield reads against a dark backdrop like the brand reference, while
-          the liquid gradient stays visible behind the left-aligned text. lg-only
-          to match the signet's lg:flex visibility; renders above the mesh but
-          below the z-1 signet, so the shield floats on a calm dark ground. */}
+      {/* Seamless right-side darkening so the obsidian signet MELTS into the
+          background instead of sitting in a visible dark box. A soft linear ramp
+          (transparent → dark toward the right edge, where the hero is already
+          dark) has no detectable boundary — unlike a localized radial, which
+          read as a framed panel around the logo. lg-only to match the signet's
+          lg:flex visibility; renders above the mesh but below the z-1 signet. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 hidden lg:block bg-[radial-gradient(52%_58%_at_82%_50%,rgba(5,5,7,0.85)_0%,rgba(5,5,7,0.4)_46%,transparent_72%)]"
+        className="pointer-events-none absolute inset-0 hidden lg:block bg-[linear-gradient(96deg,transparent_32%,rgba(5,5,7,0.5)_60%,rgba(5,5,7,0.9)_100%)]"
       />
 
       {/* Dissolve the mesh to solid page-black before the hero's edge so it hands

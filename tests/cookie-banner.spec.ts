@@ -1,7 +1,16 @@
 import { test, expect } from '@playwright/test';
 
 // Override the project-level storageState so consent is unset and the banner can render.
-test.use({ storageState: { cookies: [], origins: [] } });
+// Force reduced motion so the Loader takes its instant early-out (animations.ts:125) instead
+// of running its ~4.7s full-screen intro (z-110). Otherwise that overlay covers the banner
+// (z-80): toBeVisible() passes (the element is rendered), but the button click waits for
+// actionability until the intro clears — and when the GSAP ticker is starved on a loaded CI
+// runner the click slips past the 30s test timeout. The 600ms banner reveal timer is a plain
+// setTimeout and is unaffected by the motion preference, so the banner still appears on cue.
+test.use({
+  storageState: { cookies: [], origins: [] },
+  reducedMotion: 'reduce',
+});
 
 const ANALYTICS_URL = '**/__playwright_noop_analytics.js';
 

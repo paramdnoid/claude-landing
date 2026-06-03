@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
 
+// Force reduced motion so the Loader resolves immediately instead of covering the header and
+// hero with its ~4.7s intro overlay (z-110). Otherwise the LangToggle click and the hero
+// headline assertions race that GSAP timeline and flake under a loaded CI runner. Under
+// reduced motion the hero renders its static text at full opacity (see reduced-motion.spec.ts).
+test.use({ reducedMotion: 'reduce' });
+
 const DE_HEADLINE = 'Intelligenz gestalten.';
 const EN_HEADLINE = 'Designing intelligence.';
 

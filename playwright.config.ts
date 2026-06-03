@@ -43,14 +43,24 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `npm run dev -- --host ${HOST} --port ${PORT} --strictPort`,
+    // Run against a production build served by `vite preview`, NOT the dev server.
+    // The dev server compiles the heavy three.js/WebGL chunks on-demand on first
+    // request, so a spec that does two full loads (e.g. cookie-banner's reload)
+    // could brush the 30s test timeout on a cold/loaded CI runner — the source of
+    // the suite's recurring first-load flakes. Pre-built static assets load fast
+    // and consistently. `appType: 'spa'` (Vite default) keeps the index.html
+    // fallback, so deep links like /de/datenschutz still resolve.
+    command: `npm run build && npm run preview -- --host ${HOST} --port ${PORT} --strictPort`,
     url: BASE_URL,
     reuseExistingServer: false,
     stdout: 'ignore',
     stderr: 'pipe',
-    timeout: 120_000,
-    // Provide a stub analytics URL so the CookieBanner component renders.
-    // Tests use page.route() to fulfill the script request without network.
+    // Generous: the timeout must cover the full production build + preview start
+    // (slower on CI), not just server boot.
+    timeout: 240_000,
+    // VITE_* vars are inlined at BUILD time, so this must be present for `vite build`
+    // above — Playwright passes it to the whole command's environment. Provides a stub
+    // analytics URL so the CookieBanner renders; specs page.route() the script request.
     env: {
       VITE_ANALYTICS_SCRIPT_URL: `${BASE_URL}/__playwright_noop_analytics.js`,
     },

@@ -7,6 +7,17 @@ const ANALYTICS_URL = '**/__playwright_noop_analytics.js';
 
 test.describe('Cookie banner', () => {
   test.beforeEach(async ({ page }) => {
+    // Force reduced motion BEFORE navigating. This makes the Loader take its instant
+    // early-out (animations.ts:125) instead of running its ~4.7s full-screen intro (z-110),
+    // and makes the Hero render its static fallback so the heavy three.js/WebGL chunk is
+    // never fetched (Hero.tsx:29). Without it the loader overlay covers the banner and the
+    // three.js parse jams the main thread, so the banner mounts late (~7s) and the reject
+    // button stays unactionable for seconds — on a loaded CI runner the test then blows the
+    // 30s budget. NOTE: `emulateMedia` here is deliberate — setting `reducedMotion` via
+    // `test.use()` did NOT actually emulate the media feature in this setup (verified via
+    // trace: loader + three.js still loaded), whereas this explicit call does.
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
     // Fulfill the analytics script request so accepting does not 404.
     await page.route(ANALYTICS_URL, (route) => {
       void route.fulfill({
@@ -40,8 +51,12 @@ test.describe('Cookie banner', () => {
     const stored = await page.evaluate(() => window.localStorage.getItem('zian.consent.v1'));
     expect(stored).toBe('rejected');
 
-    await page.reload();
-    await page.waitForLoadState('domcontentloaded');
+    // Reload to domcontentloaded, NOT the default 'load' event. 'load' blocks on the heavy
+    // three.js/WebGL chunk being re-downloaded and re-parsed on reload (confirmed via trace);
+    // on a loaded CI runner that second parse pushes the cumulative test past the 30s budget.
+    // The banner's 600ms reveal timer starts on mount (after DCL), so DCL + the wait below
+    // fully exercises the "does not reappear" assertion without waiting on WebGL.
+    await page.reload({ waitUntil: 'domcontentloaded' });
     // Give it longer than the 600ms reveal timer to be sure it does not appear.
     await page.waitForTimeout(1_200);
     await expect(banner).toBeHidden();

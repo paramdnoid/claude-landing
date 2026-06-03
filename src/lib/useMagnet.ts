@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { EASE, DUR } from './animations';
 
 export function useMagnet<T extends HTMLElement>(strength = 0.35) {
   const ref = useRef<T>(null);
@@ -10,8 +11,12 @@ export function useMagnet<T extends HTMLElement>(strength = 0.35) {
     if (window.matchMedia('(pointer: coarse)').matches) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.4, ease: 'power3.out' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power3.out' });
+    // Promote once up front so the first pointer move doesn't trigger a
+    // layer-creation hitch mid-animation.
+    gsap.set(el, { willChange: 'transform' });
+
+    const xTo = gsap.quickTo(el, 'x', { duration: DUR.slow, ease: EASE.out });
+    const yTo = gsap.quickTo(el, 'y', { duration: DUR.slow, ease: EASE.out });
 
     const onMove = (e: PointerEvent) => {
       const rect = el.getBoundingClientRect();
@@ -31,6 +36,8 @@ export function useMagnet<T extends HTMLElement>(strength = 0.35) {
     return () => {
       el.removeEventListener('pointermove', onMove);
       el.removeEventListener('pointerleave', onLeave);
+      // Reset the magnet offset and drop the layer hint so a remount starts clean.
+      gsap.set(el, { x: 0, y: 0, clearProps: 'willChange' });
     };
   }, [strength]);
 

@@ -14,6 +14,7 @@ export const prefersReducedMotion = (): boolean =>
  * read CSS custom properties, so we duplicate the values here intentionally.
  */
 export const EASE = {
+  out: 'power3.out',
   outExpo: 'expo.out',
   outQuint: 'power4.out',
   inOutSoft: 'power2.inOut',
@@ -173,7 +174,7 @@ export function horizontalScroll(
     // pin-spacer's height and engage prematurely.
     refreshPriority: 1,
     snap: opts.snap
-      ? { snapTo: 1 / Math.max(1, track.children.length - 1), duration: 0.4, ease: 'power2.inOut' }
+      ? { snapTo: 1 / Math.max(1, track.children.length - 1), duration: DUR.slow, ease: EASE.inOutSoft }
       : undefined,
   });
 }

@@ -7,22 +7,22 @@
       <stop offset="1" stop-color="#050507"/>
     </linearGradient>
 
-    <!-- Plasma palette: lime -> cyan -> indigo -->
+    <!-- Plasma palette: lime -> cyan -> blue -->
     <linearGradient id="plasma" x1="80" y1="300" x2="760" y2="380" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#a3ff12"/>
       <stop offset="0.5" stop-color="#06b6d4"/>
-      <stop offset="1" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#3b82f6"/>
     </linearGradient>
     <linearGradient id="plasmaBar" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#a3ff12"/>
       <stop offset="0.5" stop-color="#06b6d4"/>
-      <stop offset="1" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#3b82f6"/>
     </linearGradient>
 
     <!-- Plasma aura glow, fades to transparent (no filters, for renderer safety) -->
     <radialGradient id="aura" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
       <stop offset="0" stop-color="#06b6d4" stop-opacity="0.22"/>
-      <stop offset="0.4" stop-color="#6366f1" stop-opacity="0.12"/>
+      <stop offset="0.4" stop-color="#3b82f6" stop-opacity="0.12"/>
       <stop offset="0.7" stop-color="#a3ff12" stop-opacity="0.05"/>
       <stop offset="1" stop-color="#050507" stop-opacity="0"/>
     </radialGradient>
@@ -34,7 +34,7 @@
       <stop offset="1" stop-color="#0a0a0f" stop-opacity="0.2"/>
     </linearGradient>
     <linearGradient id="facetR" x1="1093" y1="215" x2="920" y2="430" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#6366f1" stop-opacity="0.20"/>
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.20"/>
       <stop offset="0.6" stop-color="#06b6d4" stop-opacity="0.07"/>
       <stop offset="1" stop-color="#0a0a0f" stop-opacity="0.2"/>
     </linearGradient>

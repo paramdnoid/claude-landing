@@ -2,6 +2,8 @@
 
 Animated single-page landing for **ZIAN AI CONCEPTS** (André Zimmermann). Tech-noir design, scroll-triggered timeline choreography, bilingual DE/EN.
 
+![ZIAN AI CONCEPTS landing page — hero with the lime→cyan→blue plasma palette, 3D signet and liquid WebGL backdrop](docs/screenshot.png)
+
 ## Stack
 
 - **Vite 7** + **React 19** + **TypeScript** (strict, with `noUncheckedIndexedAccess`)

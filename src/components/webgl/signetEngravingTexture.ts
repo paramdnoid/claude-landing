@@ -130,6 +130,66 @@ export function buildEngravingTexture(maxAnisotropy: number): THREE.CanvasTextur
 }
 
 /**
+ * Soft dark drop-shadow of the Z, baked as a blurred, offset silhouette on a
+ * plane the size of the hex bounding box (same svgToCanvas mapping as the
+ * engraving). Rendered just behind the proud Z: the opaque Z hides the centre,
+ * leaving the offset blurred edge peeking down-right as a contact shadow, which
+ * lifts the letterform off the recessed panel like the brand reference.
+ *
+ * The Z silhouette is scaled +12% about its centroid (matching the mesh's
+ * Z_PTS_SCALED) and nudged down-right so the shadow falls away from the
+ * upper-left key light.
+ */
+export function buildZShadowTexture(maxAnisotropy: number): THREE.CanvasTexture {
+  const s = TEX_W / SVG_W;
+
+  let canvas: HTMLCanvasElement | OffscreenCanvas;
+  if (typeof OffscreenCanvas !== 'undefined') {
+    canvas = new OffscreenCanvas(TEX_W, TEX_H);
+  } else {
+    canvas = document.createElement('canvas');
+    canvas.width = TEX_W;
+    canvas.height = TEX_H;
+  }
+
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D | null;
+
+  if (ctx !== null) {
+    ctx.clearRect(0, 0, TEX_W, TEX_H);
+    const zSvg: Array<[number, number]> = [
+      [114, 104], [246, 104], [246, 136], [174, 183], [246, 183],
+      [246, 215], [114, 215], [114, 183], [186, 136], [114, 136],
+    ];
+    const cx = 180;
+    const cy = 159.5;
+    const scale = 1.12;
+    // Small offset: most of the shadow stays hidden behind the opaque Z, so only
+    // a thin contact edge peeks out below/right — keeps the open triangular
+    // negative-spaces of the Z from filling with dark patches (which amplify into
+    // visible artefacts on large, high-contrast displays).
+    const offX = 2;
+    const offY = 5;
+    ctx.filter = `blur(${5 * s}px)`;
+    ctx.fillStyle = 'rgba(0,0,0,0.9)';
+    ctx.beginPath();
+    zSvg.forEach(([x, y], i) => {
+      const [px, py] = svgToCanvas(cx + (x - cx) * scale + offX, cy + (y - cy) * scale + offY);
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    });
+    ctx.closePath();
+    ctx.fill();
+    ctx.filter = 'none';
+  }
+
+  const tex = new THREE.CanvasTexture(canvas as HTMLCanvasElement);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = maxAnisotropy;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+/**
  * Builds a radial aura glow texture (256×256) matching the SVG
  * `zian-monolith-aura-gradient`: lime → cyan → blue → transparent.
  * Used as a sprite behind the signet body.

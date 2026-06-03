@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import * as THREE from 'three';
-import { svgToCanvas, buildEngravingTexture, buildAuraTexture, TEX_W, TEX_H } from '../signetEngravingTexture';
+import { svgToCanvas, buildEngravingTexture, buildAuraTexture, buildZShadowTexture, TEX_W, TEX_H } from '../signetEngravingTexture';
 
 describe('svgToCanvas', () => {
   it('maps top-left SVG corner (86, 35) to canvas origin (0, 0)', () => {
@@ -49,6 +49,29 @@ describe('buildEngravingTexture', () => {
     expect(tex.anisotropy).toBe(1);
 
     // If jsdom provided a canvas with real dimensions, verify them.
+    const img = tex.image as { width?: number; height?: number } | null;
+    if (img !== null && typeof img.width === 'number' && img.width > 0) {
+      expect(img.width).toBe(TEX_W);
+      expect(img.height).toBe(TEX_H);
+    }
+  });
+});
+
+describe('buildZShadowTexture', () => {
+  it('returns a THREE.CanvasTexture with SRGBColorSpace and the hex-bbox size', () => {
+    let tex: THREE.CanvasTexture | null = null;
+    try {
+      tex = buildZShadowTexture(1);
+    } catch {
+      // Guard if canvas APIs are absent in this env.
+    }
+
+    if (tex === null) return;
+
+    expect(tex).toBeInstanceOf(THREE.CanvasTexture);
+    expect(tex.colorSpace).toBe(THREE.SRGBColorSpace);
+    expect(tex.anisotropy).toBe(1);
+
     const img = tex.image as { width?: number; height?: number } | null;
     if (img !== null && typeof img.width === 'number' && img.width > 0) {
       expect(img.width).toBe(TEX_W);

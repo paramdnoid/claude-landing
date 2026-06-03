@@ -1,16 +1,92 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
   <defs>
+    <!-- Background: deep near-black with a faint elevation shift -->
     <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#0a0a0f"/>
-      <stop offset="1" stop-color="#13131c"/>
+      <stop offset="0.55" stop-color="#070709"/>
+      <stop offset="1" stop-color="#050507"/>
     </linearGradient>
-    <linearGradient id="g" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#00e5ff"/>
-      <stop offset="1" stop-color="#a855f7"/>
+
+    <!-- Plasma palette: lime -> cyan -> indigo -->
+    <linearGradient id="plasma" x1="80" y1="300" x2="760" y2="380" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a3ff12"/>
+      <stop offset="0.5" stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="plasmaBar" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a3ff12"/>
+      <stop offset="0.5" stop-color="#06b6d4"/>
+      <stop offset="1" stop-color="#6366f1"/>
+    </linearGradient>
+
+    <!-- Plasma aura glow, fades to transparent (no filters, for renderer safety) -->
+    <radialGradient id="aura" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#06b6d4" stop-opacity="0.22"/>
+      <stop offset="0.4" stop-color="#6366f1" stop-opacity="0.12"/>
+      <stop offset="0.7" stop-color="#a3ff12" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#050507" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Faceted signet fills -->
+    <linearGradient id="facetL" x1="746" y1="200" x2="920" y2="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#a3ff12" stop-opacity="0.16"/>
+      <stop offset="0.5" stop-color="#06b6d4" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#0a0a0f" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="facetR" x1="1093" y1="215" x2="920" y2="430" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.20"/>
+      <stop offset="0.6" stop-color="#06b6d4" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#0a0a0f" stop-opacity="0.2"/>
     </linearGradient>
   </defs>
+
+  <!-- Canvas -->
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <text x="80" y="320" font-family="system-ui, sans-serif" font-weight="800" font-size="120" fill="url(#g)" letter-spacing="-6">ZIAN AI</text>
-  <text x="80" y="420" font-family="system-ui, sans-serif" font-weight="500" font-size="48" fill="#fafafa" opacity="0.85">CONCEPTS</text>
-  <text x="80" y="510" font-family="ui-monospace, monospace" font-size="24" fill="#71717a">AI-driven Engineering · Kurse · Integration</text>
+
+  <!-- Plasma aura, right-of-centre -->
+  <ellipse cx="880" cy="250" rx="640" ry="470" fill="url(#aura)"/>
+
+  <!-- Decorative faceted monolith signet (large, right) -->
+  <g opacity="0.9">
+    <path d="M920 115 L1093.2 215 L920 315 L746.8 215 Z" fill="url(#facetL)"/>
+    <path d="M920 315 L1093.2 215 L1093.2 415 L920 515 Z" fill="url(#facetR)"/>
+    <path d="M920 315 L746.8 215 L746.8 415 L920 515 Z" fill="url(#facetL)"/>
+    <path d="M920 115 L1093.2 215 L1093.2 415 L920 515 L746.8 415 L746.8 215 Z"
+          fill="none" stroke="url(#plasmaBar)" stroke-width="2" stroke-opacity="0.55" stroke-linejoin="round"/>
+    <!-- vertical seam -->
+    <line x1="920" y1="115" x2="920" y2="515" stroke="url(#plasmaBar)" stroke-width="1.25" stroke-opacity="0.3"/>
+  </g>
+
+  <!-- Brand lockup: signet badge + wordmark (top-left) -->
+  <g>
+    <path d="M104 64 L125 76 L125 104 L104 116 L83 104 L83 76 Z"
+          fill="none" stroke="url(#plasmaBar)" stroke-width="2.5" stroke-linejoin="round"/>
+    <line x1="104" y1="64" x2="104" y2="116" stroke="url(#plasmaBar)" stroke-width="1.25" stroke-opacity="0.5"/>
+    <text x="152" y="86" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="700"
+          font-size="26" letter-spacing="6" fill="#f5f5f7">ZIAN AI CONCEPTS</text>
+    <text x="153" y="110" font-family="'SF Mono', ui-monospace, 'DejaVu Sans Mono', monospace"
+          font-size="15" letter-spacing="2" fill="#71717a">by Andre Zimmermann</text>
+  </g>
+
+  <!-- Eyebrow -->
+  <g>
+    <circle cx="90" cy="293" r="6" fill="#a3ff12"/>
+    <text x="108" y="299" font-family="'SF Mono', ui-monospace, 'DejaVu Sans Mono', monospace"
+          font-size="20" letter-spacing="5" fill="#a1a1aa">KI · CREATIVE TECH · ENGINEERING</text>
+  </g>
+
+  <!-- Headline (the hero statement) -->
+  <text x="78" y="410" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-weight="800"
+        font-size="104" letter-spacing="-3" fill="url(#plasma)">Intelligenz gestalten.</text>
+
+  <!-- Services line -->
+  <text x="82" y="478" font-family="'SF Mono', ui-monospace, 'DejaVu Sans Mono', monospace"
+        font-size="25" letter-spacing="0.5" fill="#8a8a93">KI-Engineering · Creative Coding · Integration · Kurse</text>
+
+  <!-- URL (bottom-left) -->
+  <text x="80" y="566" font-family="'SF Mono', ui-monospace, 'DejaVu Sans Mono', monospace"
+        font-size="22" letter-spacing="1" fill="#52525b">zian-ai.dev</text>
+
+  <!-- Plasma accent bar (full width, bottom) -->
+  <rect x="0" y="624" width="1200" height="6" fill="url(#plasmaBar)"/>
 </svg>

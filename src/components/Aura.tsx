@@ -1,4 +1,4 @@
-type AuraColor = 'lime' | 'cyan' | 'indigo';
+type AuraColor = 'lime' | 'cyan' | 'blue';
 
 type Props = {
   /** Plasma tint of the glow. */
@@ -10,7 +10,7 @@ type Props = {
 const TINT: Record<AuraColor, string> = {
   lime: 'bg-plasma-lime/[0.07]',
   cyan: 'bg-plasma-cyan/[0.06]',
-  indigo: 'bg-plasma-indigo/[0.10]',
+  blue: 'bg-plasma-blue/[0.10]',
 };
 
 /**
@@ -19,7 +19,7 @@ const TINT: Record<AuraColor, string> = {
  * it never clips a `position: sticky` child the way `overflow-hidden` on the
  * section would. Purely decorative; sits behind the section content.
  */
-export default function Aura({ color = 'indigo', className = '' }: Props) {
+export default function Aura({ color = 'blue', className = '' }: Props) {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
       <div className={`absolute rounded-full blur-[130px] ${TINT[color]} ${className}`} />

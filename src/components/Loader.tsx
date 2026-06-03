@@ -175,7 +175,7 @@ export default function Loader({ onDone }: { onDone: () => void }) {
               <linearGradient id="loader-ring" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="var(--color-plasma-lime)" />
                 <stop offset="50%" stopColor="var(--color-plasma-cyan)" />
-                <stop offset="100%" stopColor="var(--color-plasma-indigo)" />
+                <stop offset="100%" stopColor="var(--color-plasma-blue)" />
               </linearGradient>
             </defs>
             {/* Track */}

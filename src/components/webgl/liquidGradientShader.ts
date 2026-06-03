@@ -21,7 +21,7 @@ export const liquidGradientFragment = /* glsl */ `
   // Plasma palette
   const vec3 LIME   = vec3(0.639, 1.000, 0.071);   // #a3ff12
   const vec3 CYAN   = vec3(0.024, 0.714, 0.831);   // #06b6d4
-  const vec3 INDIGO = vec3(0.231, 0.510, 0.965);   // #3b82f6
+  const vec3 BLUE = vec3(0.231, 0.510, 0.965);   // #3b82f6
   const vec3 DEEP   = vec3(0.039, 0.078, 0.188);   // #0a1430
   const vec3 BG     = vec3(0.020, 0.020, 0.027);   // #050507
 
@@ -98,7 +98,7 @@ export const liquidGradientFragment = /* glsl */ `
     float stopA = clamp(f - 0.05 + s * 0.1, 0.0, 1.0);
     float stopB = clamp(f * 1.1 + 0.05 - s * 0.15, 0.0, 1.0);
 
-    vec3 col = mix(INDIGO, CYAN, smoothstep(0.0, 0.55, stopA));
+    vec3 col = mix(BLUE, CYAN, smoothstep(0.0, 0.55, stopA));
     col      = mix(col,    LIME,   smoothstep(0.55, 0.95, stopB));
     col      = mix(col,    DEEP,   smoothstep(0.0, 1.0, s) * 0.55);
 

@@ -53,7 +53,7 @@ type Props<T extends StickyStoryItem> = {
    */
   mirror?: boolean;
   /** Optional atmospheric plasma glow tint for depth behind the section. */
-  auraColor?: 'lime' | 'cyan' | 'indigo';
+  auraColor?: 'lime' | 'cyan' | 'blue';
 };
 
 const DEFAULT_HEADER_CLS = 'flex flex-col gap-6';

@@ -291,7 +291,7 @@ export default function Connect() {
       {/* Backwards-compat anchor for legacy #ai-demo links */}
       <span id="ai-demo" aria-hidden="true" className="block -translate-y-24" />
 
-      <Aura color="indigo" className="h-[520px] w-[520px] -right-40 top-[6%]" />
+      <Aura color="blue" className="h-[520px] w-[520px] -right-40 top-[6%]" />
 
       <div className="shell relative">
         {/* Header */}

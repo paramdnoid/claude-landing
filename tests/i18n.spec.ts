@@ -1,10 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-// Force reduced motion so the Loader resolves immediately instead of covering the header and
-// hero with its ~4.7s intro overlay (z-110). Otherwise the LangToggle click and the hero
-// headline assertions race that GSAP timeline and flake under a loaded CI runner. Under
-// reduced motion the hero renders its static text at full opacity (see reduced-motion.spec.ts).
-test.use({ reducedMotion: 'reduce' });
+// Force reduced motion BEFORE navigating so the Loader resolves immediately (no ~4.7s intro
+// overlay covering the header) and the Hero renders static text without fetching the heavy
+// three.js/WebGL chunk — otherwise the LangToggle click and headline assertions race that
+// work and flake on a loaded CI runner. `emulateMedia` is deliberate: `reducedMotion` via
+// `test.use()` did NOT actually emulate the feature here (verified via trace).
+test.beforeEach(async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+});
 
 const DE_HEADLINE = 'Intelligenz gestalten.';
 const EN_HEADLINE = 'Designing intelligence.';

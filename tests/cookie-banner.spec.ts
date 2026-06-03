@@ -1,21 +1,23 @@
 import { test, expect } from '@playwright/test';
 
 // Override the project-level storageState so consent is unset and the banner can render.
-// Force reduced motion so the Loader takes its instant early-out (animations.ts:125) instead
-// of running its ~4.7s full-screen intro (z-110). Otherwise that overlay covers the banner
-// (z-80): toBeVisible() passes (the element is rendered), but the button click waits for
-// actionability until the intro clears — and when the GSAP ticker is starved on a loaded CI
-// runner the click slips past the 30s test timeout. The 600ms banner reveal timer is a plain
-// setTimeout and is unaffected by the motion preference, so the banner still appears on cue.
-test.use({
-  storageState: { cookies: [], origins: [] },
-  reducedMotion: 'reduce',
-});
+test.use({ storageState: { cookies: [], origins: [] } });
 
 const ANALYTICS_URL = '**/__playwright_noop_analytics.js';
 
 test.describe('Cookie banner', () => {
   test.beforeEach(async ({ page }) => {
+    // Force reduced motion BEFORE navigating. This makes the Loader take its instant
+    // early-out (animations.ts:125) instead of running its ~4.7s full-screen intro (z-110),
+    // and makes the Hero render its static fallback so the heavy three.js/WebGL chunk is
+    // never fetched (Hero.tsx:29). Without it the loader overlay covers the banner and the
+    // three.js parse jams the main thread, so the banner mounts late (~7s) and the reject
+    // button stays unactionable for seconds — on a loaded CI runner the test then blows the
+    // 30s budget. NOTE: `emulateMedia` here is deliberate — setting `reducedMotion` via
+    // `test.use()` did NOT actually emulate the media feature in this setup (verified via
+    // trace: loader + three.js still loaded), whereas this explicit call does.
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
     // Fulfill the analytics script request so accepting does not 404.
     await page.route(ANALYTICS_URL, (route) => {
       void route.fulfill({

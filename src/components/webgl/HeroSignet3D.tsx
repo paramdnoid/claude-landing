@@ -47,7 +47,7 @@ export default function HeroSignet3D({ inView = true }: { inView?: boolean }) {
           frameloop={inView ? 'always' : 'never'}
           gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
           dpr={[1, 1.5]}
-          camera={{ position: [0, 0, 5], fov: 52 }}
+          camera={{ position: [0, 0, 7.6], fov: 41 }}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             maskImage: EDGE_FADE, WebkitMaskImage: EDGE_FADE,
@@ -55,7 +55,7 @@ export default function HeroSignet3D({ inView = true }: { inView?: boolean }) {
         >
           <SignetMesh3D />
           <EffectComposer multisampling={0}>
-            <N8AO halfRes aoSamples={6} aoRadius={0.35} intensity={1.1} />
+            <N8AO halfRes aoSamples={8} aoRadius={0.5} intensity={1.6} />
             <Bloom intensity={0.42} luminanceThreshold={0.82} luminanceSmoothing={0.3} mipmapBlur />
             <ToneMapping mode={ToneMappingMode.NEUTRAL} />
             <SMAA />

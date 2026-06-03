@@ -87,10 +87,10 @@ export function buildEngravingTexture(maxAnisotropy: number): THREE.CanvasTextur
       ctx.beginPath();
       ring.forEach(([x, y], i) => (i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)));
       ctx.closePath();
-      ctx.strokeStyle = 'rgba(163,255,18,0.32)';
+      ctx.strokeStyle = 'rgba(163,255,18,0.4)';
       ctx.lineWidth = 0.9 * s;
-      ctx.setLineDash([2 * s, 7 * s]);
-      ctx.globalAlpha = 0.78;
+      ctx.setLineDash([2.2 * s, 6 * s]);
+      ctx.globalAlpha = 0.9;
       ctx.stroke();
       ctx.setLineDash([]);
     }
@@ -104,7 +104,7 @@ export function buildEngravingTexture(maxAnisotropy: number): THREE.CanvasTextur
         [svgToCanvas(180, 65), svgToCanvas(180, 104)],
         [svgToCanvas(180, 215), svgToCanvas(180, 285)],
       ];
-      ctx.strokeStyle = 'rgba(163,255,18,0.18)';
+      ctx.strokeStyle = 'rgba(163,255,18,0.22)';
       ctx.lineWidth = 1 * s;
       ctx.globalAlpha = 0.78;
       lines.forEach(([[x0, y0], [x1, y1]]) => {

@@ -125,8 +125,18 @@ export default function Hero() {
         </WebGLErrorBoundary>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_60%,rgba(5,5,7,0.25)_0%,rgba(5,5,7,0.65)_70%,rgba(5,5,7,0.92)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_60%,rgba(5,5,7,0.4)_0%,rgba(5,5,7,0.74)_70%,rgba(5,5,7,0.95)_100%)]" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-bg/35 md:hidden" />
+
+      {/* Clean dark field behind the 3-D signet (right side) so the obsidian
+          shield reads against a dark backdrop like the brand reference, while
+          the liquid gradient stays visible behind the left-aligned text. lg-only
+          to match the signet's lg:flex visibility; renders above the mesh but
+          below the z-1 signet, so the shield floats on a calm dark ground. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 hidden lg:block bg-[radial-gradient(52%_58%_at_82%_50%,rgba(5,5,7,0.85)_0%,rgba(5,5,7,0.4)_46%,transparent_72%)]"
+      />
 
       {/* Dissolve the mesh to solid page-black before the hero's edge so it hands
           off seamlessly to the Manifesto's black top fade — no ragged mesh cut. */}

@@ -64,7 +64,7 @@ function paintZWithHighlights(geo: THREE.BufferGeometry): void {
   // Highlight colours for top-bar region — light lime, NOT pure white. A white
   // target plus the bright IBL + bloom blew the top bar out to a flat white
   // stroke; the SVG's highlight is a translucent lift over lime, so keep it lime.
-  const hiTop = new THREE.Color(0xeaffc4);
+  const hiTop = new THREE.Color(0xf4ffe0);
   const hiMid = new THREE.Color(0xd4ff6e);
   const pos = geo.attributes.position;
   const nrm = geo.attributes.normal;
@@ -89,7 +89,7 @@ function paintZWithHighlights(geo: THREE.BufferGeometry): void {
       if (y > topBarThreshold) {
         // Top bar — gentle highlight toward light lime (kept subtle so it reads
         // as a lit lime stroke, not a white bar that booms under bloom).
-        const factor = Math.min((y - topBarThreshold) / (spanY * 0.16), 1) * 0.22;
+        const factor = Math.min((y - topBarThreshold) / (spanY * 0.16), 1) * 0.32;
         const th = (y - topBarThreshold) / (spanY * 0.16);
         h.copy(hiTop).lerp(hiMid, th);
         c.lerp(h, factor);
@@ -316,7 +316,7 @@ export default function SignetMesh3D() {
   const zGeo = useMemo(() => {
     const geo = new THREE.ExtrudeGeometry(shapeFrom(Z_PTS), {
       depth: 0.12, bevelEnabled: true,
-      bevelThickness: 0.015, bevelSize: 0.012, bevelSegments: 6, curveSegments: 12,
+      bevelThickness: 0.02, bevelSize: 0.016, bevelSegments: 8, curveSegments: 12,
     });
     geo.computeVertexNormals();
     paintZWithHighlights(geo);
@@ -357,7 +357,7 @@ export default function SignetMesh3D() {
   const frameRingGeo = useMemo(() => {
     const geo = new THREE.ExtrudeGeometry(buildZFrameShape(), {
       depth: 0.012, bevelEnabled: true,
-      bevelThickness: 0.01, bevelSize: 0.012, bevelSegments: 3, curveSegments: 6,
+      bevelThickness: 0.014, bevelSize: 0.016, bevelSegments: 3, curveSegments: 6,
     });
     geo.computeVertexNormals();
     return geo;
@@ -395,12 +395,12 @@ export default function SignetMesh3D() {
   const panelMat = useMemo(() => new THREE.MeshPhysicalMaterial({
     color: 0x080b14, metalness: 0.1, roughness: 0.2,
     clearcoat: 1, clearcoatRoughness: 0.12, envMapIntensity: 1.4,
-    emissive: new THREE.Color(0x061820), emissiveIntensity: 0.55,
+    emissive: new THREE.Color(0x061820), emissiveIntensity: 0.40,
   }), []);
 
   const zMat = useMemo(() => new THREE.MeshPhysicalMaterial({
-    vertexColors: true, roughness: 0.34, metalness: 0,
-    clearcoat: 1, clearcoatRoughness: 0.1, envMapIntensity: 1,
+    vertexColors: true, roughness: 0.22, metalness: 0,
+    clearcoat: 1, clearcoatRoughness: 0.06, envMapIntensity: 1,
     // Brand-lime emissive reinforces the hue and feeds bloom cleanly; kept low so
     // the vertex-colour gradient (lit form) drives the look, not a flat glow.
     emissive: new THREE.Color(0x6cc70d), emissiveIntensity: Z_EMISSIVE_BASE,
@@ -421,9 +421,9 @@ export default function SignetMesh3D() {
   }), []);
 
   const frameRingMat = useMemo(() => new THREE.MeshPhysicalMaterial({
-    color: 0x636b78, metalness: 0.2, roughness: 0.3,
-    clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 1.1,
-    transparent: true, opacity: 0.7,
+    color: 0x636b78, metalness: 0.2, roughness: 0.22,
+    clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 1.3,
+    transparent: true, opacity: 0.9,
   }), []);
 
   const auraMat = useMemo(() => new THREE.MeshBasicMaterial({
@@ -487,7 +487,7 @@ export default function SignetMesh3D() {
     // Rim shimmer (5 s period, matches SVG .signet-rim)
     const rim1Mesh = rim1MeshRef.current;
     if (rim1Mesh !== null && rim1Mesh.material instanceof THREE.MeshBasicMaterial) {
-      rim1Mesh.material.opacity = 0.825 + 0.175 * Math.sin(t * ((2 * Math.PI) / 5));
+      rim1Mesh.material.opacity = 0.88 + 0.12 * Math.sin(t * ((2 * Math.PI) / 5));
     }
 
     // Aura breathe (7 s period, matches SVG .signet-aura)
@@ -537,7 +537,7 @@ export default function SignetMesh3D() {
         {/* Recessed-reading bezel panel. No bright lime inlay frame: the SVG's
             inner hex is only a faint outline, baked into the engraving texture. */}
         <group position={[0, yShift, 0]}>
-          <mesh geometry={panelGeo} material={panelMat} position={[0, 0, frontZ - 0.02]} />
+          <mesh geometry={panelGeo} material={panelMat} position={[0, 0, frontZ - 0.06]} />
           {/* Beveled "Schrank" frame wrapping the Z — symmetric on all sides */}
           <mesh geometry={frameRingGeo} material={frameRingMat} position={[0, 0, frontZ - 0.005]} />
 

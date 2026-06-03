@@ -24,6 +24,9 @@ function GradientPlane({ scrollTriggerId, inView = true }: Props) {
   // Impulse state — mutable ref, no re-render needed.
   // x,y hold the last NDC pointer position; strength starts at 0.
   const impulseRef = useRef({ x: 0, y: 0, strength: 0 });
+  // Pointer target for the parallax lerp; updated by a listener, consumed in
+  // useFrame — so there is no second standalone rAF loop running in the background.
+  const mouseTargetRef = useRef(new THREE.Vector2(0, 0));
   const reducedMotion = prefersReducedMotion();
 
   // Initial size is captured intentionally; the resize effect below keeps
@@ -44,26 +47,19 @@ function GradientPlane({ scrollTriggerId, inView = true }: Props) {
     uniforms.uResolution.value.set(size.width, size.height);
   }, [size, uniforms]);
 
-  // mouse parallax — paused while the hero is offscreen. This rAF is independent
-  // of the R3F frameloop, so it must be stopped explicitly or it keeps lerping.
+  // mouse parallax — only track the pointer target here; the actual ease happens
+  // in useFrame, so it shares the R3F render loop (auto-paused offscreen) instead
+  // of a separate always-on rAF.
   useEffect(() => {
-    if (!inView) return;
-    const target = new THREE.Vector2();
     const onMove = (e: PointerEvent) => {
-      target.set((e.clientX / window.innerWidth) * 2 - 1, -((e.clientY / window.innerHeight) * 2 - 1));
+      mouseTargetRef.current.set(
+        (e.clientX / window.innerWidth) * 2 - 1,
+        -((e.clientY / window.innerHeight) * 2 - 1),
+      );
     };
     window.addEventListener('pointermove', onMove);
-    let raf = 0;
-    const ease = () => {
-      uniforms.uMouse.value.lerp(target, 0.06);
-      raf = requestAnimationFrame(ease);
-    };
-    raf = requestAnimationFrame(ease);
-    return () => {
-      window.removeEventListener('pointermove', onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, [uniforms, inView]);
+    return () => window.removeEventListener('pointermove', onMove);
+  }, []);
 
   // pointer impulse — disabled when reducedMotion
   useEffect(() => {
@@ -103,6 +99,14 @@ function GradientPlane({ scrollTriggerId, inView = true }: Props) {
     if (!materialRef.current || !inView) return;
 
     (materialRef.current.uniforms.uTime as { value: number }).value += dt;
+
+    // Frame-rate-independent ease toward the pointer target (matches the prior
+    // fixed 0.06/frame feel at 60fps; no separate rAF needed).
+    const mouseLerp = 1 - Math.pow(1 - 0.06, dt * 60);
+    (materialRef.current.uniforms.uMouse as { value: THREE.Vector2 }).value.lerp(
+      mouseTargetRef.current,
+      mouseLerp,
+    );
 
     // Decay the impulse strength each frame (~0.7s half-life at 60fps)
     const imp = impulseRef.current;

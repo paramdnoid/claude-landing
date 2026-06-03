@@ -1,8 +1,8 @@
 import { useRef, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '../../lib/gsap';
-import { splitText, prefersReducedMotion } from '../../lib/animations';
+import { gsap } from '../../lib/gsap';
+import { splitText, prefersReducedMotion, EASE } from '../../lib/animations';
 import { scrollToSection } from '../../lib/scrollToSection';
 import { useMagnet } from '../../lib/useMagnet';
 import WebGLErrorBoundary from '../webgl/WebGLErrorBoundary';
@@ -43,30 +43,37 @@ export default function Hero() {
     if (!rm) {
       const chars = splitText(headlineRef.current);
       const tl = gsap.timeline();
-      tl.from(eyebrowRef.current, { y: 20, opacity: 0, duration: 0.7, ease: 'power3.out' })
-        .from(chars, { y: 28, opacity: 0, duration: 0.8, ease: 'expo.out', stagger: 0.018 }, '-=0.45')
-        .from(subRef.current, { y: 24, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.55')
-        .from(ctaRef.current?.children ?? [], { y: 16, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.08 }, '-=0.4')
-        .from(metaRef.current?.children ?? [], { y: 14, opacity: 0, duration: 0.6, ease: 'power3.out', stagger: 0.07 }, '-=0.4');
+      tl.from(eyebrowRef.current, { y: 20, opacity: 0, duration: 0.7, ease: EASE.out })
+        .from(chars, { y: 28, opacity: 0, duration: 0.8, ease: EASE.outExpo, stagger: 0.018 }, '-=0.45')
+        .from(subRef.current, { y: 24, opacity: 0, duration: 0.8, ease: EASE.out }, '-=0.55')
+        .from(ctaRef.current?.children ?? [], { y: 16, opacity: 0, duration: 0.6, ease: EASE.out, stagger: 0.08 }, '-=0.4')
+        .from(metaRef.current?.children ?? [], { y: 14, opacity: 0, duration: 0.6, ease: EASE.out, stagger: 0.07 }, '-=0.4');
     }
 
     if (!rm && contentRef.current !== null && sectionRef.current !== null) {
-      const st = ScrollTrigger.create({
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.2,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          if (contentRef.current !== null) {
-            gsap.set(contentRef.current, {
-              y: self.progress * -60,
-              force3D: true,
-            });
-          }
+      // Drive the parallax through a real scrubbed tween (ease 'none') instead of
+      // gsap.set in onUpdate, so scrub interpolation smooths fast scroll flicks
+      // rather than stepping per scroll event.
+      const tween = gsap.fromTo(
+        contentRef.current,
+        { y: 0 },
+        {
+          y: -60,
+          ease: 'none',
+          force3D: true,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1.2,
+            invalidateOnRefresh: true,
+          },
         },
-      });
-      return () => st.kill();
+      );
+      return () => {
+        tween.scrollTrigger?.kill();
+        tween.kill();
+      };
     }
   }, { scope: sectionRef, dependencies: [] });
 
@@ -149,7 +156,7 @@ export default function Hero() {
               ref={workCtaRef}
               href="#work"
               onClick={onCta('work')}
-              className="group/cta inline-flex items-center gap-3 rounded-full bg-plasma-lime px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-bg transition-shadow duration-300 hover:shadow-glow-lime md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
+              className="group/cta inline-flex items-center gap-3 rounded-full bg-plasma-lime px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-bg transition-[box-shadow,filter] duration-300 hover:shadow-glow-lime active:brightness-95 md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
             >
               <span>{t('hero.ctaWork')}</span>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" className="transition-transform duration-300 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5">
@@ -160,7 +167,7 @@ export default function Hero() {
               ref={contactCtaRef}
               href="#contact"
               onClick={onCta('contact')}
-              className="inline-flex items-center gap-3 rounded-full border border-border-strong px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-fg transition-colors duration-300 hover:border-plasma-lime hover:text-plasma-lime md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
+              className="inline-flex items-center gap-3 rounded-full border border-border-strong px-6 py-3 font-mono text-xs uppercase tracking-[0.18em] text-fg transition-colors duration-300 hover:border-plasma-lime hover:text-plasma-lime active:border-plasma-lime active:text-plasma-lime md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
             >
               {t('hero.ctaContact')}
             </a>

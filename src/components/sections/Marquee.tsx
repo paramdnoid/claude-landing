@@ -37,7 +37,7 @@ export default function Marquee() {
         <div className="tag">{t('marquee.eyebrow')}</div>
       </div>
       <div className="shell relative overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-        <div ref={trackRef} className="flex w-max items-center gap-12 whitespace-nowrap will-change-transform md:gap-20">
+        <div ref={trackRef} aria-hidden="true" className="flex w-max items-center gap-12 whitespace-nowrap will-change-transform md:gap-20">
           {items.map((label, i) => (
             <div key={i} className="flex items-center gap-12 md:gap-20">
               <span className="font-display text-5xl text-fg/60 transition-colors duration-300 hover:text-fg md:text-7xl">{label}</span>
@@ -46,6 +46,13 @@ export default function Marquee() {
           ))}
         </div>
       </div>
+      {/* The visual marquee is decorative and duplicated (aria-hidden above), so
+          expose the tool list once to assistive tech as a single labelled list. */}
+      <ul className="sr-only" aria-label={t('marquee.eyebrow')}>
+        {TOOLS.map((label) => (
+          <li key={label}>{label}</li>
+        ))}
+      </ul>
     </section>
   );
 }

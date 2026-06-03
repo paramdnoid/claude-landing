@@ -34,7 +34,7 @@ export default function Manifesto() {
           strips fade back to the page black so it reads as an intentional panel
           between the dark neighbours, not a hard cut. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(125%_140%_at_22%_12%,rgba(99,102,241,0.34)_0%,rgba(30,27,75,0.26)_40%,transparent_80%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(125%_140%_at_22%_12%,rgba(13,148,136,0.34)_0%,rgba(4,47,46,0.26)_40%,transparent_80%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(90%_100%_at_88%_92%,rgba(6,182,212,0.20)_0%,transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(70%_70%_at_58%_46%,rgba(163,255,18,0.08)_0%,transparent_55%)]" />
         <div className="absolute inset-x-0 top-0 h-44 bg-[linear-gradient(to_bottom,var(--color-bg),transparent)]" />

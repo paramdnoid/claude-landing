@@ -21,8 +21,8 @@ export const liquidGradientFragment = /* glsl */ `
   // Plasma palette
   const vec3 LIME   = vec3(0.639, 1.000, 0.071);   // #a3ff12
   const vec3 CYAN   = vec3(0.024, 0.714, 0.831);   // #06b6d4
-  const vec3 INDIGO = vec3(0.388, 0.400, 0.945);   // #6366f1
-  const vec3 DEEP   = vec3(0.078, 0.071, 0.196);   // #14122e
+  const vec3 INDIGO = vec3(0.051, 0.580, 0.533);   // #0d9488
+  const vec3 DEEP   = vec3(0.027, 0.129, 0.122);   // #07211f
   const vec3 BG     = vec3(0.020, 0.020, 0.027);   // #050507
 
   // Hash + simplex-ish noise (Inigo Quilez)

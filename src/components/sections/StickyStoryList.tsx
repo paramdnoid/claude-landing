@@ -132,7 +132,7 @@ export default function StickyStoryList<T extends StickyStoryItem>({
                         aria-hidden
                         className="block h-1.5 w-1.5 rounded-full bg-muted/30 transition-all duration-200 group-hover:bg-muted group-data-[active=true]:bg-plasma-lime group-data-[active=true]:shadow-(--shadow-glow-lime)"
                       />
-                      <span className="font-mono text-xs tracking-widest text-plasma-lime/70 transition-colors duration-200 group-data-[active=true]:text-plasma-lime">
+                      <span className="font-mono text-xs tabular-nums tracking-widest text-plasma-lime/70 transition-colors duration-200 group-data-[active=true]:text-plasma-lime">
                         {it.index}
                       </span>
                       <span className="font-display text-base md:text-lg">{it.title}</span>

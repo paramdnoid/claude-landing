@@ -309,7 +309,7 @@ export default function SelectedWork() {
             <p className="font-display text-display-md text-fg">{t('work.endLine')}</p>
             <a
               href="#contact"
-              className="tag inline-flex w-fit items-center gap-2 rounded-full border border-border-strong px-3 py-1.5 text-muted-2 transition-colors duration-[var(--dur-base)] hover:border-plasma-lime hover:!text-plasma-lime focus-visible:!text-plasma-lime"
+              className="inline-flex w-fit items-center gap-2 rounded-full bg-plasma-lime px-5 py-2.5 font-mono text-xs uppercase tracking-[0.18em] text-bg transition-[box-shadow,filter] duration-300 hover:shadow-glow-lime active:brightness-95"
             >
               {t('work.onRequest')} <span aria-hidden="true">→</span>
             </a>

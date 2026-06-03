@@ -137,7 +137,8 @@ export default function Hero() {
         <div className="flex flex-1 flex-col justify-center gap-10 md:gap-12">
           <div ref={eyebrowRef} className="glass glass-pill tag inline-flex w-fit max-w-full items-start gap-2.5 leading-snug md:items-center md:gap-3">
             <span className="mt-[0.3rem] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-plasma-lime glow-lime md:mt-0" />
-            <span className="text-[0.62rem] tracking-[0.12em] md:text-[0.7rem] md:tracking-[0.18em]">{t('hero.eyebrow')}</span>
+            <span className="text-[0.62rem] tracking-[0.12em] sm:hidden md:text-[0.7rem] md:tracking-[0.18em]">{t('hero.eyebrowShort')}</span>
+            <span className="hidden text-[0.62rem] tracking-[0.12em] sm:inline md:text-[0.7rem] md:tracking-[0.18em]">{t('hero.eyebrow')}</span>
           </div>
 
           <div className="max-w-400">

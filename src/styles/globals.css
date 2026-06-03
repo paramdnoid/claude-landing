@@ -16,7 +16,7 @@
   /* Plasma palette: Lime → Cyan → Blue */
   --color-plasma-lime: #a3ff12;
   --color-plasma-cyan: #06b6d4;
-  --color-plasma-indigo: #3b82f6;
+  --color-plasma-blue: #3b82f6;
   --color-plasma-deep: #172554;
 
   /* Semantic feedback tokens */
@@ -29,7 +29,7 @@
 
   --shadow-glow-lime: 0 0 24px rgba(163, 255, 18, 0.45), 0 0 80px rgba(163, 255, 18, 0.18);
   --shadow-glow-cyan: 0 0 24px rgba(6, 182, 212, 0.5), 0 0 80px rgba(6, 182, 212, 0.22);
-  --shadow-glow-indigo: 0 0 24px rgba(59, 130, 246, 0.55), 0 0 80px rgba(59, 130, 246, 0.25);
+  --shadow-glow-blue: 0 0 24px rgba(59, 130, 246, 0.55), 0 0 80px rgba(59, 130, 246, 0.25);
   --shadow-premium: 0 30px 80px -30px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.05) inset;
 
   /* Elevation scale — consistent surface depth for pills, cards, sheets, modals.
@@ -185,26 +185,26 @@
   .text-plasma,
   .text-plasma .word,
   .text-plasma .char {
-    background-image: linear-gradient(110deg, var(--color-plasma-lime) 0%, var(--color-plasma-cyan) 50%, var(--color-plasma-indigo) 100%);
+    background-image: linear-gradient(110deg, var(--color-plasma-lime) 0%, var(--color-plasma-cyan) 50%, var(--color-plasma-blue) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .text-plasma-reverse {
-    background-image: linear-gradient(110deg, var(--color-plasma-indigo) 0%, var(--color-plasma-cyan) 50%, var(--color-plasma-lime) 100%);
+    background-image: linear-gradient(110deg, var(--color-plasma-blue) 0%, var(--color-plasma-cyan) 50%, var(--color-plasma-lime) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
   .bg-plasma {
-    background-image: linear-gradient(110deg, var(--color-plasma-lime) 0%, var(--color-plasma-cyan) 50%, var(--color-plasma-indigo) 100%);
+    background-image: linear-gradient(110deg, var(--color-plasma-lime) 0%, var(--color-plasma-cyan) 50%, var(--color-plasma-blue) 100%);
   }
 
   .glow-lime { box-shadow: var(--shadow-glow-lime); }
   .glow-cyan { box-shadow: var(--shadow-glow-cyan); }
-  .glow-indigo { box-shadow: var(--shadow-glow-indigo); }
+  .glow-blue { box-shadow: var(--shadow-glow-blue); }
 
   /* Hairline divider */
   .rule {
@@ -362,7 +362,7 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(var(--color-plasma-cyan), var(--color-plasma-indigo));
+    background: linear-gradient(var(--color-plasma-cyan), var(--color-plasma-blue));
     border: 3px solid var(--color-bg);
     border-radius: 9999px;
   }

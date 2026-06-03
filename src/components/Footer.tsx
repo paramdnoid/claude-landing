@@ -39,7 +39,7 @@ export default function Footer() {
       {/* Plasma accent hairline — the premium divider from the section above. */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent_0%,var(--color-plasma-lime)_25%,var(--color-plasma-cyan)_50%,var(--color-plasma-indigo)_75%,transparent_100%)] opacity-60"
+        className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent_0%,var(--color-plasma-lime)_25%,var(--color-plasma-cyan)_50%,var(--color-plasma-blue)_75%,transparent_100%)] opacity-60"
       />
 
       <div className="relative mx-auto max-w-400 px-6 py-16 md:px-10 md:py-20">

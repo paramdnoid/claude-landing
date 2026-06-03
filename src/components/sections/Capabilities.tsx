@@ -104,7 +104,7 @@ export default function Capabilities() {
       )}
       renderArticleBody={(it) => (
         <>
-          <span className="font-mono text-xs uppercase tracking-widest text-plasma-lime">
+          <span className="font-mono text-xs uppercase tracking-widest tabular-nums text-plasma-lime">
             {it.index}
           </span>
           <h3 id={`${it.anchorId}-title`} className="font-display text-display-md">

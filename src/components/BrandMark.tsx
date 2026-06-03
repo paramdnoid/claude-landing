@@ -19,12 +19,16 @@ export default function BrandMark({ variant }: Props) {
           aria-hidden="true"
           width="28"
           height="28"
-          className="block h-7 w-7 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
-          style={{ filter: 'drop-shadow(0 0 12px rgba(163, 255, 18, 0.35))' }}
+          className="block transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
+          style={{
+            width: 'clamp(2rem, 1.8vw, 3.25rem)',
+            height: 'clamp(2rem, 1.8vw, 3.25rem)',
+            filter: 'drop-shadow(0 0 12px rgba(163, 255, 18, 0.35))',
+          }}
         />
-        <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-fg leading-tight">
+        <span className="font-mono text-[clamp(0.8125rem,0.72vw,1.25rem)] uppercase tracking-[0.22em] text-fg leading-tight">
           <span className="block">ZIAN AI CONCEPTS</span>
-          <span className="block text-muted text-[10px]">by Andre Zimmermann</span>
+          <span className="block text-muted text-[clamp(0.6875rem,0.62vw,1.0625rem)]">by Andre Zimmermann</span>
         </span>
       </>
     );

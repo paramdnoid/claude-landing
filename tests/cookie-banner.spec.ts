@@ -49,8 +49,12 @@ test.describe('Cookie banner', () => {
     const stored = await page.evaluate(() => window.localStorage.getItem('zian.consent.v1'));
     expect(stored).toBe('rejected');
 
-    await page.reload();
-    await page.waitForLoadState('domcontentloaded');
+    // Reload to domcontentloaded, NOT the default 'load' event. 'load' blocks on the heavy
+    // three.js/WebGL chunk being re-downloaded and re-parsed on reload (confirmed via trace);
+    // on a loaded CI runner that second parse pushes the cumulative test past the 30s budget.
+    // The banner's 600ms reveal timer starts on mount (after DCL), so DCL + the wait below
+    // fully exercises the "does not reappear" assertion without waiting on WebGL.
+    await page.reload({ waitUntil: 'domcontentloaded' });
     // Give it longer than the 600ms reveal timer to be sure it does not appear.
     await page.waitForTimeout(1_200);
     await expect(banner).toBeHidden();

@@ -31,7 +31,10 @@ test('locale from URL is preserved across reload', async ({ page }) => {
   await page.waitForURL(/\/en$/);
   await expect(page.locator('#hero h1')).toContainText(EN_HEADLINE);
 
-  await page.reload();
+  // domcontentloaded, not the default 'load' — see cookie-banner.spec.ts: waiting for the
+  // WebGL chunk's load event on reload is wasted here (the locale assertions don't need it)
+  // and can flake on a loaded CI runner.
+  await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForURL(/\/en$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('#hero h1')).toContainText(EN_HEADLINE);

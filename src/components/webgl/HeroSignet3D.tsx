@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber';
-import { EffectComposer, Bloom, SMAA, N8AO } from '@react-three/postprocessing';
-import * as THREE from 'three';
+import { EffectComposer, Bloom, SMAA, N8AO, ToneMapping } from '@react-three/postprocessing';
+import { ToneMappingMode } from 'postprocessing';
 import WebGLErrorBoundary from './WebGLErrorBoundary';
 import Signet from '../Signet';
 import SignetMesh3D from './SignetMesh3D';
@@ -13,16 +13,21 @@ const SIZE = 'clamp(320px, 42vw, 1664px)';
 // Dissolve the square canvas edges so the signet (and its bloom) floats in the
 // hero instead of reading as a pasted-on panel. Elliptical to respect the
 // taller-than-wide shield silhouette without clipping its points.
-const EDGE_FADE = 'radial-gradient(ellipse 62% 70% at 50% 50%, #000 60%, transparent 100%)';
+// Widened from 62%/70% to 64%/72% so the aura sprite is not clipped.
+const EDGE_FADE = 'radial-gradient(ellipse 64% 72% at 50% 50%, #000 60%, transparent 100%)';
 
 /**
  * Transparent R3F Canvas positioned at z-[1] (above all CSS scrim overlays).
  *
  * The signet renders as a polished obsidian monolith: brand-coloured IBL
  * reflections (drei Environment/Lightformer), a beveled gradient-lit lime Z,
- * and a post-processing stack (N8AO contact shadows, Bloom on the lime,
- * SMAA for crisp silhouette edges) under ACES tone mapping. No canvas-level
- * opacity — the crisp render composites directly over the hero gradient.
+ * and a post-processing stack (N8AO contact shadows, Bloom on the lime, Khronos
+ * PBR Neutral tone mapping, SMAA for crisp silhouette edges). Tone mapping lives
+ * in the composer, not on the renderer: @react-three/postprocessing forces
+ * gl.toneMapping to NoToneMapping while mounted, so the effect owns it. Neutral
+ * over ACES because it preserves the saturated brand lime (and rolls highlights
+ * off without clipping them to white) instead of washing it toward yellow. No
+ * canvas-level opacity — the crisp render composites directly over the hero.
  */
 export default function HeroSignet3D({ inView = true }: { inView?: boolean }) {
   const rm = prefersReducedMotion();
@@ -43,10 +48,6 @@ export default function HeroSignet3D({ inView = true }: { inView?: boolean }) {
           gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
           dpr={[1, 1.5]}
           camera={{ position: [0, 0, 5], fov: 52 }}
-          onCreated={({ gl }) => {
-            gl.toneMapping = THREE.ACESFilmicToneMapping;
-            gl.toneMappingExposure = 1.0;
-          }}
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             maskImage: EDGE_FADE, WebkitMaskImage: EDGE_FADE,
@@ -55,7 +56,8 @@ export default function HeroSignet3D({ inView = true }: { inView?: boolean }) {
           <SignetMesh3D />
           <EffectComposer multisampling={0}>
             <N8AO halfRes aoSamples={6} aoRadius={0.35} intensity={1.1} />
-            <Bloom intensity={0.42} luminanceThreshold={0.78} luminanceSmoothing={0.35} mipmapBlur />
+            <Bloom intensity={0.42} luminanceThreshold={0.82} luminanceSmoothing={0.3} mipmapBlur />
+            <ToneMapping mode={ToneMappingMode.NEUTRAL} />
             <SMAA />
           </EffectComposer>
         </Canvas>
